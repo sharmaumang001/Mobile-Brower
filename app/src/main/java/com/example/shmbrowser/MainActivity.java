@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
@@ -67,6 +68,34 @@ public class MainActivity extends AppCompatActivity {
         }
 
         mWebView.setWebViewClient(new MyWebViewClient());
+
+
+        mUrlText.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+                    try {
+                        if(!MyNetworkState.connectionAvailable(MainActivity.this)){
+                            Toasty.error(MainActivity.this, "Check Connection", Toasty.LENGTH_SHORT).show();
+                        }else {
+
+                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
+                            mWebView.loadUrl("https://" + mUrlText.getText().toString());
+                            mUrlText.setText("");
+                        }
+
+                    }catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    return true;
+                }
+                return false;
+            }
+        });
+
+
         mGoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -122,6 +151,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 mWebView.loadUrl("https://google.com");
+                Toasty.info(MainActivity.this,"HOME : GOOGLE.COM",Toasty.LENGTH_SHORT).show();
             }
         });
 
