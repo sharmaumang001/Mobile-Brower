@@ -168,6 +168,8 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+
         mForwardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,6 +192,8 @@ public class MainActivity extends AppCompatActivity {
                 mWebView.reload();
             }
         });
+
+
         mHomeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

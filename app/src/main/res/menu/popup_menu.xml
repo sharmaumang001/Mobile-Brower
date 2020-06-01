@@ -2,48 +2,47 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-
         android:id="@+id/firstID"
-        android:title="One" />
+        android:title="New Tab " />
     <item
         android:id="@+id/secondID"
-        android:title="Two"/>
+        android:title="Bookmarks"/>
     <item
         android:id="@+id/thirdID"
-        android:title="Three"/>
+        android:title="Audio Queue"/>
     <item
         android:id="@+id/fourthID"
-        android:title="Three"/>
+        android:title="Add to Audio Queue"/>
     <item
         android:id="@+id/fifthID"
-        android:title="Three"/>
+        android:title="Download videos on this page"/>
     <item
         android:id="@+id/sixthID"
-        android:title="Three"/>
+        android:title="Clear data"/>
     <item
         android:id="@+id/seventhID"
-        android:title="Three"/>
+        android:title="Clear data and Close all tabs"/>
     <item
         android:id="@+id/eighthID"
-        android:title="Three"/>
+        android:title="Downloads"/>
     <item
         android:id="@+id/ninthID"
-        android:title="Three"/>
+        android:title="share"/>
     <item
         android:id="@+id/tenthID"
-        android:title="Three"/>
+        android:title="Find in page"/>
     <item
         android:id="@+id/eleventhID"
-        android:title="Three"/>
+        android:title="Add to home screen"/>
     <item
         android:id="@+id/tewelvthID"
-        android:title="Three"/>
+        android:title="Desktop Site "/>
     <item
         android:id="@+id/thirteenID"
-        android:title="Three"/>
+        android:title="Settings"/>
     <item
         android:id="@+id/fourteenID"
-        android:title="Fourteen"/>
+        android:title="Exit"/>
 
 
 
