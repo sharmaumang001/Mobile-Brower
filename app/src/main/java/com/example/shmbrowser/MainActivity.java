@@ -83,10 +83,20 @@ public class MainActivity extends AppCompatActivity {
                             Toasty.error(MainActivity.this, "Check Connection", Toasty.LENGTH_SHORT).show();
                         }else {
 
-                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                            inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
-                            mWebView.loadUrl("https://" + mUrlText.getText().toString());
-                            mUrlText.setText("");
+                            String url = mUrlText.getText().toString();
+                            if (url.contains(".")) {
+
+                                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
+
+                                mWebView.loadUrl("https://" +url);
+                                mUrlText.setText("");
+                            }else {
+                                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
+                                mWebView.loadUrl("https://www.google.com/search?q=" +url);
+                                mUrlText.setText("");
+                            }
                         }
 
                     }catch (Exception e) {
@@ -108,10 +118,20 @@ public class MainActivity extends AppCompatActivity {
                         Toasty.error(MainActivity.this, "Check Connection", Toasty.LENGTH_SHORT).show();
                     }else {
 
+                        String url = mUrlText.getText().toString();
+                        if (url.contains(".")) {
+
                         InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                         inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
-                        mWebView.loadUrl("https://" + mUrlText.getText().toString());
-                        mUrlText.setText("");
+
+                            mWebView.loadUrl("https://" +url);
+                            mUrlText.setText("");
+                        }else {
+                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
+                            mWebView.loadUrl("https://www.google.com/search?q=" +url);
+                            mUrlText.setText("");
+                        }
                     }
 
                 }catch (Exception e) {

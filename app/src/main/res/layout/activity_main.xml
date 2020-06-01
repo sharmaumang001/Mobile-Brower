@@ -3,6 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:backgroundTint="#F60707"
+    android:hapticFeedbackEnabled="true"
     android:orientation="vertical"
     android:weightSum="1"
     tools:context=".MainActivity">
@@ -10,75 +12,79 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         android:layout_weight="0.002"
         android:background="@color/colorAccent"
+        android:orientation="vertical"
         android:weightSum="2">
 
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_weight="1.9"
-                    android:weightSum="3">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.9"
+            android:orientation="horizontal"
+            android:weightSum="3">
 
-                    <EditText
-                        android:id="@+id/url_EditText_ID"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".4"
-                        android:focusable="true"
-                        android:focusableInTouchMode="true"
-                        android:hint="Enter URL"
-                        android:inputType="textWebEditText"
-                        android:maxLines="1"
-                        android:textColor="#000000"
-                        android:textColorHint="#000000"
-                        android:textSize="20sp"
-                        android:layout_marginTop="10dp">
+            <EditText
+                android:id="@+id/url_EditText_ID"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight=".4"
+                android:backgroundTint="#FFFFFF"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:hint="Search here"
+                android:inputType="textWebEditText"
+                android:maxLines="1"
+                android:textColor="#000000"
+                android:textColorHighlight="#7AAFEC"
+                android:textColorHint="#000000"
+                android:textColorLink="#000000"
+                android:textCursorDrawable="@drawable/ic_cursor"
+                android:textIsSelectable="true"
+                android:textSize="20sp">
 
-                    </EditText>
+            </EditText>
 
-                    <ImageButton
-                        style="@style/Base.Widget.AppCompat.Button.Borderless"
-                        android:id="@+id/go_Button_ID"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorAccent"
-                        android:src="@drawable/ic_go_button"
-                        android:layout_weight="1.3"
-                        android:layout_marginTop="10dp">
+            <ImageButton
+                android:id="@+id/go_Button_ID"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1.3"
+                android:background="@color/colorAccent"
+                android:src="@drawable/ic_go_button">
 
-                    </ImageButton>
+            </ImageButton>
 
-                    <ImageButton
-                        style="@style/Base.Widget.AppCompat.Button.Borderless"
-                        android:id="@+id/popUpPanel_ID"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/colorAccent"
-                        android:layout_weight="1.3"
-                        android:contentDescription="@string/menu"
-                        android:onClick="showPopup"
-                        android:layout_marginTop="10dp"
-                        android:layout_marginLeft="10dp"
+            <ImageButton
+                android:id="@+id/popUpPanel_ID"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1.3"
+                android:background="@color/colorAccent"
+                android:contentDescription="@string/menu"
+                android:onClick="showPopup"
 
-                        android:src="@drawable/ic_pop_back">
+                android:src="@drawable/ic_pop_back">
 
-                    </ImageButton>
+            </ImageButton>
 
-                </LinearLayout>
+        </LinearLayout>
 
-                <ProgressBar
-                    android:id="@+id/progressBar_ID"
-                    style="?android:attr/progressBarStyleHorizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.1">
-                </ProgressBar>
+        <ProgressBar
+            android:id="@+id/progressBar_ID"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.1"></ProgressBar>
 
-            </LinearLayout>
+    </LinearLayout>
 
 
     <WebView
@@ -94,64 +100,52 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_weight=".005"
-        android:weightSum="5"
-        android:background="@color/colorAccent">
+        android:background="@color/colorAccent"
+        android:orientation="horizontal"
+        android:weightSum="5">
 
         <ImageButton
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:id="@+id/backButton_ID"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_arrowback">
-        </ImageButton>
+            android:src="@drawable/ic_arrowback"></ImageButton>
 
         <ImageButton
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:id="@+id/forwardButton_ID"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_forward"
-            >
-        </ImageButton>
+            android:src="@drawable/ic_forward"></ImageButton>
 
         <ImageButton
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:id="@+id/stopButton_ID"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_cancel">
-        </ImageButton>
+            android:src="@drawable/ic_cancel"></ImageButton>
 
         <ImageButton
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:id="@+id/refreshButon_ID"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_refresh_24">
-        </ImageButton>
+            android:src="@drawable/ic_refresh_24"></ImageButton>
 
         <ImageButton
-            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:id="@+id/homeButton_ID"
+            style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_home"
-            >
-        </ImageButton>
+            android:src="@drawable/ic_home"></ImageButton>
 
     </LinearLayout>
-
-
-
-
-
 
 
 </LinearLayout>
