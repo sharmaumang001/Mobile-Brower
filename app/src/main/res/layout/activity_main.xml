@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="0.005"
+        android:layout_weight="0.002"
         android:background="@color/colorAccent"
         android:weightSum="2">
 
@@ -85,7 +85,7 @@
         android:id="@+id/webView_ID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight=".98">
+        android:layout_weight=".99">
 
 
     </WebView>
@@ -95,7 +95,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_weight=".015"
+        android:layout_weight=".005"
         android:weightSum="5"
         android:background="@color/colorAccent">
 

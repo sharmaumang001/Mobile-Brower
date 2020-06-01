@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
@@ -13,6 +14,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.PopupMenu;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     WebView mWebView;
     EditText mUrlText;
     ProgressBar mProgressBar;
-    ImageButton mBackButton, mForwardButton, mStopButton, mRefreshButton, mHomeButton,mGoButton;
+    ImageButton mBackButton, mForwardButton, mStopButton, mRefreshButton, mHomeButton,mGoButton,mPopUPButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         mRefreshButton = findViewById(R.id.refreshButon_ID);
         mHomeButton = findViewById(R.id.homeButton_ID);
         mGoButton = findViewById(R.id.go_Button_ID);
+        mPopUPButton= findViewById(R.id.popUpPanel_ID);
 
         if (savedInstanceState != null) {
             mWebView.restoreState(savedInstanceState);
@@ -114,6 +117,26 @@ public class MainActivity extends AppCompatActivity {
                 }catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+        });
+
+        mPopUPButton.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                PopupMenu popup = new PopupMenu(MainActivity.this, mPopUPButton);
+
+                popup.getMenuInflater().inflate(R.menu.popup_menu, popup.getMenu());
+
+
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        Toasty.success(MainActivity.this,"You Clicked : " + item.getTitle(), Toasty.LENGTH_SHORT).show();
+                        return true;
+                    }
+                });
+
+                popup.show();
             }
         });
 
