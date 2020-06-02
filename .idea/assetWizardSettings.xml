@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/snap/android-studio/90/android-studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/height/baseline_height_24.xml" />
+                                      <entry key="url" value="jar:file:/C:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material/icons/materialicons/add/baseline_add_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,9 +28,10 @@
                         </option>
                         <option name="values">
                           <map>
+                            <entry key="assetSourceType" value="FILE" />
                             <entry key="opacityPercent" value="94" />
-                            <entry key="outputName" value="ic_cursor" />
-                            <entry key="sourceFile" value="$USER_HOME$/Downloads/icons8-go-100.svg" />
+                            <entry key="outputName" value="ic_book" />
+                            <entry key="sourceFile" value="C:\Users\Ravi\Downloads\book (1).svg" />
                           </map>
                         </option>
                       </PersistentState>

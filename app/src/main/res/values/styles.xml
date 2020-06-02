@@ -1,10 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
 <resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="@style/Theme.AppCompat.NoActionBar">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
+    </style>
+
+    <style name="AppTheme.Translucent" parent="@style/AppTheme">
+        <item name="android:windowBackground">@color/window_background</item>
+    </style>
+
+    <style name="AppTheme.Translucent.Light" parent="@style/AppTheme.Translucent">
+        <item name="tabSwitcherThemeGlobal">@style/LightTabSwitcher</item>
+    </style>
+
+    <style name="AppTheme.Translucent.Dark" parent="@style/AppTheme.Translucent">
+        <item name="tabSwitcherThemeGlobal">@style/DarkTabSwitcher</item>
+    </style>
+
+    <style name="LightTabSwitcher" parent="@style/TabSwitcher.Light">
+        <item name="tabSwitcherTabIcon">@drawable/ic_file_outline_18dp</item>
+        <item name="tabSwitcherTabIconTint">#ff666666</item>
+        <item name="tabSwitcherToolbarNavigationIconTint">@android:color/white</item>
+        <item name="toolbarTheme">@style/LightToolbar</item>
+    </style>
+
+    <style name="DarkTabSwitcher" parent="@style/TabSwitcher">
+        <item name="tabSwitcherTabIcon">@drawable/ic_file_outline_18dp</item>
+        <item name="tabSwitcherTabIconTint">@android:color/white</item>
+        <item name="tabSwitcherToolbarNavigationIconTint">@android:color/white</item>
+        <item name="toolbarTheme">@style/DarkToolbar</item>
+    </style>
+
+    <style name="LightToolbar" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">?android:attr/textColorSecondary</item>
+    </style>
+
+    <style name="DarkToolbar" parent="@style/ThemeOverlay.AppCompat.Light">
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColorSecondary">@android:color/white</item>
     </style>
 
 </resources>
