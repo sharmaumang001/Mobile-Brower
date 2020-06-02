@@ -1,62 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item
-        android:id="@+id/toggle_tab_switcher_menu_item"
-        android:title="@string/toggle_tab_switcher_menu_item"
-        app:actionLayout="@layout/tab_switcher_menu_item"
-        app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/bookmark_ID"
-        android:title="BookMark"
-        android:icon="@drawable/ic_book"
-        app:showAsAction="always"/>
-    <item
-        android:id="@+id/remove_tab_menu_item"
-        android:title="@string/remove_tab_menu_item"
-        app:showAsAction="never"/>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/add_tab_menu_item"
-        android:title="@string/add_tab_menu_item"
-        app:showAsAction="never"/>
 
+        android:id="@+id/firstID"
+        android:title="One" />
+    <item
+        android:id="@+id/secondID"
+        android:title="Two"/>
     <item
         android:id="@+id/thirdID"
-        android:title="Audio Queue"/>
+        android:title="Three"/>
     <item
         android:id="@+id/fourthID"
-        android:title="Add to Audio Queue"/>
+        android:title="Three"/>
     <item
         android:id="@+id/fifthID"
-        android:title="Download videos on this page"/>
+        android:title="Three"/>
     <item
         android:id="@+id/sixthID"
-        android:title="Clear data"/>
+        android:title="Three"/>
     <item
         android:id="@+id/seventhID"
-        android:title="Clear data and Close all tabs"/>
+        android:title="Three"/>
     <item
         android:id="@+id/eighthID"
-        android:title="Downloads"/>
+        android:title="Three"/>
     <item
         android:id="@+id/ninthID"
-        android:title="share"/>
+        android:title="Three"/>
     <item
         android:id="@+id/tenthID"
-        android:title="Find in page"/>
+        android:title="Three"/>
     <item
         android:id="@+id/eleventhID"
-        android:title="Add to home screen"/>
+        android:title="Three"/>
     <item
         android:id="@+id/tewelvthID"
-        android:title="Desktop Site "/>
+        android:title="Three"/>
     <item
         android:id="@+id/thirteenID"
-        android:title="Settings"/>
+        android:title="Three"/>
     <item
         android:id="@+id/fourteenID"
-        android:title="Exit"/>
+        android:title="Fourteen"/>
 
 
 
