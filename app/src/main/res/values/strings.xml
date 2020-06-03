@@ -10,14 +10,10 @@
     <string name="clear_tabs_menu_item">Clear all tabs</string>
     <string name="settings_menu_item">Settings</string>
     <string name="tab_title">Tab %1$d</string>
-    <string name="lorem_ipsum">hllo to all of you</string>
+    <string name="lorem_ipsum">hello to all of you</string>
     <string name="removed_tab_snackbar">Removed %1$s</string>
     <string name="cleared_tabs_snackbar">Removed all tabs</string>
     <string name="undo">Undo</string>
-
-
-
-
 
 
 </resources>
