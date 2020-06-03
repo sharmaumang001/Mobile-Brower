@@ -10,12 +10,10 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import android.content.Context;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
+
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,15 +28,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.PopupMenu;
+
 import android.widget.ProgressBar;
-import android.widget.TextView;
-import android.widget.Toast;
+
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.Locale;
+
 
 import de.mrapp.android.tabswitcher.AbstractState;
 import de.mrapp.android.tabswitcher.AddTabButtonListener;
@@ -52,11 +49,11 @@ import de.mrapp.android.tabswitcher.SwipeGesture;
 import de.mrapp.android.tabswitcher.Tab;
 import de.mrapp.android.tabswitcher.TabPreviewListener;
 import de.mrapp.android.tabswitcher.TabSwitcher;
-import de.mrapp.android.tabswitcher.TabSwitcherDecorator;
+
 import de.mrapp.android.tabswitcher.TabSwitcherListener;
 import de.mrapp.android.util.ThemeUtil;
 import de.mrapp.android.util.multithreading.AbstractDataBinder;
-import de.mrapp.util.Condition;
+
 import es.dmoral.toasty.Toasty;
 
 import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
@@ -68,25 +65,103 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
     public class MainActivity extends AppCompatActivity implements TabSwitcherListener {
 
         WebView mWebView;
+
         EditText mUrlText;
         ProgressBar mProgressBar;
         ImageButton mBackButton, mForwardButton, mStopButton, mRefreshButton, mHomeButton,mGoButton,mPopUPButton;
 
-  // Decorator Clas-----------------------------------
-        class Decorator extends TabSwitcherDecorator {
+        private class State extends AbstractState
+                implements AbstractDataBinder.Listener<ArrayAdapter<String>, Tab, ListView, Void>,
+                TabPreviewListener {
+
+
+      //      private ArrayAdapter<String> adapter;
+
+
+            State(@NonNull final Tab tab) {
+                super(tab);
+            }
+
+
+
+
+            @Override
+            public boolean onLoadData(
+                    @NonNull final AbstractDataBinder<ArrayAdapter<String>, Tab, ListView, Void> dataBinder,
+                    @NonNull final Tab key, @NonNull final Void... params) {
+                return true;
+            }
+
+            @Override
+            public void onCanceled(
+                    @NonNull final AbstractDataBinder<ArrayAdapter<String>, Tab, ListView, Void> dataBinder) {
+
+            }
+
+            @Override
+            public void onFinished(
+                    @NonNull final AbstractDataBinder<ArrayAdapter<String>, Tab, ListView, Void> dataBinder,
+                    @NonNull final Tab key, @Nullable final ArrayAdapter<String> data,
+                    @NonNull final ListView view, @NonNull final Void... params) {
+
+            }
+
+            @Override
+            public final void saveInstanceState(@NonNull final Bundle outState) {
+
+            }
+
+            @Override
+            public void restoreInstanceState(@Nullable final Bundle savedInstanceState) {
+
+            }
+
+            @Override
+            public boolean onLoadTabPreview(@NonNull final TabSwitcher tabSwitcher,
+                                            @NonNull final Tab tab) {
+                return !getTab().equals(tab);
+            }
+
+        }
+
+
+        private class Decorator extends StatefulTabSwitcherDecorator<State> {
+
+            @Nullable
+            @Override
+            protected State onCreateState(@NonNull final Context context,
+                                          @NonNull final TabSwitcher tabSwitcher,
+                                          @NonNull final View view, @NonNull final Tab tab,
+                                          final int index, final int viewType,
+                                          @Nullable final Bundle savedInstanceState) {
+
+
+                return null;
+            }
+
+            @Override
+            protected void onClearState(@NonNull final State state) {
+                tabSwitcher.removeTabPreviewListener(state);
+            }
+
+            @Override
+            protected void onSaveInstanceState(@NonNull final View view, @NonNull final Tab tab,
+                                               final int index, final int viewType,
+                                               @Nullable final State state,
+                                               @NonNull final Bundle outState) {
+                if (state != null) {
+                    state.saveInstanceState(outState);
+                }
+            }
 
             @NonNull
             @Override
-            public View onInflateView(@NonNull LayoutInflater inflater,
-                                      @Nullable ViewGroup parent, int viewType) {
+            public View onInflateView(@NonNull final LayoutInflater inflater,
+                                      @Nullable final ViewGroup parent, final int viewType) {
                 View view;
 
-                if (viewType == 0) {
                     view = inflater.inflate(R.layout.tablayout, parent, false);
 
-                } else {
-                    view = inflater.inflate(R.layout.tablayout, parent, false);
-                }
 
                 Toolbar toolbar = view.findViewById(R.id.toolbar);
                 toolbar.inflateMenu(R.menu.popup_menu);
@@ -95,88 +170,95 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
                 TabSwitcher.setupWithMenu(tabSwitcher, menu, createTabSwitcherButtonListener());
                 return view;
             }
+
             @Override
-            public void onShowTab(@NonNull Context context, @NonNull TabSwitcher tabSwitcher,
-                                  @NonNull View view, @NonNull Tab tab, int index, int viewType,
-                                  @Nullable Bundle savedInstanceState) {
-                if (viewType == 0) {
-     //               WebView code----------------------------------------------------
-                            mWebView= findViewById(R.id.webView_ID);
-                    mUrlText = findViewById(R.id.url_EditText_ID);
-                    mProgressBar = findViewById(R.id.progressBar_ID);
-                    mBackButton = findViewById(R.id.backButton_ID);
-                    mForwardButton = findViewById(R.id.forwardButton_ID);
-                    mStopButton = findViewById(R.id.stopButton_ID);
-                    mRefreshButton = findViewById(R.id.refreshButon_ID);
-                    mHomeButton = findViewById(R.id.homeButton_ID);
-                    //  mGoButton = findViewById(R.id.go_Button_ID);
-                    //   mPopUPButton= findViewById(R.id.popUpPanel_ID);
+            public void onShowTab(@NonNull final Context context,
+                                  @NonNull final TabSwitcher tabSwitcher, @NonNull final View view,
+                                  @NonNull final Tab tab, final int index, final int viewType,
+                                  @Nullable final State state,
+                                  @Nullable final Bundle savedInstanceState) {
 
-                    if (savedInstanceState != null) {
-                        mWebView.restoreState(savedInstanceState);
-                    } else {
-                        mWebView.getSettings().setJavaScriptEnabled(true);
-                        mWebView.getSettings().setUseWideViewPort(true);
-                        mWebView.getSettings().setLoadWithOverviewMode(true);
-                        mWebView.getSettings().setSupportZoom(true);
-                        mWebView.getSettings().setSupportMultipleWindows(true);
-                        mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-                        mWebView.setBackgroundColor(Color.WHITE);
+                Toolbar toolbar = findViewById(R.id.toolbar);
+                toolbar.setVisibility(tabSwitcher.isSwitcherShown() ? View.GONE : View.VISIBLE);
 
-                        mWebView.setWebChromeClient(new WebChromeClient() {
-                            @Override
-                            public void onProgressChanged(WebView view, int newProgress) {
-                                super.onProgressChanged(view, newProgress);
-                                mProgressBar.setProgress(newProgress);
-                                if (newProgress < 100 && mProgressBar.getVisibility() == ProgressBar.GONE) {
-                                    mProgressBar.setVisibility(ProgressBar.VISIBLE);
+
+
+                        //               WebView code----------------------------------------------------
+                        mWebView= findViewById(R.id.webView_ID);
+                        mUrlText = findViewById(R.id.url_EditText_ID);
+                        mProgressBar = findViewById(R.id.progressBar_ID);
+                        mBackButton = findViewById(R.id.backButton_ID);
+                        mForwardButton = findViewById(R.id.forwardButton_ID);
+                        mStopButton = findViewById(R.id.stopButton_ID);
+                        mRefreshButton = findViewById(R.id.refreshButon_ID);
+                        mHomeButton = findViewById(R.id.homeButton_ID);
+                        //  mGoButton = findViewById(R.id.go_Button_ID);
+                        //   mPopUPButton= findViewById(R.id.popUpPanel_ID);
+
+                        if (savedInstanceState != null) {
+                            mWebView.restoreState(savedInstanceState);
+                        } else {
+                            mWebView.getSettings().setJavaScriptEnabled(true);
+                            mWebView.getSettings().setUseWideViewPort(true);
+                            mWebView.getSettings().setLoadWithOverviewMode(true);
+                            mWebView.getSettings().setSupportZoom(true);
+                            mWebView.getSettings().setSupportMultipleWindows(true);
+                            mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+                            mWebView.setBackgroundColor(Color.WHITE);
+                            mWebView.setWebChromeClient(new WebChromeClient() {
+                                @Override
+                                public void onProgressChanged(WebView view, int newProgress) {
+                                    super.onProgressChanged(view, newProgress);
+                                    mProgressBar.setProgress(newProgress);
+                                    if (newProgress < 100 && mProgressBar.getVisibility() == ProgressBar.GONE) {
+                                        mProgressBar.setVisibility(ProgressBar.VISIBLE);
+                                    }
+                                    if (newProgress == 100) {
+                                        mProgressBar.setVisibility(ProgressBar.GONE);
+                                    }else{
+                                        mProgressBar.setVisibility(ProgressBar.VISIBLE);
+                                    }
                                 }
-                                if (newProgress == 100) {
-                                    mProgressBar.setVisibility(ProgressBar.GONE);
-                                }else{
-                                    mProgressBar.setVisibility(ProgressBar.VISIBLE);
+                            });
+                        }
+
+                        mWebView.setWebViewClient(new MyWebViewClient());
+
+
+                        mUrlText.setOnKeyListener(new View.OnKeyListener() {
+                            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                                if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+                                    try {
+                                        if(!MyNetworkState.connectionAvailable(MainActivity.this)){
+                                            Toasty.error(MainActivity.this, "Check Connection", Toasty.LENGTH_SHORT).show();
+                                        }else {
+
+                                            String url = mUrlText.getText().toString();
+                                            if (url.contains(".")) {
+
+                                                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
+
+                                                mWebView.loadUrl("https://" +url);
+                                                mUrlText.setText("");
+                                            }else {
+                                                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                                inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
+                                                mWebView.loadUrl("https://www.google.com/search?q=" +url);
+                                                mUrlText.setText("");
+                                            }
+                                        }
+
+                                    }catch (Exception e) {
+                                        e.printStackTrace();
+                                    }
+                                    return true;
                                 }
+                                return false;
                             }
                         });
-                    }
-
-                    mWebView.setWebViewClient(new MyWebViewClient());
-
-
-                    mUrlText.setOnKeyListener(new View.OnKeyListener() {
-                        public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                            if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-
-                                try {
-                                    if(!MyNetworkState.connectionAvailable(MainActivity.this)){
-                                        Toasty.error(MainActivity.this, "Check Connection", Toasty.LENGTH_SHORT).show();
-                                    }else {
-
-                                        String url = mUrlText.getText().toString();
-                                        if (url.contains(".")) {
-
-                                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                            inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
-
-                                            mWebView.loadUrl("https://" +url);
-                                            mUrlText.setText("");
-                                        }else {
-                                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                            inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
-                                            mWebView.loadUrl("https://www.google.com/search?q=" +url);
-                                            mUrlText.setText("");
-                                        }
-                                    }
-
-                                }catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                return true;
-                            }
-                            return false;
-                        }
-                    });
 
 
 //                mGoButton.setOnClickListener(new View.OnClickListener() {
@@ -191,7 +273,7 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
 //                                String url = mUrlText.getText().toString();
 //                                if (url.contains(".")) {
 //
-//                                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //                                    inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
 //
 //                                    mWebView.loadUrl("https://" +url);
@@ -230,73 +312,63 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
 //                    }
 //                });
 
-                    mBackButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (mWebView.canGoBack()) {
-                                mWebView.goBack();
+                        mBackButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (mWebView.canGoBack()) {
+                                    mWebView.goBack();
+                                }
                             }
-                        }
-                    });
+                        });
 
 
-                    mForwardButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (mWebView.canGoForward()) {
-                                mWebView.goForward();
+                        mForwardButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                if (mWebView.canGoForward()) {
+                                    mWebView.goForward();
+                                }
                             }
-                        }
-                    });
+                        });
 
-                    mStopButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mWebView.stopLoading();
-                        }
-                    });
+                        mStopButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mWebView.stopLoading();
+                            }
+                        });
 
-                    mRefreshButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mWebView.reload();
-                        }
-                    });
-
-
-                    mHomeButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            mWebView.loadUrl("https://google.com");
-                            Toasty.info(MainActivity.this,"HOME : GOOGLE.COM",Toasty.LENGTH_SHORT).show();
-                        }
-                    });
+                        mRefreshButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mWebView.reload();
+                            }
+                        });
 
 
-                } else {
+                        mHomeButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mWebView.loadUrl("https://google.com");
+                                Toasty.info(MainActivity.this,"HOME : GOOGLE.COM",Toasty.LENGTH_SHORT).show();
+                            }
+                        });
 
-                }
 
-                if (savedInstanceState != null) {
-                    // Restore the tab's state if necessary
-                }
-            }
+                    }
+
+
+
 
             @Override
             public int getViewTypeCount() {
-                return 2;
+                return 1;
             }
 
             @Override
-            public int getViewType(@NonNull Tab tab, int index) {
+            public int getViewType(@NonNull final Tab tab, final int index) {
                 Bundle parameters = tab.getParameters();
-                return parameters != null ? parameters.getInt("view_type") : 0;
-            }
-
-            @Override
-            public void onSaveInstanceState(@NonNull View view, @NonNull Tab tab, int index,
-                                            int viewType, @NonNull Bundle outState) {
-                // Store the tab's current state in the Bundle outState if necessary
+                return parameters != null ? parameters.getInt(VIEW_TYPE_EXTRA) : 0;
             }
 
         }
@@ -304,7 +376,17 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
 
 
 
+
+
+
+
+
+
+
         private static final String VIEW_TYPE_EXTRA = MainActivity.class.getName() + "::ViewType";
+
+
+        private static final String ADAPTER_STATE_EXTRA = State.class.getName() + "::%s::AdapterState";
 
 
         private static final int TAB_COUNT = 1;
@@ -317,9 +399,6 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
 
 
         private Snackbar snackbar;
-
-
-
 
 
         @NonNull
@@ -369,7 +448,7 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
             };
         }
 
-// Toolbar Clicklistner---------------------------------------------------------
+
         @NonNull
         private Toolbar.OnMenuItemClickListener createToolbarMenuListener() {
             return new Toolbar.OnMenuItemClickListener() {
@@ -409,13 +488,12 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
             };
         }
 
-// Switching in toolbars---------------------------------------------------
+
         private void inflateMenu() {
             tabSwitcher
                     .inflateToolbarMenu(tabSwitcher.getCount() > 0 ? R.menu.tab_switcher : R.menu.popup_menu,
                             createToolbarMenuListener());
         }
-
 
 
         @NonNull
@@ -467,7 +545,6 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
             };
         }
 
-
         @NonNull
         private BaseTransientBottomBar.BaseCallback<Snackbar> createUndoSnackbarCallback(
                 final Tab... tabs) {
@@ -478,12 +555,12 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
                     if (event != DISMISS_EVENT_ACTION) {
                         for (Tab tab : tabs) {
                             tabSwitcher.clearSavedState(tab);
+                            decorator.clearState(tab);
                         }
                     }
                 }
             };
         }
-
 
 
         private void showUndoSnackbar(@NonNull final CharSequence text, final int index,
@@ -495,7 +572,7 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
             snackbar.show();
         }
 
-// Animation--------------------------------------------
+
         @NonNull
         private Animation createRevealAnimation() {
             float x = 0;
@@ -511,7 +588,6 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
 
             return new RevealAnimation.Builder().setX(x).setY(y).create();
         }
-
 
 
         @NonNull
@@ -546,7 +622,7 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
             CharSequence title = getString(R.string.tab_title, index + 1);
             Tab tab = new Tab(title);
             Bundle parameters = new Bundle();
-            parameters.putInt(VIEW_TYPE_EXTRA, index % 3);
+            parameters.putInt(VIEW_TYPE_EXTRA, index % 100);
             tab.setParameters(parameters);
             return tab;
         }
@@ -597,11 +673,11 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
         }
 
 
-// OnCreate---------------------------------------------------
         @Override
         protected final void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
+
             decorator = new Decorator();
             tabSwitcher = findViewById(R.id.tab_switcher);
             tabSwitcher.clearSavedStatesWhenRemovingTabs(false);
@@ -619,6 +695,5 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
             TabSwitcher.setupWithMenu(tabSwitcher, createTabSwitcherButtonListener());
             inflateMenu();
         }
-
 
     }
