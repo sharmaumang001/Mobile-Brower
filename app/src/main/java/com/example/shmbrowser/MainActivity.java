@@ -30,6 +30,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -65,7 +66,7 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
     public class MainActivity extends AppCompatActivity implements TabSwitcherListener {
 
         WebView mWebView;
-
+        Bundle parameters = new Bundle();
         EditText mUrlText;
         ProgressBar mProgressBar;
         ImageButton mBackButton, mForwardButton, mStopButton, mRefreshButton, mHomeButton,mGoButton,mPopUPButton;
@@ -458,9 +459,12 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
                     switch (item.getItemId()) {
                         case R.id.remove_tab_menu_item:
                             Tab selectedTab = tabSwitcher.getSelectedTab();
+                            tabSwitcher.clearSavedState(selectedTab);
+
 
                             if (selectedTab != null) {
                                 tabSwitcher.removeTab(selectedTab);
+
                             }
 
                             return true;
@@ -470,13 +474,21 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
 
                             if (tabSwitcher.isSwitcherShown()) {
                                 tabSwitcher.addTab(tab, 0, createRevealAnimation());
-                            } else {
+                            }
+                            else {
                                 tabSwitcher.addTab(tab, 0, createPeekAnimation());
                             }
 
                             return true;
                         case R.id.clear_tabs_menu_item:
                             tabSwitcher.clear();
+                            tabSwitcher.clearAllSavedStates();
+                            decorator.clearAllStates();
+                            parameters.clear();
+
+
+
+
                             return true;
                         case R.id.settings_menu_item:
 
@@ -621,10 +633,14 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
         private Tab createTab(final int index) {
             CharSequence title = getString(R.string.tab_title, index + 1);
             Tab tab = new Tab(title);
+
             Bundle parameters = new Bundle();
             parameters.putInt(VIEW_TYPE_EXTRA, index % 100);
             tab.setParameters(parameters);
+
             return tab;
+
+
         }
 
         @Override
@@ -677,7 +693,6 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
         protected final void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
-
             decorator = new Decorator();
             tabSwitcher = findViewById(R.id.tab_switcher);
             tabSwitcher.clearSavedStatesWhenRemovingTabs(false);
@@ -694,6 +709,8 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
             tabSwitcher.setToolbarNavigationIcon(R.drawable.ic_plus_24dp, createAddTabListener());
             TabSwitcher.setupWithMenu(tabSwitcher, createTabSwitcherButtonListener());
             inflateMenu();
+
         }
+
 
     }
