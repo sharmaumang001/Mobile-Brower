@@ -56,9 +56,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
       />
+<!--    <ImageView-->
+<!--        android:id="@+id/add_shortcut"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        android:src="@drawable/ic_baseline_add_24"/>-->
+   <androidx.recyclerview.widget.RecyclerView
+       android:id="@+id/shortcutlinks_recycler"
+       android:layout_width="match_parent"
+
+       android:layout_height="wrap_content"/>
 
     <WebView
         android:id="@+id/webView_ID"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight=".99"
@@ -72,6 +83,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight=".005"
+        android:gravity="bottom"
         android:background="@android:color/transparent"
         android:orientation="horizontal"
         android:weightSum="5">

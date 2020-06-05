@@ -17,10 +17,7 @@
         android:title="@string/add_tab_menu_item"
         app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/remove_tab_menu_item"
-        android:title="@string/remove_tab_menu_item"
-        app:showAsAction="never"/>
+
 
 
     <item

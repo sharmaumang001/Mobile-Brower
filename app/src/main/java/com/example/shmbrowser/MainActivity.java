@@ -8,18 +8,27 @@ import androidx.core.content.ContextCompat;
 import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.PixelFormat;
 import android.graphics.RectF;
 import android.os.Bundle;
 
+import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -27,15 +36,24 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
+import android.widget.PopupWindow;
 import android.widget.ProgressBar;
+import android.widget.TextView;
+import android.widget.Toast;
 
 
+import com.example.shmbrowser.Adapter.SitesAdapter;
+import com.example.shmbrowser.Model.Sites;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
 
+import java.util.ArrayList;
+import java.util.List;
 
 import de.mrapp.android.tabswitcher.AbstractState;
 import de.mrapp.android.tabswitcher.AddTabButtonListener;
@@ -54,7 +72,7 @@ import de.mrapp.android.tabswitcher.TabSwitcherListener;
 import de.mrapp.android.util.ThemeUtil;
 import de.mrapp.android.util.multithreading.AbstractDataBinder;
 
-import es.dmoral.toasty.Toasty;
+
 
 import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
 
@@ -65,10 +83,14 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
 public class MainActivity extends AppCompatActivity implements TabSwitcherListener {
 
     WebView mWebView;
-
     EditText mUrlText;
     ProgressBar mProgressBar;
-    ImageButton mBackButton, mForwardButton, mStopButton, mRefreshButton, mHomeButton,mGoButton,mPopUPButton;
+    ImageButton mBackButton, mForwardButton, mStopButton, mRefreshButton, mHomeButton;
+    RecyclerView mRecyclerView;
+    List<Sites> mSitesList;
+    SitesAdapter mAdapter;
+    ImageView mAddShortcutlink;
+    String Url;
 
     private class State extends AbstractState
             implements AbstractDataBinder.Listener<ArrayAdapter<String>, Tab, ListView, Void>,
@@ -182,9 +204,8 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             toolbar.setVisibility(tabSwitcher.isSwitcherShown() ? View.GONE : View.VISIBLE);
 
 
-
             //               WebView code----------------------------------------------------
-            mWebView= findViewById(R.id.webView_ID);
+            mWebView = findViewById(R.id.webView_ID);
             mUrlText = findViewById(R.id.url_EditText_ID);
             mProgressBar = findViewById(R.id.progressBar_ID);
             mBackButton = findViewById(R.id.backButton_ID);
@@ -192,73 +213,117 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             mStopButton = findViewById(R.id.stopButton_ID);
             mRefreshButton = findViewById(R.id.refreshButon_ID);
             mHomeButton = findViewById(R.id.homeButton_ID);
+            mRecyclerView = findViewById(R.id.shortcutlinks_recycler);
+            //   mAddShortcutlink=findViewById(R.id.add_shortcut);
+
             //  mGoButton = findViewById(R.id.go_Button_ID);
             //   mPopUPButton= findViewById(R.id.popUpPanel_ID);
+            mSitesList = new ArrayList<>();
+            Sites sites = new Sites("https://www.google.com/","Google",R.drawable.ic_google);
+            mSitesList.add(sites);
+            sites=new Sites("https://www.facebook.com/","Facebook",R.drawable.ic_facebook);
+            mSitesList.add(sites);
 
-            if (savedInstanceState != null) {
-                mWebView.restoreState(savedInstanceState);
-            } else {
+            sites=new Sites("https://github.com/","Github",R.drawable.ic_github);
+            mSitesList.add(sites);
+
+            sites=new Sites("https://www.youtube.com/","Youtube",R.drawable.ic_youtube);
+            mSitesList.add(sites);
+
+            sites=new Sites("https://www.linkedin.com/","Linked in",R.drawable.ic_linkedin);
+            mSitesList.add(sites);
+
+            sites=new Sites("https://www.instagram.com/","Instagram",R.drawable.ic_instagram);
+            mSitesList.add(sites);
+
+            sites=new Sites("https://stackoverflow.com/","Stack Overflow",R.drawable.ic_stack_overflow);
+            mSitesList.add(sites);
+            sites=new Sites("https://stackoverflow.com/","Stack Overflow",R.drawable.ic_link);
+            mSitesList.add(sites);
+
+            mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
+            mAdapter = new SitesAdapter(getApplicationContext(), mSitesList);
+            mRecyclerView.setAdapter(mAdapter);
+            Intent intent = getIntent();
+            if (intent.hasExtra(Intent.EXTRA_TEXT)) {
+                Url = intent.getStringExtra(Intent.EXTRA_TEXT);
+                mRecyclerView.setVisibility(View.GONE);
+                mWebView.setVisibility(View.VISIBLE);
+                mWebView.getSettings().setLoadsImagesAutomatically(true);
                 mWebView.getSettings().setJavaScriptEnabled(true);
-                mWebView.getSettings().setUseWideViewPort(true);
-                mWebView.getSettings().setLoadWithOverviewMode(true);
-                mWebView.getSettings().setSupportZoom(true);
-                mWebView.getSettings().setSupportMultipleWindows(true);
                 mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-                mWebView.setBackgroundColor(Color.WHITE);
-                mWebView.setWebChromeClient(new WebChromeClient() {
-                    @Override
-                    public void onProgressChanged(WebView view, int newProgress) {
-                        super.onProgressChanged(view, newProgress);
-                        mProgressBar.setProgress(newProgress);
-                        if (newProgress < 100 && mProgressBar.getVisibility() == ProgressBar.GONE) {
-                            mProgressBar.setVisibility(ProgressBar.VISIBLE);
+                mWebView.loadUrl(Url);
+            }
+                if (savedInstanceState != null) {
+                    mWebView.restoreState(savedInstanceState);
+                } else {
+                    mWebView.getSettings().setJavaScriptEnabled(true);
+                    mWebView.getSettings().setUseWideViewPort(true);
+                    mWebView.getSettings().setLoadWithOverviewMode(true);
+                    mWebView.getSettings().setSupportZoom(true);
+                    mWebView.getSettings().setSupportMultipleWindows(true);
+                    mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+                    mWebView.setBackgroundColor(Color.WHITE);
+                    mWebView.setWebChromeClient(new WebChromeClient() {
+                        @Override
+                        public void onProgressChanged(WebView view, int newProgress) {
+                            super.onProgressChanged(view, newProgress);
+                            mProgressBar.setProgress(newProgress);
+                            if (newProgress < 100 && mProgressBar.getVisibility() == ProgressBar.GONE) {
+                                mProgressBar.setVisibility(ProgressBar.VISIBLE);
+                            }
+                            if (newProgress == 100) {
+                                mProgressBar.setVisibility(ProgressBar.GONE);
+                            } else {
+                                mProgressBar.setVisibility(ProgressBar.VISIBLE);
+                            }
                         }
-                        if (newProgress == 100) {
-                            mProgressBar.setVisibility(ProgressBar.GONE);
-                        }else{
-                            mProgressBar.setVisibility(ProgressBar.VISIBLE);
+                    });
+                }
+
+                mWebView.setWebViewClient(new MyWebViewClient());
+
+
+                mUrlText.setOnKeyListener(new View.OnKeyListener() {
+                    public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                        if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+                            try {
+                                if (!MyNetworkState.connectionAvailable(MainActivity.this)) {
+                                    Toast.makeText(MainActivity.this, "Check Connection", Toast.LENGTH_SHORT).show();
+                                } else {
+                                     mRecyclerView.setVisibility(View.INVISIBLE);
+                                     mWebView.setVisibility(View.VISIBLE);
+                                    String url = mUrlText.getText().toString();
+
+                                    mWebView.setVisibility(View.VISIBLE);
+                                    mRecyclerView.setVisibility(View.GONE);
+                                    Toast.makeText(MainActivity.this, url, Toast.LENGTH_SHORT).show();
+
+                                    if (url.contains(".")) {
+
+                                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                        inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
+
+                                        mWebView.loadUrl("https://" + url);
+                                        mUrlText.setText("");
+                                    } else {
+                                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                        inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
+                                        mWebView.loadUrl("https://www.google.com/search?q=" + url);
+                                        mUrlText.setText("");
+                                    }
+                                }
+
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                            return true;
                         }
+                        return false;
                     }
                 });
-            }
-
-            mWebView.setWebViewClient(new MyWebViewClient());
-
-
-            mUrlText.setOnKeyListener(new View.OnKeyListener() {
-                public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                    if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-
-                        try {
-                            if(!MyNetworkState.connectionAvailable(MainActivity.this)){
-                                Toasty.error(MainActivity.this, "Check Connection", Toasty.LENGTH_SHORT).show();
-                            }else {
-
-                                String url = mUrlText.getText().toString();
-                                if (url.contains(".")) {
-
-                                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
-
-                                    mWebView.loadUrl("https://" +url);
-                                    mUrlText.setText("");
-                                }else {
-                                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                    inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
-                                    mWebView.loadUrl("https://www.google.com/search?q=" +url);
-                                    mUrlText.setText("");
-                                }
-                            }
-
-                        }catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        return true;
-                    }
-                    return false;
-                }
-            });
 
 
 //                mGoButton.setOnClickListener(new View.OnClickListener() {
@@ -273,7 +338,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
 //                                String url = mUrlText.getText().toString();
 //                                if (url.contains(".")) {
 //
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 //                                    inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
 //
 //                                    mWebView.loadUrl("https://" +url);
@@ -312,50 +377,50 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
 //                    }
 //                });
 
-            mBackButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mWebView.canGoBack()) {
-                        mWebView.goBack();
+                mBackButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mWebView.canGoBack()) {
+                            mWebView.goBack();
+                        }
                     }
-                }
-            });
+                });
 
 
-            mForwardButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (mWebView.canGoForward()) {
-                        mWebView.goForward();
+                mForwardButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mWebView.canGoForward()) {
+                            mWebView.goForward();
+                        }
                     }
-                }
-            });
+                });
 
-            mStopButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mWebView.stopLoading();
-                }
-            });
+                mStopButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mWebView.stopLoading();
+                    }
+                });
 
-            mRefreshButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mWebView.reload();
-                }
-            });
-
-
-            mHomeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mWebView.loadUrl("https://google.com");
-                    Toasty.info(MainActivity.this,"HOME : GOOGLE.COM",Toasty.LENGTH_SHORT).show();
-                }
-            });
+                mRefreshButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mWebView.reload();
+                    }
+                });
 
 
-        }
+                mHomeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mWebView.loadUrl("https://google.com");
+                        Toast.makeText(MainActivity.this, "HOME : GOOGLE.COM", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+            }
 
 
 
@@ -372,13 +437,6 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         }
 
     }
-
-
-
-
-
-
-
 
 
 
@@ -456,14 +514,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             @Override
             public boolean onMenuItemClick(final MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.remove_tab_menu_item:
-                        Tab selectedTab = tabSwitcher.getSelectedTab();
 
-                        if (selectedTab != null) {
-                            tabSwitcher.removeTab(selectedTab);
-                        }
-
-                        return true;
                     case R.id.add_tab_menu_item:
                         int index = tabSwitcher.getCount();
                         Tab tab = createTab(index);
