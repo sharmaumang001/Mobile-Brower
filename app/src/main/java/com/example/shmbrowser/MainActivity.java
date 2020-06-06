@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -30,7 +29,6 @@ import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import android.widget.ProgressBar;
@@ -64,7 +62,6 @@ import de.mrapp.android.tabswitcher.TabSwitcher;
 import de.mrapp.android.tabswitcher.TabSwitcherListener;
 import de.mrapp.android.util.ThemeUtil;
 import de.mrapp.android.util.multithreading.AbstractDataBinder;
-import de.mrapp.android.util.view.ViewHolder;
 
 
 
@@ -213,6 +210,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             mSitesList = new ArrayList<>();
             Sites sites = new Sites("https://www.google.com/","Google",R.drawable.ic_google);
             mSitesList.add(sites);
+
             sites=new Sites("https://www.facebook.com/","Facebook",R.drawable.ic_facebook);
             mSitesList.add(sites);
 
