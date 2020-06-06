@@ -37,6 +37,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 
+import com.example.shmbrowser.Adapter.RecyclerViewClicklistner;
 import com.example.shmbrowser.Adapter.SitesAdapter;
 import com.example.shmbrowser.Model.Sites;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
@@ -63,6 +64,7 @@ import de.mrapp.android.tabswitcher.TabSwitcher;
 import de.mrapp.android.tabswitcher.TabSwitcherListener;
 import de.mrapp.android.util.ThemeUtil;
 import de.mrapp.android.util.multithreading.AbstractDataBinder;
+import de.mrapp.android.util.view.ViewHolder;
 
 
 
@@ -81,8 +83,9 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     RecyclerView mRecyclerView;
     List<Sites> mSitesList;
     SitesAdapter mAdapter;
-    ImageView mAddShortcutlink;
+
     String Url;
+
 
     private class State extends AbstractState
             implements AbstractDataBinder.Listener<ArrayAdapter<String>, Tab, ListView, Void>,
@@ -164,7 +167,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                                            @Nullable final State state,
                                            @NonNull final Bundle outState) {
             if (state != null) {
-                state.saveInstanceState(outState);
+                //  state.saveInstanceState(outState);
             }
         }
 
@@ -196,7 +199,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             toolbar.setVisibility(tabSwitcher.isSwitcherShown() ? View.GONE : View.VISIBLE);
 
 
-            //               WebView code----------------------------------------------------
+            //              WebView code----------------------------------------------------
             mWebView = findViewById(R.id.webView_ID);
             mUrlText = findViewById(R.id.url_EditText_ID);
             mProgressBar = findViewById(R.id.progressBar_ID);
@@ -206,8 +209,6 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             mRefreshButton = findViewById(R.id.refreshButon_ID);
             mHomeButton = findViewById(R.id.homeButton_ID);
             mRecyclerView = findViewById(R.id.shortcutlinks_recycler);
-            //   mAddShortcutlink=findViewById(R.id.add_shortcut);
-
 
             mSitesList = new ArrayList<>();
             Sites sites = new Sites("https://www.google.com/","Google",R.drawable.ic_google);
@@ -227,145 +228,150 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             sites=new Sites("https://www.instagram.com/","Instagram",R.drawable.ic_instagram);
             mSitesList.add(sites);
 
-//            sites=new Sites("https://stackoverflow.com/","Add new",R.drawable.ic_link);
-//            mSitesList.add(sites);
 
             mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
-            mAdapter = new SitesAdapter(getApplicationContext(), mSitesList);
-            mRecyclerView.setAdapter(mAdapter);
-            Intent intent = getIntent();
-            if (intent.hasExtra(Intent.EXTRA_TEXT)) {
-                Url = intent.getStringExtra(Intent.EXTRA_TEXT);
-                mRecyclerView.setVisibility(View.GONE);
-                mWebView.setVisibility(View.VISIBLE);
-                mWebView.getSettings().setLoadsImagesAutomatically(true);
-                mWebView.getSettings().setJavaScriptEnabled(true);
-                mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-                mWebView.loadUrl(Url);
-            }
-                if (savedInstanceState != null) {
-                    mWebView.restoreState(savedInstanceState);
-                } else {
+
+            final RecyclerViewClicklistner listener = new RecyclerViewClicklistner() {
+                @Override
+                public void onClick(View view1, int position) {
+                    Url = mSitesList.get(position).getUrl();
+                    mRecyclerView.setVisibility(View.GONE);
+                    mWebView.setVisibility(View.VISIBLE);
+                    mWebView.getSettings().setLoadsImagesAutomatically(true);
                     mWebView.getSettings().setJavaScriptEnabled(true);
-                    mWebView.getSettings().setUseWideViewPort(true);
-                    mWebView.getSettings().setLoadWithOverviewMode(true);
-                    mWebView.getSettings().setSupportZoom(true);
-                    mWebView.getSettings().setSupportMultipleWindows(true);
                     mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-                    mWebView.setBackgroundColor(Color.WHITE);
-                    mWebView.setWebChromeClient(new WebChromeClient() {
-                        @Override
-                        public void onProgressChanged(WebView view, int newProgress) {
-                            super.onProgressChanged(view, newProgress);
-                            mProgressBar.setProgress(newProgress);
-                            if (newProgress < 100 && mProgressBar.getVisibility() == ProgressBar.GONE) {
-                                mProgressBar.setVisibility(ProgressBar.VISIBLE);
-                            }
-                            if (newProgress == 100) {
-                                mProgressBar.setVisibility(ProgressBar.GONE);
-                            } else {
-                                mProgressBar.setVisibility(ProgressBar.VISIBLE);
-                            }
-                        }
-                    });
+
+                    mWebView.loadUrl(Url);
                 }
-
-                mWebView.setWebViewClient(new MyWebViewClient());
-
-
-                mUrlText.setOnKeyListener(new View.OnKeyListener() {
-                    public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                        if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-
-                            try {
-                                if (!MyNetworkState.connectionAvailable(MainActivity.this)) {
-                                    Toast.makeText(MainActivity.this, "Check Connection", Toast.LENGTH_SHORT).show();
-                                } else {
-                                     mRecyclerView.setVisibility(View.INVISIBLE);
-                                     mWebView.setVisibility(View.VISIBLE);
-                                    String url = mUrlText.getText().toString();
-
-                                    mWebView.setVisibility(View.VISIBLE);
-                                    mRecyclerView.setVisibility(View.GONE);
-                                    Toast.makeText(MainActivity.this, url, Toast.LENGTH_SHORT).show();
-
-                                    if (url.contains(".")) {
-
-                                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                        inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
-
-                                        mWebView.loadUrl("https://" + url);
-                                        mUrlText.setText("");
-                                    } else {
-                                        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                                        inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
-                                        mWebView.loadUrl("https://www.google.com/search?q=" + url);
-                                        mUrlText.setText("");
-                                    }
-                                }
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            return true;
-                        }
-                        return false;
-                    }
-                });
+            };
+            mAdapter = new SitesAdapter(getApplicationContext(), listener,mSitesList);
+            mRecyclerView.setAdapter(mAdapter);
 
 
 
-                mBackButton.setOnClickListener(new View.OnClickListener() {
+            if (savedInstanceState != null) {
+                mWebView.restoreState(savedInstanceState);
+            } else {
+                mWebView.getSettings().setJavaScriptEnabled(true);
+                mWebView.getSettings().setUseWideViewPort(true);
+                mWebView.getSettings().setLoadWithOverviewMode(true);
+                mWebView.getSettings().setSupportZoom(true);
+                mWebView.getSettings().setSupportMultipleWindows(true);
+                mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+                mWebView.setBackgroundColor(Color.WHITE);
+                mWebView.setWebChromeClient(new WebChromeClient() {
                     @Override
-                    public void onClick(View v) {
-                        if (mWebView.canGoBack()) {
-                            mWebView.goBack();
+                    public void onProgressChanged(WebView view, int newProgress) {
+                        super.onProgressChanged(view, newProgress);
+                        mProgressBar.setProgress(newProgress);
+                        if (newProgress < 100 && mProgressBar.getVisibility() == ProgressBar.GONE) {
+                            mProgressBar.setVisibility(ProgressBar.VISIBLE);
+                        }
+                        if (newProgress == 100) {
+                            mProgressBar.setVisibility(ProgressBar.GONE);
+                        } else {
+                            mProgressBar.setVisibility(ProgressBar.VISIBLE);
                         }
                     }
                 });
-
-
-                mForwardButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mWebView.canGoForward()) {
-                            mWebView.goForward();
-                        }
-                    }
-                });
-
-                mStopButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mWebView.stopLoading();
-                    }
-                });
-
-                mRefreshButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mWebView.reload();
-                    }
-                });
-
-
-                mHomeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
-                        mAdapter = new SitesAdapter(getApplicationContext(), mSitesList);
-                        mRecyclerView.setAdapter(mAdapter);
-
-
-                            mRecyclerView.setVisibility(View.VISIBLE);
-                            mWebView.setVisibility(View.GONE);
-                        Toast.makeText(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-
             }
+
+            mWebView.setWebViewClient(new MyWebViewClient());
+
+
+            mUrlText.setOnKeyListener(new View.OnKeyListener() {
+                public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                    if ((event.getAction() == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+
+                        try {
+                            if (!MyNetworkState.connectionAvailable(MainActivity.this)) {
+                                Toast.makeText(MainActivity.this, "Check Connection", Toast.LENGTH_SHORT).show();
+                            } else {
+                                mRecyclerView.setVisibility(View.INVISIBLE);
+                                mWebView.setVisibility(View.VISIBLE);
+                                String url = mUrlText.getText().toString();
+
+                                mWebView.setVisibility(View.VISIBLE);
+                                mRecyclerView.setVisibility(View.GONE);
+                                Toast.makeText(MainActivity.this, url, Toast.LENGTH_SHORT).show();
+
+                                if (url.contains(".")) {
+
+                                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
+
+                                    mWebView.loadUrl("https://" + url);
+                                    mUrlText.setText("");
+                                } else {
+                                    InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                                    inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
+                                    mWebView.loadUrl("https://www.google.com/search?q=" + url);
+                                    mUrlText.setText("");
+                                }
+                            }
+
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        return true;
+                    }
+                    return false;
+                }
+            });
+
+
+
+            mBackButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mWebView.canGoBack()) {
+                        mWebView.goBack();
+                    }
+                }
+            });
+
+
+            mForwardButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (mWebView.canGoForward()) {
+                        mWebView.goForward();
+                    }
+                }
+            });
+
+            mStopButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mWebView.stopLoading();
+                }
+            });
+
+            mRefreshButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mWebView.reload();
+                }
+            });
+
+
+            mHomeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
+                    mAdapter = new SitesAdapter(getApplicationContext(),listener,mSitesList);
+                    mRecyclerView.setAdapter(mAdapter);
+
+
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    mWebView.setVisibility(View.GONE);
+                    Toast.makeText(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+
+        }
 
 
 
@@ -388,8 +394,6 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
 
     private static final String VIEW_TYPE_EXTRA = MainActivity.class.getName() + "::ViewType";
 
-
-    private static final String ADAPTER_STATE_EXTRA = State.class.getName() + "::%s::AdapterState";
 
 
     private static final int TAB_COUNT = 1;
@@ -617,9 +621,11 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     private Tab createTab(final int index) {
         CharSequence title = getString(R.string.tab_title, index + 1);
         Tab tab = new Tab(title);
+
         Bundle parameters = new Bundle();
         parameters.putInt(VIEW_TYPE_EXTRA, index % 100);
         tab.setParameters(parameters);
+
         return tab;
     }
 
@@ -647,6 +653,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                                  @NonNull final Tab tab, @NonNull final Animation animation) {
         inflateMenu();
         TabSwitcher.setupWithMenu(tabSwitcher, createTabSwitcherButtonListener());
+
     }
 
     @Override
