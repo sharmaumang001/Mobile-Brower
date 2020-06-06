@@ -20,10 +20,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SitesAdapter extends RecyclerView.Adapter<SitesAdapter.MyViewHolder> {
     Context context;
+     RecyclerViewClicklistner mListener;
     List<Sites>sitesList;
 
-    public SitesAdapter(Context context, List<Sites> sitesList) {
+    public SitesAdapter(Context context, RecyclerViewClicklistner mListener, List<Sites> sitesList) {
         this.context = context;
+        this.mListener = mListener;
         this.sitesList = sitesList;
     }
 
@@ -31,7 +33,7 @@ public class SitesAdapter extends RecyclerView.Adapter<SitesAdapter.MyViewHolder
     @Override
     public SitesAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view= LayoutInflater.from(context).inflate(R.layout.shortcut,parent,false);
-        MyViewHolder myViewHolder=new MyViewHolder(view);
+        MyViewHolder myViewHolder=new MyViewHolder(view,mListener);
         return myViewHolder;
     }
 
@@ -40,15 +42,7 @@ public class SitesAdapter extends RecyclerView.Adapter<SitesAdapter.MyViewHolder
         holder.circleImageView.setImageResource(sitesList.get(position).getImageid());
         holder.url.setText(sitesList.get(position).getUrl());
         holder.Title.setText(sitesList.get(position).getTitle());
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, MainActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT,sitesList.get(position).getUrl());
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
-        });
+
     }
 
     @Override
@@ -56,15 +50,22 @@ public class SitesAdapter extends RecyclerView.Adapter<SitesAdapter.MyViewHolder
         return sitesList.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder{
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         CircleImageView circleImageView;
         TextView url,Title;
-        public MyViewHolder(@NonNull View itemView) {
+        private RecyclerViewClicklistner mListener;
+
+        MyViewHolder(View itemView, RecyclerViewClicklistner listener) {
             super(itemView);
+            mListener = listener;
+            itemView.setOnClickListener(this);
             circleImageView=itemView.findViewById(R.id.sitesicon);
             url=itemView.findViewById(R.id.url);
             Title=itemView.findViewById(R.id.title);
-
+        }
+        @Override
+        public void onClick(View v) {
+            mListener.onClick(v, getAdapterPosition());
         }
     }
 }
