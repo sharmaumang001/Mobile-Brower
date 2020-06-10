@@ -2,6 +2,8 @@ package com.example.shmbrowser.Activity
 
 import android.os.Bundle
 import android.widget.ImageButton
+import android.widget.LinearLayout
+import android.widget.ScrollView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,8 @@ class MyDownloadActivity: AppCompatActivity() {
     private lateinit var imageButton8: ImageButton
     private lateinit var recyclerDownloads: RecyclerView
     private lateinit var layoutManager: RecyclerView.LayoutManager
+    private lateinit var scrollView: ScrollView
+    private lateinit var ll: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +30,9 @@ class MyDownloadActivity: AppCompatActivity() {
         imageButton8 = findViewById(R.id.imageButton8)
         recyclerDownloads = findViewById(R.id.recyclerDownloads)
         layoutManager = LinearLayoutManager(this@MyDownloadActivity)
+        scrollView = findViewById(R.id.scrollView)
+        ll = findViewById(R.id.ll)
+
 
     }
 }

@@ -27,6 +27,7 @@ class MyBookmarks: AppCompatActivity() {
     lateinit var recyclerAdapter: BookmarkRecyclerAdapter
     val searchList = arrayListOf<BookmarkEntity>()
     val bookmarkList = arrayListOf<BookmarkEntity>()
+    val book = BookmarkEntity("www.google.com", "Google")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mybookmarks)
@@ -61,6 +62,7 @@ class MyBookmarks: AppCompatActivity() {
 
         search.setOnClickListener {
             searchList.clear()
+            cancel.visibility = View.VISIBLE
             val name = search_bar.text.toString()
             val bookmark = GetBookmarkByName(this@MyBookmarks, name).execute().get()
             searchList.addAll(bookmark)
@@ -81,6 +83,12 @@ class MyBookmarks: AppCompatActivity() {
         }
 
         back.setOnClickListener {
+            startActivity(Intent(this@MyBookmarks, MainActivity::class.java))
+            finish()
+        }
+
+        cancel.setOnClickListener {
+
             if(list.isEmpty()){
                 noBookMark.visibility = View.VISIBLE
                 star.visibility = View.VISIBLE
@@ -97,12 +105,8 @@ class MyBookmarks: AppCompatActivity() {
                 recyclerBookmarks.visibility = View.VISIBLE
             }
         }
-
-        cancel.setOnClickListener {
-            startActivity(Intent(this@MyBookmarks, MainActivity::class.java))
-            finish()
-        }
     }
+
 
     class GetBookmarkByName(val context: Context, val name:String): AsyncTask<Void, Void, List<BookmarkEntity>>(){
         private val db = Room.databaseBuilder(context, BookmarkDatabase::class.java, "bookmark-db").build()
@@ -122,4 +126,10 @@ class MyBookmarks: AppCompatActivity() {
         startActivity(Intent(this@MyBookmarks, MainActivity::class.java))
         finish()
     }
+
+    override fun onPause() {
+        super.onPause()
+        finish()
+    }
+
 }

@@ -8,10 +8,10 @@ import androidx.room.Query
 @Dao
 interface BookmarkDao{
     @Insert
-    fun insertBookmark(bookmarks: BookmarkEntity)
+    fun insertBookmark(bookmark: BookmarkEntity)
 
     @Delete
-    fun deleteBookmark(bookmarks: BookmarkEntity)
+    fun deleteBookmark(bookmark: BookmarkEntity)
 
     @Query("SELECT * FROM bookmarks" )
     fun getAllBookmarks(): List<BookmarkEntity>

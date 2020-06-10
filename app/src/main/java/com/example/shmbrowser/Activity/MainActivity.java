@@ -2,6 +2,7 @@ package com.example.shmbrowser.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RectF;
@@ -509,6 +511,14 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         finish();
                         return true;
 
+                    case R.id.desktopSite:
+                        if (item.isChecked()) {
+                            item.setChecked(false);
+                        } else {
+                            item.setChecked(true);
+                        }
+                        return true;
+
                     case R.id.settings_menu_item:
 
                     case R.id.exit:
@@ -719,6 +729,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         decorator = new Decorator();
         tabSwitcher = findViewById(R.id.tab_switcher);
         tabSwitcher.clearSavedStatesWhenRemovingTabs(false);
@@ -737,4 +748,25 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         inflateMenu();
     }
 
+    @Override
+    public final void onBackPressed() {
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialogTheme);
+        alert.setTitle("Exit")
+        .setMessage("Sure You Want To Exit")
+        .setCancelable(false)
+        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
+            }
+        })
+        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //do nothing
+            }
+        });
+        alert.create()
+        .show();
+    }
 }
