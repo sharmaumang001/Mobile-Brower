@@ -1,4 +1,4 @@
-package com.example.shmbrowser;
+package com.example.shmbrowser.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -38,6 +39,9 @@ import android.widget.Toast;
 import com.example.shmbrowser.Adapter.RecyclerViewClicklistner;
 import com.example.shmbrowser.Adapter.SitesAdapter;
 import com.example.shmbrowser.Model.Sites;
+import com.example.shmbrowser.utility.MyNetworkState;
+import com.example.shmbrowser.utility.MyWebViewClient;
+import com.example.shmbrowser.R;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -461,7 +465,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             @Override
             public boolean onMenuItemClick(final MenuItem item) {
                 switch (item.getItemId()) {
-
+                    //      added click listeners to menu items
                     case R.id.add_tab_menu_item:
                         int index = tabSwitcher.getCount();
                         Tab tab = createTab(index);
@@ -471,12 +475,48 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         } else {
                             tabSwitcher.addTab(tab, 0, createPeekAnimation());
                         }
-
                         return true;
+
+                    case R.id.bookmark:
+                        Intent intent = new Intent(MainActivity.this, MyBookmarks.class);
+                        startActivity(intent);
+                        finish();
+                        return true;
+
+                    case R.id.audioQueue:
+                        intent = new Intent(MainActivity.this, MyAudioQueueActivity.class);
+                        startActivity(intent);
+                        finish();
+                        return true;
+
+                    case R.id.downloadVids:
+
+                    case R.id.clearData:
+
+                    case R.id.erase:
+                        if (tabSwitcher.isSwitcherShown()) {
+                            createRevealAnimation();
+                        }
+                        else {
+                            createPeekAnimation();
+                        }
+                        tabSwitcher.clear();
+                        return true;
+
+                    case R.id.downloads:
+                        intent = new Intent(MainActivity.this, MyDownloadActivity.class);
+                        startActivity(intent);
+                        finish();
+                        return true;
+
+                    case R.id.settings_menu_item:
+
+                    case R.id.exit:
+                        finishAffinity();
+
                     case R.id.clear_tabs_menu_item:
                         tabSwitcher.clear();
                         return true;
-                    case R.id.settings_menu_item:
 
                     default:
                         return false;
@@ -489,7 +529,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
 
     private void inflateMenu() {
         tabSwitcher
-                .inflateToolbarMenu(tabSwitcher.getCount() > 0 ? R.menu.tab_switcher : R.menu.popup_menu,
+                .inflateToolbarMenu(tabSwitcher.getCount() >= 0 ? R.menu.tab_switcher : R.menu.popup_menu,
                         createToolbarMenuListener());
     }
 

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.MyDownloadActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorAccent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="127dp"
+        tools:layout_editor_absoluteY="-3dp"
+        tools:ignore="MissingConstraints">
+
+        <LinearLayout
+            android:id="@+id/llContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Downloads"
+                android:textStyle="bold"
+                android:textSize="27sp"
+                tools:layout_editor_absoluteX="31dp"
+                tools:layout_editor_absoluteY="16dp"
+                android:padding="5dp"/>
+
+            <ImageButton
+                android:id="@+id/imageButton5"
+                android:layout_width="wrap_content"
+                android:background="#F4F0F1"
+                android:layout_height="match_parent"
+                android:contentDescription="lot of things"
+                android:padding="5dp"
+                app:srcCompat="@android:drawable/btn_dropdown" />
+
+            <ImageButton
+                android:id="@+id/imageButton6"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#F4F0F1"
+                android:padding="5dp"
+                app:srcCompat="@android:drawable/ic_menu_preferences" />
+
+            <ImageButton
+                android:id="@+id/imageButton7"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="#F4F0F1"
+                app:srcCompat="@android:drawable/ic_search_category_default"
+                tools:layout_editor_absoluteX="74dp"
+                android:padding="5dp"
+                tools:layout_editor_absoluteY="65dp" />
+
+            <ImageButton
+                android:id="@+id/imageButton8"
+                android:layout_width="wrap_content"
+                android:background="#F4F0F1"
+                android:layout_height="match_parent"
+                app:srcCompat="@drawable/ic_cancel"
+                android:padding="5dp"
+                tools:layout_editor_absoluteX="172dp"
+                tools:layout_editor_absoluteY="88dp" />
+
+        </LinearLayout>
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="vertical">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerDownloads"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scrollbars="vertical"/>
+        </ScrollView>
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

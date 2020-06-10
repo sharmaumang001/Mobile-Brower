@@ -1,4 +1,4 @@
-package com.example.shmbrowser;
+package com.example.shmbrowser.utility;
 
 import android.content.Context;
 import android.net.ConnectivityManager;

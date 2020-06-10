@@ -1,4 +1,4 @@
-package com.example.shmbrowser;
+package com.example.shmbrowser.utility;
 
 import android.webkit.CookieManager;
 import android.webkit.WebView;
