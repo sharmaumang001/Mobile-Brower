@@ -3,6 +3,7 @@ package com.example.shmbrowser.Adapter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,7 +38,8 @@ class BookmarkRecyclerAdapter(val context: Context, val bookmarkList: List<Bookm
         holder.url.text = list.siteUrl
         holder.recyclerItem.setOnClickListener {
             val intent = Intent(context , MainActivity::class.java)
-            intent.putExtra("url", list.siteUrl)
+            val sharedPreferences = context.getSharedPreferences("url", Context.MODE_PRIVATE)
+            sharedPreferences.edit().putString("url", list.siteUrl).apply()
             context.startActivity(intent)
         }
     }

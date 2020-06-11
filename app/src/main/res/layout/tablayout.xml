@@ -41,7 +41,7 @@
                 android:textColorHighlight="#e8e4e1"
                 android:textColorHint="#000000"
                 android:textColorLink="#000000"
-                android:textCursorDrawable="@drawable/ic_cursor"
+                android:textCursorDrawable="@null"
                 android:textIsSelectable="true"
                 android:textSize="20sp" />
 
@@ -74,6 +74,12 @@
         android:layout_height="wrap_content"
         android:layout_weight=".99"
         android:layout_marginTop="10dp">
+
+        <org.adblockplus.libadblockplus.android.webview.AdblockWebView
+            android:id="@+id/adBlock"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"/>
 
 
     </WebView>

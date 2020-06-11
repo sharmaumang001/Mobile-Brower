@@ -2,6 +2,7 @@ package com.example.shmbrowser.Activity
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.View
@@ -25,12 +26,14 @@ class MyBookmarks: AppCompatActivity() {
     lateinit var recyclerBookmarks: RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var recyclerAdapter: BookmarkRecyclerAdapter
+    lateinit var sharedPreferences: SharedPreferences
     val searchList = arrayListOf<BookmarkEntity>()
     val bookmarkList = arrayListOf<BookmarkEntity>()
-    val book = BookmarkEntity("www.google.com", "Google")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_mybookmarks)
+
 
         search = findViewById(R.id.search_button)
         cancel = findViewById(R.id.cancelButton_ID)
@@ -43,6 +46,8 @@ class MyBookmarks: AppCompatActivity() {
 
         noBookMark.visibility = View.GONE
         star.visibility = View.GONE
+
+
 
         val list = GetAllBookmarks(this@MyBookmarks).execute().get()
         if(list.isEmpty()){
@@ -106,7 +111,6 @@ class MyBookmarks: AppCompatActivity() {
             }
         }
     }
-
 
     class GetBookmarkByName(val context: Context, val name:String): AsyncTask<Void, Void, List<BookmarkEntity>>(){
         private val db = Room.databaseBuilder(context, BookmarkDatabase::class.java, "bookmark-db").build()

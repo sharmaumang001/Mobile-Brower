@@ -51,6 +51,12 @@
     <item
         android:id="@+id/bookmark"
         android:title="Bookmarks" />
+
+    <item
+        android:id="@+id/btnAdBlock"
+        android:title="AdBlock"
+        android:checkable="true"
+        android:checked="true"/>
     <item
         android:id="@+id/audioQueue"
         android:title="Audio Queue"/>

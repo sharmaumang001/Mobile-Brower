@@ -13,9 +13,12 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.RectF;
 import android.os.Bundle;
@@ -47,6 +50,10 @@ import com.example.shmbrowser.R;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
+
+import org.adblockplus.libadblockplus.android.AdblockEngine;
+import org.adblockplus.libadblockplus.android.AdblockEngineProvider;
+import org.adblockplus.libadblockplus.android.webview.AdblockWebView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,8 +93,10 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     RecyclerView mRecyclerView;
     List<Sites> mSitesList;
     SitesAdapter mAdapter;
-
     String Url;
+    SharedPreferences sharedPreferences;
+    AdblockWebView adblockWebView;
+
 
 
     private class State extends AbstractState
@@ -174,6 +183,8 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             }
         }
 
+
+
         @NonNull
         @Override
         public View onInflateView(@NonNull final LayoutInflater inflater,
@@ -212,6 +223,14 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             mRefreshButton = findViewById(R.id.refreshButon_ID);
             mHomeButton = findViewById(R.id.homeButton_ID);
             mRecyclerView = findViewById(R.id.shortcutlinks_recycler);
+            // adBlock
+            adblockWebView = findViewById(R.id.adBlock);
+            adblockWebView.setAdblockEnabled(true);
+
+            //
+            System.setProperty("http.proxyHost", "127.0.0.1");
+            System.setProperty("http.proxyPort", "127.0.0.1");
+
 
             mSitesList = new ArrayList<>();
             Sites sites = new Sites("https://www.google.com/","Google",R.drawable.ic_google);
@@ -466,8 +485,26 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
 
             @Override
             public boolean onMenuItemClick(final MenuItem item) {
+
                 switch (item.getItemId()) {
                     //      added click listeners to menu items
+                    case R.id.setbookmark:
+                        //will edit once web scrapping is updated
+                        return true;
+
+                    case R.id.download:
+                        Intent intent = new Intent(MainActivity.this, MyDownloadActivity.class);
+                        startActivity(intent);
+                        finish();
+                        return true;
+
+                    case R.id.info:
+                        //set nav to some info page/activity
+
+                    case R.id.refresh:
+                        mWebView.reload();
+                        return true;
+
                     case R.id.add_tab_menu_item:
                         int index = tabSwitcher.getCount();
                         Tab tab = createTab(index);
@@ -480,9 +517,20 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         return true;
 
                     case R.id.bookmark:
-                        Intent intent = new Intent(MainActivity.this, MyBookmarks.class);
+                        intent = new Intent(MainActivity.this, MyBookmarks.class);
                         startActivity(intent);
                         finish();
+                        return true;
+
+                    case R.id.btnAdBlock:
+                        if(adblockWebView.isAdblockEnabled()){
+                            adblockWebView.setAdblockEnabled(false);
+                            item.setChecked(false);
+                        }
+                        else{
+                            adblockWebView.setAdblockEnabled(true);
+                            item.setChecked(true);
+                        }
                         return true;
 
                     case R.id.audioQueue:
@@ -492,8 +540,9 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         return true;
 
                     case R.id.downloadVids:
-
+                        // needs web scrapping
                     case R.id.clearData:
+                       // will add this when web scrapping is done
 
                     case R.id.erase:
                         if (tabSwitcher.isSwitcherShown()) {
@@ -728,7 +777,13 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     protected final void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        sharedPreferences = (SharedPreferences) getSharedPreferences("url", Context.MODE_PRIVATE);
+        if(sharedPreferences!=null){
+            String url = sharedPreferences.getString("url", null);
+            if(url != null){
+                mWebView.loadUrl(url);
+            }
+        }
 
         decorator = new Decorator();
         tabSwitcher = findViewById(R.id.tab_switcher);
@@ -769,4 +824,5 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         alert.create()
         .show();
     }
+
 }

@@ -18,4 +18,7 @@ interface BookmarkDao{
 
     @Query("SELECT * FROM bookmarks WHERE bookmarkName like :name")
     fun getByName(name: String): List<BookmarkEntity>
+
+    @Query("DELETE FROM bookmarks")
+    fun deleteAll()
 }
