@@ -15,7 +15,8 @@
         app:showAsAction="always"/>
     <item
         android:id="@+id/horizontalMenu"
-        android:title="">
+        android:title=""
+        android:orderInCategory="0">
         <menu>
             <item
                 android:id="@+id/back"

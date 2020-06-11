@@ -70,7 +70,7 @@ class MyBookmarks: AppCompatActivity() {
             cancel.visibility = View.VISIBLE
             val name = search_bar.text.toString()
             val bookmark = GetBookmarkByName(this@MyBookmarks, name).execute().get()
-            searchList.addAll(bookmark)
+            searchList.add(bookmark)
             if(searchList.isEmpty()){
                 noBookMark.visibility = View.VISIBLE
                 star.visibility = View.VISIBLE
@@ -112,9 +112,9 @@ class MyBookmarks: AppCompatActivity() {
         }
     }
 
-    class GetBookmarkByName(val context: Context, val name:String): AsyncTask<Void, Void, List<BookmarkEntity>>(){
+    class GetBookmarkByName(val context: Context, val name:String): AsyncTask<Void, Void, BookmarkEntity>(){
         private val db = Room.databaseBuilder(context, BookmarkDatabase::class.java, "bookmark-db").build()
-        override fun doInBackground(vararg params: Void?): List<BookmarkEntity> {
+        override fun doInBackground(vararg params: Void?): BookmarkEntity {
             return db.BookmarkDao().getByName(name)
         }
     }

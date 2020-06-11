@@ -43,6 +43,8 @@ import android.widget.Toast;
 
 import com.example.shmbrowser.Adapter.RecyclerViewClicklistner;
 import com.example.shmbrowser.Adapter.SitesAdapter;
+import com.example.shmbrowser.Database.BookmarkEntity;
+import com.example.shmbrowser.Database.Functions;
 import com.example.shmbrowser.Model.Sites;
 import com.example.shmbrowser.utility.MyNetworkState;
 import com.example.shmbrowser.utility.MyWebViewClient;
@@ -96,6 +98,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     String Url;
     SharedPreferences sharedPreferences;
     AdblockWebView adblockWebView;
+    BookmarkEntity bookmarkEntity;
 
 
 
@@ -227,9 +230,9 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             adblockWebView = findViewById(R.id.adBlock);
             adblockWebView.setAdblockEnabled(true);
 
-            //
-            System.setProperty("http.proxyHost", "127.0.0.1");
-            System.setProperty("http.proxyPort", "127.0.0.1");
+            //proxy
+            /*System.setProperty("http.proxyHost", "127.0.0.1");    change proxy ip and port
+            System.setProperty("http.proxyPort", "8080");*/
 
 
             mSitesList = new ArrayList<>();
@@ -350,6 +353,15 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                 public void onClick(View v) {
                     if (mWebView.canGoBack()) {
                         mWebView.goBack();
+                    }else{
+                        mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
+                        mAdapter = new SitesAdapter(getApplicationContext(),listener,mSitesList);
+                        mRecyclerView.setAdapter(mAdapter);
+
+
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        mWebView.setVisibility(View.GONE);
+                        Toast.makeText(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -386,7 +398,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     mAdapter = new SitesAdapter(getApplicationContext(),listener,mSitesList);
                     mRecyclerView.setAdapter(mAdapter);
 
-
+                    
                     mRecyclerView.setVisibility(View.VISIBLE);
                     mWebView.setVisibility(View.GONE);
                     Toast.makeText(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
@@ -542,9 +554,11 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     case R.id.downloadVids:
                         // needs web scrapping
                     case R.id.clearData:
-                       // will add this when web scrapping is done
+                        new Functions.delete(MainActivity.this).execute();
+                        return true;
 
                     case R.id.erase:
+                        new Functions.delete(MainActivity.this).execute();
                         if (tabSwitcher.isSwitcherShown()) {
                             createRevealAnimation();
                         }
