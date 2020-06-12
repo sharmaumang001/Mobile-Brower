@@ -258,6 +258,8 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             sites=new Sites("https://www.instagram.com/","Instagram",R.drawable.ic_instagram);
             mSitesList.add(sites);
 
+            sites = new Sites("https://sevenribbonspictures.com/","  S R P",R.drawable.srp7);
+            mSitesList.add(sites);
 
             mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
 
