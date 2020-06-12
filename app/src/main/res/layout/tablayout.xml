@@ -41,7 +41,7 @@
                 android:textColorHighlight="#e8e4e1"
                 android:textColorHint="#000000"
                 android:textColorLink="#000000"
-                android:textCursorDrawable="@drawable/ic_cursor"
+                android:textCursorDrawable="@null"
                 android:textIsSelectable="true"
                 android:textSize="20sp" />
 
@@ -70,6 +70,7 @@
 
     <ImageView
         android:id="@+id/img"
+        android:layout_marginTop="150dp"
         android:layout_width="wrap_content"
         android:layout_height="200dp"
         android:visibility="visible"
