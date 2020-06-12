@@ -78,7 +78,7 @@ import de.mrapp.android.tabswitcher.TabSwitcher;
 import de.mrapp.android.tabswitcher.TabSwitcherListener;
 import de.mrapp.android.util.ThemeUtil;
 import de.mrapp.android.util.multithreading.AbstractDataBinder;
-
+import es.dmoral.toasty.Toasty;
 
 
 import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
@@ -359,12 +359,28 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                 public void onClick(View v) {
                     if (mWebView.canGoBack()) {
                         mWebView.goBack();
-                    }else {
-                        mWebView.clearCache(true);
-                        mWebView.clearHistory();
-                        mRecyclerView.setVisibility(View.VISIBLE);
-                        image.setVisibility(View.VISIBLE);
-                        mWebView.setVisibility(View.GONE);
+                    }else{
+                        if (mWebView.canGoBack()) {
+                            if(mWebView.getUrl() =="about:blank" ){
+
+                                mWebView.clearCache(true);
+                                mWebView.clearHistory();
+
+                                mRecyclerView.setVisibility(View.VISIBLE);
+                                image.setVisibility(View.VISIBLE);
+                                mWebView.setVisibility(View.GONE);
+                            }else {
+                                mWebView.goBack();
+                            }
+                        }else{
+                            mWebView.loadUrl("about:blank");
+
+                            mRecyclerView.setVisibility(View.VISIBLE);
+                            image.setVisibility(View.VISIBLE);
+                            mWebView.setVisibility(View.GONE);
+                            mWebView.clearCache(true);
+                            mWebView.clearHistory();
+                        }
 
                     }
                 }
@@ -402,13 +418,14 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     mAdapter = new SitesAdapter(getApplicationContext(),listener,mSitesList);
                     mRecyclerView.setAdapter(mAdapter);
 
-                    mWebView.clearCache(true);
-                    mWebView.clearHistory();
+                    mWebView.loadUrl("about:blank");
 
 
                     mRecyclerView.setVisibility(View.VISIBLE);
                     image.setVisibility(View.VISIBLE);
                     mWebView.setVisibility(View.GONE);
+                    mWebView.clearCache(true);
+                    mWebView.clearHistory();
                     Toast.makeText(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -860,13 +877,22 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     .show();
         }else{
             if (mWebView.canGoBack()) {
-                mWebView.goBack();
+                if(mWebView.getUrl() =="about:blank" ){
+
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    image.setVisibility(View.VISIBLE);
+                    mWebView.setVisibility(View.GONE);
+                }else {
+                    mWebView.goBack();
+                }
             }else{
-                mWebView.clearCache(true);
-                mWebView.clearHistory();
+                mWebView.loadUrl("about:blank");
+
                 mRecyclerView.setVisibility(View.VISIBLE);
                 image.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
+                mWebView.clearCache(true);
+                mWebView.clearHistory();
             }
 
         }
