@@ -41,7 +41,7 @@
                 android:textColorHighlight="#e8e4e1"
                 android:textColorHint="#000000"
                 android:textColorLink="#000000"
-                android:textCursorDrawable="@null"
+                android:textCursorDrawable="@drawable/ic_cursor"
                 android:textIsSelectable="true"
                 android:textSize="20sp" />
 

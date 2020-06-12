@@ -31,7 +31,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -78,7 +77,7 @@ import de.mrapp.android.tabswitcher.TabSwitcher;
 import de.mrapp.android.tabswitcher.TabSwitcherListener;
 import de.mrapp.android.util.ThemeUtil;
 import de.mrapp.android.util.multithreading.AbstractDataBinder;
-import es.dmoral.toasty.Toasty;
+
 
 
 import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
@@ -89,7 +88,7 @@ import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
 
 public class MainActivity extends AppCompatActivity implements TabSwitcherListener {
 
-    public WebView mWebView;
+    WebView mWebView;
     EditText mUrlText;
     ProgressBar mProgressBar;
     ImageButton mBackButton, mForwardButton, mStopButton, mRefreshButton, mHomeButton;
@@ -354,15 +353,6 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                 public void onClick(View v) {
                     if (mWebView.canGoBack()) {
                         mWebView.goBack();
-                    }else{
-                        mRecyclerView.setLayoutManager(new GridLayoutManager(getApplicationContext(), 4));
-                        mAdapter = new SitesAdapter(getApplicationContext(),listener,mSitesList);
-                        mRecyclerView.setAdapter(mAdapter);
-
-
-                        mRecyclerView.setVisibility(View.VISIBLE);
-                        mWebView.setVisibility(View.GONE);
-                        Toasty.normal(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
                     }
                 }
             });
@@ -400,15 +390,9 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     mRecyclerView.setAdapter(mAdapter);
 
 
-                    if (mWebView.canGoBack()) {
-                        mWebView.goBack();}
-                    mWebView.clearCache(true);
-                    mWebView.clearHistory();
-
-
                     mRecyclerView.setVisibility(View.VISIBLE);
                     mWebView.setVisibility(View.GONE);
-                    Toasty.normal(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -824,39 +808,26 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         inflateMenu();
     }
 
-
     @Override
     public final void onBackPressed() {
-
-        if(mWebView.getVisibility()==View.GONE) {
-            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialogTheme);
-            alert.setTitle("Exit")
-                    .setMessage("Sure You Want To Exit")
-                    .setCancelable(false)
-                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finishAffinity();
-                        }
-                    })
-                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //do nothing
-                        }
-                    });
-            alert.create()
-                    .show();
-        }else{
-
-            if (mWebView.canGoBack()) {
-                mWebView.goBack();
-            }else{
-                mRecyclerView.setVisibility(View.VISIBLE);
-                mWebView.setVisibility(View.GONE);
-                Toasty.normal(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
+        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialogTheme);
+        alert.setTitle("Exit")
+        .setMessage("Sure You Want To Exit")
+        .setCancelable(false)
+        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                finishAffinity();
             }
-        }
+        })
+        .setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //do nothing
+            }
+        });
+        alert.create()
+        .show();
     }
 
 }
