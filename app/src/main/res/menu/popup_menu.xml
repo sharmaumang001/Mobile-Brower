@@ -81,6 +81,9 @@
         android:id="@+id/settings_menu_item"
         android:title="Settings"/>
     <item
+        android:id="@+id/appInfo"
+        android:title="About App"/>
+    <item
         android:id="@+id/exit"
         android:title="Exit"/>
 </menu>

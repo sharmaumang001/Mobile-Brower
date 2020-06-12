@@ -35,6 +35,7 @@ import android.webkit.WebView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import android.widget.ProgressBar;
@@ -99,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     SharedPreferences sharedPreferences;
     AdblockWebView adblockWebView;
     BookmarkEntity bookmarkEntity;
+    ImageView  image;
 
 
 
@@ -226,6 +228,8 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             mRefreshButton = findViewById(R.id.refreshButon_ID);
             mHomeButton = findViewById(R.id.homeButton_ID);
             mRecyclerView = findViewById(R.id.shortcutlinks_recycler);
+            image = findViewById(R.id.img);
+
             // adBlock
             adblockWebView = findViewById(R.id.adBlock);
             adblockWebView.setAdblockEnabled(true);
@@ -266,8 +270,8 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     mWebView.getSettings().setLoadsImagesAutomatically(true);
                     mWebView.getSettings().setJavaScriptEnabled(true);
                     mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-
                     mWebView.loadUrl(Url);
+                    image.setVisibility(View.GONE);
                 }
             };
             mAdapter = new SitesAdapter(getApplicationContext(), listener,mSitesList);
@@ -328,11 +332,13 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                                     inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
 
                                     mWebView.loadUrl("https://" + url);
+                                    image.setVisibility(View.GONE);
                                     mUrlText.setText("");
                                 } else {
                                     InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                     inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
                                     mWebView.loadUrl("https://www.google.com/search?q=" + url);
+                                    image.setVisibility(View.GONE);
                                     mUrlText.setText("");
                                 }
                             }
@@ -353,6 +359,13 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                 public void onClick(View v) {
                     if (mWebView.canGoBack()) {
                         mWebView.goBack();
+                    }else {
+                        mWebView.clearCache(true);
+                        mWebView.clearHistory();
+                        mRecyclerView.setVisibility(View.VISIBLE);
+                        image.setVisibility(View.VISIBLE);
+                        mWebView.setVisibility(View.GONE);
+
                     }
                 }
             });
@@ -389,8 +402,12 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     mAdapter = new SitesAdapter(getApplicationContext(),listener,mSitesList);
                     mRecyclerView.setAdapter(mAdapter);
 
+                    mWebView.clearCache(true);
+                    mWebView.clearHistory();
+
 
                     mRecyclerView.setVisibility(View.VISIBLE);
+                    image.setVisibility(View.VISIBLE);
                     mWebView.setVisibility(View.GONE);
                     Toast.makeText(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
                 }
@@ -490,7 +507,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             public boolean onMenuItemClick(final MenuItem item) {
 
                 switch (item.getItemId()) {
-                    //      added click listeners to menu items
+                    //added click listeners to menu items
                     case R.id.setbookmark:
                         //will edit once web scrapping is updated
                         return true;
@@ -502,7 +519,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         return true;
 
                     case R.id.info:
-                        //set nav to some info page/activity
+                        return true;
 
                     case R.id.refresh:
                         mWebView.reload();
@@ -544,6 +561,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
 
                     case R.id.downloadVids:
                         // needs web scrapping
+                        return true;
                     case R.id.clearData:
                         new Functions.delete(MainActivity.this).execute();
                         return true;
@@ -568,12 +586,22 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     case R.id.desktopSite:
                         if (item.isChecked()) {
                             item.setChecked(false);
+                            setDesktopMode(mWebView, false);
                         } else {
                             item.setChecked(true);
+                            setDesktopMode(mWebView, true);
                         }
                         return true;
 
                     case R.id.settings_menu_item:
+                        //add settings page
+                        return true;
+
+                    case R.id.appInfo:
+                        intent = new Intent(MainActivity.this, Info.class);
+                        startActivity(intent);
+                        finish();
+                        return true;
 
                     case R.id.exit:
                         finishAffinity();
@@ -782,6 +810,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     protected final void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         sharedPreferences = (SharedPreferences) getSharedPreferences("url", Context.MODE_PRIVATE);
         if(sharedPreferences!=null){
             String url = sharedPreferences.getString("url", null);
@@ -810,24 +839,57 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
 
     @Override
     public final void onBackPressed() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialogTheme);
-        alert.setTitle("Exit")
-        .setMessage("Sure You Want To Exit")
-        .setCancelable(false)
-        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finishAffinity();
+        if (mWebView.getVisibility()==View.GONE) {
+            AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.this, R.style.AlertDialogTheme);
+            alert.setTitle("Exit")
+                    .setMessage("Sure You Want To Exit")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finishAffinity();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //do nothing
+                        }
+                    });
+            alert.create()
+                    .show();
+        }else{
+            if (mWebView.canGoBack()) {
+                mWebView.goBack();
+            }else{
+                mWebView.clearCache(true);
+                mWebView.clearHistory();
+                mRecyclerView.setVisibility(View.VISIBLE);
+                image.setVisibility(View.VISIBLE);
+                mWebView.setVisibility(View.GONE);
             }
-        })
-        .setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //do nothing
+
+        }
+    }
+
+    public void setDesktopMode(WebView webView,boolean enabled) {
+        String newUserAgent = webView.getSettings().getUserAgentString();
+        if (enabled) {
+            try {
+                String ua = webView.getSettings().getUserAgentString();
+                String androidOSString = webView.getSettings().getUserAgentString().substring(ua.indexOf("("), ua.indexOf(")") + 1);
+                newUserAgent = webView.getSettings().getUserAgentString().replace(androidOSString, "(X11; Linux x86_64)");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-        });
-        alert.create()
-        .show();
+        } else {
+            newUserAgent = null;
+        }
+
+        webView.getSettings().setUserAgentString(newUserAgent);
+        webView.getSettings().setUseWideViewPort(enabled);
+        webView.getSettings().setLoadWithOverviewMode(enabled);
+        webView.reload();
     }
 
 }

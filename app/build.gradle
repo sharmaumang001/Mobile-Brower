@@ -65,4 +65,8 @@ dependencies {
 //AdBlock
     implementation 'org.adblockplus:adblock-android-webview:3.0'
 
+//Gif
+    implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.17'
+
+
 }

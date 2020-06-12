@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.MyDownloadActivity">
+    tools:context=".Activity.MyDownloadActivity"
+    android:background="@color/colorAccent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

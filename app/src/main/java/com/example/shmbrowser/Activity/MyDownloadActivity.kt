@@ -1,5 +1,6 @@
 package com.example.shmbrowser.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -33,6 +34,10 @@ class MyDownloadActivity: AppCompatActivity() {
         scrollView = findViewById(R.id.scrollView)
         ll = findViewById(R.id.ll)
 
+    }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        startActivity(Intent(this@MyDownloadActivity, MainActivity::class.java))
     }
 }

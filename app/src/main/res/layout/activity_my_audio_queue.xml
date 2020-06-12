@@ -1,104 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.MyAudioQueueActivity">
+    tools:context=".Activity.MyAudioQueueActivity"
+    android:orientation="vertical">
 
 
     <LinearLayout
         android:id="@+id/text"
+        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="0.002"
         android:background="@color/colorAccent"
         android:orientation="vertical"
-        android:weightSum="2"
-        tools:layout_editor_absoluteX="127dp"
-        tools:layout_editor_absoluteY="-3dp"
         tools:ignore="MissingConstraints">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1.9"
-        android:orientation="horizontal"
-        android:weightSum="3">
+        <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/imageButton2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_arrowback"
-            tools:layout_editor_absoluteX="5dp"
-            tools:layout_editor_absoluteY="1dp" />
+                <ImageButton
+                    android:id="@+id/imageButton2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/ic_arrowback"/>
 
-        <TextView
-            android:id="@+id/textView"
-            android:layout_width="318dp"
-            android:layout_height="44dp"
-            android:text="  Audio Queue "
-            android:textSize="37dp"
-            android:textStyle="bold"
-            android:textColor="#151515"
-            tools:layout_editor_absoluteX="77dp"
-            tools:layout_editor_absoluteY="8dp" />
-
-
-    </LinearLayout>
-
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="318dp"
+                    android:layout_height="44dp"
+                    android:text="  Audio Queue "
+                    android:textSize="37dp"
+                    android:textStyle="bold"
+                    android:textColor="#151515"/>
+            </LinearLayout>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerQueue"
+        android:layout_below="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/text"/>
 
     <LinearLayout
-
-        android:layout_width="328dp"
+        android:layout_width="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
         android:layout_height="87dp"
         android:layout_marginEnd="16dp"
-        android:layout_weight=".005"
-        android:background="@color/colorAccent"
         android:orientation="horizontal"
-        android:weightSum="5"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:layout_editor_absoluteY="635dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        android:padding="10dp">
 
         <ImageButton
             android:id="@+id/imageButton"
             android:layout_width="98dp"
             android:layout_height="match_parent"
             android:background="#7E7C7C"
-
             app:srcCompat="@android:drawable/ic_media_previous"
-            tools:layout_editor_absoluteX="28dp"
-            tools:layout_editor_absoluteY="641dp" />
+            />
 
         <ImageButton
             android:id="@+id/imageButton3"
             android:layout_width="93dp"
             android:layout_height="match_parent"
             android:background="#7E7C7C"
-            app:srcCompat="@android:drawable/ic_media_play"
-            tools:layout_editor_absoluteX="144dp"
-            tools:layout_editor_absoluteY="641dp" />
+            app:srcCompat="@android:drawable/ic_media_play" />
 
         <ImageButton
             android:id="@+id/imageButton4"
-            android:layout_width="84dp"
+            android:layout_width="98dp"
             android:layout_height="match_parent"
             android:background="#7E7C7C"
-            app:srcCompat="@android:drawable/ic_media_next"
-            tools:layout_editor_absoluteX="276dp"
-            tools:layout_editor_absoluteY="642dp" />
-
-
+            app:srcCompat="@android:drawable/ic_media_next" />
     </LinearLayout>
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
