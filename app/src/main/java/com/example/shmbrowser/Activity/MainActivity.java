@@ -65,9 +65,6 @@ import com.example.shmbrowser.R;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-
-import org.adblockplus.libadblockplus.android.AdblockEngine;
-import org.adblockplus.libadblockplus.android.AdblockEngineProvider;
 import org.adblockplus.libadblockplus.android.webview.AdblockWebView;
 
 import java.io.File;
@@ -76,6 +73,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 
 import de.mrapp.android.tabswitcher.AbstractState;
@@ -94,7 +92,6 @@ import de.mrapp.android.tabswitcher.TabSwitcher;
 import de.mrapp.android.tabswitcher.TabSwitcherListener;
 import de.mrapp.android.util.ThemeUtil;
 import de.mrapp.android.util.multithreading.AbstractDataBinder;
-import es.dmoral.toasty.Toasty;
 
 
 import static de.mrapp.android.util.DisplayUtil.getDisplayWidth;
@@ -568,9 +565,63 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             public boolean onMenuItemClick(final MenuItem item) {
 
                 switch (item.getItemId()) {
-                    //added click listeners to menu items
                     case R.id.setbookmark:
-                        //will edit once web scrapping is updated
+                        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                        LayoutInflater inflater = MainActivity.this.getLayoutInflater();
+                        final View view = inflater.inflate(R.layout.popup_window, null);
+                        builder.setView(view)
+                                .setTitle("Bookmark")
+                                .setPositiveButton("Add", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        EditText editName = view.findViewById(R.id.bookmarkName);
+                                        EditText editUrl = view.findViewById(R.id.bookmarkUrl);
+                                        String name = editName.getText().toString();
+                                        editUrl.setText(mWebView.getUrl());
+                                        String url = mWebView.getUrl();
+                                        if(url!=null){
+                                            bookmarkEntity = new BookmarkEntity(name, url);
+                                            try {
+                                                Boolean check = new Functions.DBAsyncTask(MainActivity.this, bookmarkEntity, 1).execute().get();
+                                                if(check){
+                                                    Toast.makeText(
+                                                            MainActivity.this,
+                                                            "Bookmark added",
+                                                            Toast.LENGTH_SHORT
+                                                    ).show();
+                                                }
+                                                else{
+                                                    Toast.makeText(
+                                                            MainActivity.this,
+                                                            "Bookmark not added",
+                                                            Toast.LENGTH_SHORT
+                                                    ).show();
+                                                }
+                                            } catch (ExecutionException | InterruptedException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
+                                        else{
+                                            Toast.makeText(
+                                                    MainActivity.this,
+                                                    "URL is empty",
+                                                    Toast.LENGTH_SHORT
+                                            ).show();
+                                        }
+                                    }
+                                })
+                                .setNegativeButton("Cancle", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Toast.makeText(
+                                                MainActivity.this,
+                                                "Bookmark not added",
+                                                Toast.LENGTH_SHORT
+                                        ).show();
+                                    }
+                                });
+                        builder.create();
+                        builder.show().getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorPrimary));
                         return true;
 
                     case R.id.download:
@@ -871,7 +922,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences = (SharedPreferences) getSharedPreferences("url", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("url", Context.MODE_PRIVATE);
         if(sharedPreferences!=null){
             String url = sharedPreferences.getString("url", null);
             if(url != null){
@@ -1013,6 +1064,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                                     request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
                                     request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,filename);
                                     DownloadManager manager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+                                    assert manager != null;
                                     manager.enqueue(request);
                                     Toast.makeText(MainActivity.this, "Check Notification", Toast.LENGTH_SHORT).show();
                                     SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY , hh:mm a", Locale.getDefault());
