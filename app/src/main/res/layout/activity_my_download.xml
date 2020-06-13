@@ -1,79 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Activity.MyDownloadActivity">
-    <RelativeLayout
-        android:id="@+id/rlcontent"
-        android:padding="5dp"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ImageButton
-            android:id="@+id/back"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_arrowback"
-            android:background="@android:color/white"/>
-
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimaryDark"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:layout_scrollFlags="scroll|enterAlways|snap"
+        app:title="Downloads"
+        >
+    </androidx.appcompat.widget.Toolbar>
+    <ListView
+        android:layout_height="wrap_content"
+        android:id="@+id/downloadlistview"
+        android:layout_width="match_parent">
+    </ListView>
+    <LinearLayout
+        android:id="@+id/emptyList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
         <TextView
-            android:id="@+id/text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toEndOf="@+id/back"
-            android:text="Downloads"
-            android:textSize="25sp" />
-        <ImageButton
-            android:id="@+id/settings"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:src="@drawable/ic_settings"
-            android:layout_toStartOf="@+id/cancle"
-            android:layout_marginEnd="10dp"
-            android:layout_marginStart="10dp"
-            android:background="@android:color/white"/>
-
-        <EditText
-            android:id="@+id/search_button"
+            android:layout_gravity="center"
+            android:gravity="center_vertical"
+            android:text="WHOOPS"
+            android:textColor="#212121"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+        <TextView
             android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginHorizontal="10dp"
-            android:layout_toStartOf="@+id/settings"
-            android:layout_toEndOf="@+id/text"
-            android:background="@android:color/white"
-            android:drawableEnd="@drawable/ic_search"
-            android:drawablePadding="5dp"
-            android:hint="search" />
-
-        <ImageButton
-            android:id="@+id/cancle"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:background="@android:color/white"
-            android:src="@drawable/ic_cancel"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="5dp"/>
-
-    </RelativeLayout>
-    <ScrollView
-        android:id="@+id/scroll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/rlcontent">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerDownload"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-    </ScrollView>
-    <TextView
-        android:id="@+id/downloadtext"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:text="No Downloads"
-        android:textSize="30sp"
-        android:textStyle="bold"/>
-
-</RelativeLayout>
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:text="There are no Downloads at the moment"
+            android:textColor="#212121" />
+    </LinearLayout>
+</LinearLayout>

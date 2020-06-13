@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.OnApplyWindowInsetsListener;
 import androidx.core.view.ViewCompat;
@@ -13,16 +14,22 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-
-
+import android.Manifest;
+import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.RectF;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import android.os.Environment;
+import android.util.Log;
+import android.view.ContextMenu;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,6 +37,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.CookieManager;
+import android.webkit.DownloadListener;
+import android.webkit.MimeTypeMap;
+import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
@@ -45,6 +56,7 @@ import android.widget.Toast;
 import com.example.shmbrowser.Adapter.RecyclerViewClicklistner;
 import com.example.shmbrowser.Adapter.SitesAdapter;
 import com.example.shmbrowser.Database.BookmarkEntity;
+import com.example.shmbrowser.Database.DatabaseHelper;
 import com.example.shmbrowser.Database.Functions;
 import com.example.shmbrowser.Model.Sites;
 import com.example.shmbrowser.utility.MyNetworkState;
@@ -58,8 +70,12 @@ import org.adblockplus.libadblockplus.android.AdblockEngine;
 import org.adblockplus.libadblockplus.android.AdblockEngineProvider;
 import org.adblockplus.libadblockplus.android.webview.AdblockWebView;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 
 import de.mrapp.android.tabswitcher.AbstractState;
@@ -101,6 +117,8 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     AdblockWebView adblockWebView;
     BookmarkEntity bookmarkEntity;
     ImageView  image;
+    String mImageDownloadurl;
+    DatabaseHelper mydb;
 
 
 
@@ -307,6 +325,30 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     }
                 });
             }
+            mWebView.setDownloadListener(new DownloadListener() {
+                @Override
+                public void onDownloadStart(final String url, final String userAgent, String contentDisposition, String mimetype, long contentLength) {
+                    final String filename = URLUtil.guessFileName(url,contentDisposition,mimetype);
+
+                                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+                                    String cookie = CookieManager.getInstance().getCookie(url);
+                                    request.addRequestHeader("Cookie",cookie);
+                                    request.addRequestHeader("User-Agent",userAgent);
+                                    request.allowScanningByMediaScanner();
+                                    request.setShowRunningNotification(true);
+                                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                                    DownloadManager manager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,filename);
+                                    manager.enqueue(request);
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY , hh:mm a", Locale.getDefault());
+                                    File path = new File(Environment.getExternalStorageDirectory() + "/" + Environment.DIRECTORY_DOWNLOADS + "/" + filename);
+                                    addDownload(filename,sdf.format(new Date()),String.valueOf(path));
+
+
+
+
+                }
+            });
 
             mWebView.setWebViewClient(new MyWebViewClient());
 
@@ -430,6 +472,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     Toast.makeText(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
                 }
             });
+            registerForContextMenu(mWebView);
 
 
         }
@@ -843,6 +886,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         tabSwitcher.setDecorator(decorator);
         tabSwitcher.addListener(this);
         tabSwitcher.showToolbars(true);
+        mydb=new DatabaseHelper(getApplicationContext());
 
         for (int i = 0; i < TAB_COUNT; i++) {
             tabSwitcher.addTab(createTab(i));
@@ -852,6 +896,16 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         tabSwitcher.setToolbarNavigationIcon(R.drawable.ic_plus_24dp, createAddTabListener());
         TabSwitcher.setupWithMenu(tabSwitcher, createTabSwitcherButtonListener());
         inflateMenu();
+        //Runtime External storage permission for saving download files
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                    == PackageManager.PERMISSION_DENIED) {
+                Log.d("permission", "permission denied to WRITE_EXTERNAL_STORAGE - requesting it");
+                String[] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+                requestPermissions(permissions, 1);
+            }
+        }
+
     }
 
     @Override
@@ -918,4 +972,94 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         webView.reload();
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        final WebView.HitTestResult webviewHittestResult = mWebView.getHitTestResult();
+        mImageDownloadurl = webviewHittestResult.getExtra();
+        if(webviewHittestResult.getType() == WebView.HitTestResult.IMAGE_TYPE ||
+                webviewHittestResult.getType() == WebView.HitTestResult.SRC_IMAGE_ANCHOR_TYPE)
+        {
+            if(URLUtil.isNetworkUrl(mImageDownloadurl))
+            {
+                menu.setHeaderTitle("Download Image from Below");
+                menu.add(0,1,0,"Download Image")
+                        .setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+                            @Override
+                            public boolean onMenuItemClick(MenuItem menuItem) {
+                                int Permission_all = 1;
+                                String Permission[] = {Manifest.permission.WRITE_EXTERNAL_STORAGE,Manifest.permission.READ_EXTERNAL_STORAGE};
+                                if(!hasPermission(MainActivity.this,Permission))
+                                {
+                                    ActivityCompat.requestPermissions(MainActivity.this,Permission,Permission_all);
+                                }
+                                else
+                                {
+                                    String filename = "";
+                                    String type = null;
+                                    String Mimetype = MimeTypeMap.getFileExtensionFromUrl(mImageDownloadurl);
+                                    filename = URLUtil.guessFileName(mImageDownloadurl,mImageDownloadurl,Mimetype);
+                                    if(Mimetype!=null)
+                                    {
+                                        type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(Mimetype);
+                                    }
+                                    if(type==null)
+                                    {
+                                        filename = filename.replace(filename.substring(filename.lastIndexOf(".")),".png");
+                                        type = "image/*";
+                                    }
+                                    DownloadManager.Request request = new DownloadManager.Request(Uri.parse(mImageDownloadurl));
+                                    request.allowScanningByMediaScanner();
+                                    request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+                                    request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS,filename);
+                                    DownloadManager manager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+                                    manager.enqueue(request);
+                                    Toast.makeText(MainActivity.this, "Check Notification", Toast.LENGTH_SHORT).show();
+                                    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-YYYY , hh:mm a", Locale.getDefault());
+                                    File path = new File(Environment.getExternalStorageDirectory() + "/" + Environment.DIRECTORY_DOWNLOADS + "/" + filename);
+                                    addDownload(filename,sdf.format(new Date()),String.valueOf(path));
+                                }
+                                return false;
+                            }
+                        });
+            }
+        }
+        else
+        {
+            Toast.makeText(this, "Error Downloading", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public static boolean hasPermission(Context context, String... permissions)
+    {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
+                context!=null && permissions!=null)
+        {
+            for(String permission : permissions)
+            {
+                if(ActivityCompat.checkSelfPermission(context,permission) != PackageManager.PERMISSION_GRANTED)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    public void addDownload(String Title,String Time,String Path)
+    {
+
+        String title = Title;
+        String time = Time;
+        String path = Path;
+        boolean isInserted = mydb.insertDataDownload(title,time,path);
+        if(isInserted)
+        {
+            Toast.makeText(this, "Download Added", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(this, "Error adding Downloads", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
