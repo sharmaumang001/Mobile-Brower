@@ -7,11 +7,6 @@
         android:id="@+id/toggle_tab_switcher_menu_item"
         android:title="@string/toggle_tab_switcher_menu_item"
         app:actionLayout="@layout/tab_switcher_menu_item"
-        app:showAsAction="ifRoom"/>
-    <item
-        android:id="@+id/simplifiedView"
-        android:title="Simplified View"
-        android:icon="@drawable/ic_book"
         app:showAsAction="always"/>
     <item
         android:id="@+id/horizontalMenu"
