@@ -1,18 +1,20 @@
 package com.example.shmbrowser.Adapter
 
-import android.app.Activity
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shmbrowser.Activity.MainActivity
 import com.example.shmbrowser.Database.BookmarkEntity
-
+import com.example.shmbrowser.Database.Functions
 import com.example.shmbrowser.R
 
 class BookmarkRecyclerAdapter(val context: Context, val bookmarkList: List<BookmarkEntity>): RecyclerView.Adapter<BookmarkRecyclerAdapter.BookmarkViewHolder>(){
@@ -20,6 +22,7 @@ class BookmarkRecyclerAdapter(val context: Context, val bookmarkList: List<Bookm
         val name: TextView = view.findViewById(R.id.name)
         val url: TextView = view.findViewById(R.id.url)
         val recyclerItem: LinearLayout = view.findViewById(R.id.recyclerItem)
+        val delete: ImageButton = view.findViewById(R.id.delete)
     }
 
 
@@ -38,9 +41,31 @@ class BookmarkRecyclerAdapter(val context: Context, val bookmarkList: List<Bookm
         holder.url.text = list.siteUrl
         holder.recyclerItem.setOnClickListener {
             val intent = Intent(context , MainActivity::class.java)
-            val sharedPreferences = context.getSharedPreferences("url", Context.MODE_PRIVATE)
-            sharedPreferences.edit().putString("url", list.siteUrl).apply()
+            intent.putExtra("url", list.siteUrl)
             context.startActivity(intent)
+        }
+        holder.delete.setOnClickListener {
+            val builder = AlertDialog.Builder(context)
+            builder.setTitle("Delete")
+            builder.setMessage("Sure you want to delete bookmark?")
+            builder.setPositiveButton("Delete"){text, listner ->
+                val check = Functions.DBAsyncTask(context, bookmarkList[position], 2).execute().get()
+                if(check){
+                    Toast.makeText(context, "Bookmark Deleted", Toast.LENGTH_SHORT).show()
+                    notifyItemRemoved(position)
+                }
+                else{
+                    Toast.makeText(context, "Some error occurred", Toast.LENGTH_SHORT).show()
+                }
+            }
+            builder.setNegativeButton("Cancle"){text, listener ->
+                Toast.makeText(context, "Bookmark Not Deleted", Toast.LENGTH_SHORT).show()
+            }
+            builder.create()
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                builder.show().getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(context.getColor(R.color.colorPrimary))
+            }
+
         }
     }
 }

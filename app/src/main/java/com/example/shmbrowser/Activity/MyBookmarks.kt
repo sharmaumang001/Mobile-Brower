@@ -69,21 +69,22 @@ class MyBookmarks: AppCompatActivity() {
             searchList.clear()
             cancel.visibility = View.VISIBLE
             val name = search_bar.text.toString()
-            val bookmark = GetBookmarkByName(this@MyBookmarks, name).execute().get()
-            searchList.add(bookmark)
-            if(searchList.isEmpty()){
-                noBookMark.visibility = View.VISIBLE
-                star.visibility = View.VISIBLE
-                recyclerBookmarks.visibility = View.GONE
-            }
-            else{
-                recyclerAdapter = BookmarkRecyclerAdapter(this@MyBookmarks, searchList)
-                recyclerBookmarks.adapter = recyclerAdapter
-                recyclerBookmarks.layoutManager = layoutManager
-                recyclerAdapter.notifyDataSetChanged()
-                recyclerBookmarks.visibility = View.VISIBLE
-                noBookMark.visibility = View.GONE
-                star.visibility = View.GONE
+            if(name!=null) {
+                val bookmark = GetBookmarkByName(this@MyBookmarks, name).execute().get()
+                searchList.add(bookmark)
+                if (searchList.isEmpty()) {
+                    noBookMark.visibility = View.VISIBLE
+                    star.visibility = View.VISIBLE
+                    recyclerBookmarks.visibility = View.GONE
+                } else {
+                    recyclerAdapter = BookmarkRecyclerAdapter(this@MyBookmarks, searchList)
+                    recyclerBookmarks.adapter = recyclerAdapter
+                    recyclerBookmarks.layoutManager = layoutManager
+                    recyclerAdapter.notifyDataSetChanged()
+                    recyclerBookmarks.visibility = View.VISIBLE
+                    noBookMark.visibility = View.GONE
+                    star.visibility = View.GONE
+                }
             }
         }
 
@@ -100,7 +101,6 @@ class MyBookmarks: AppCompatActivity() {
                 recyclerBookmarks.visibility = View.GONE
             }
             else {
-                bookmarkList.addAll(list)
                 recyclerAdapter = BookmarkRecyclerAdapter(this@MyBookmarks, bookmarkList)
                 recyclerBookmarks.adapter = recyclerAdapter
                 recyclerBookmarks.layoutManager = layoutManager

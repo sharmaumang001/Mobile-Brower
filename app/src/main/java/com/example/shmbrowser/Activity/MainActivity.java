@@ -19,7 +19,6 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.RectF;
@@ -110,7 +109,6 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     List<Sites> mSitesList;
     SitesAdapter mAdapter;
     String Url;
-    SharedPreferences sharedPreferences;
     AdblockWebView adblockWebView;
     BookmarkEntity bookmarkEntity;
     ImageView  image;
@@ -580,7 +578,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                                         editUrl.setText(mWebView.getUrl());
                                         String url = mWebView.getUrl();
                                         if(url!=null){
-                                            bookmarkEntity = new BookmarkEntity(name, url);
+                                            bookmarkEntity = new BookmarkEntity(url, name);
                                             try {
                                                 Boolean check = new Functions.DBAsyncTask(MainActivity.this, bookmarkEntity, 1).execute().get();
                                                 if(check){
@@ -622,6 +620,8 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                                 });
                         builder.create();
                         builder.show().getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorPrimary));
+                        EditText editUrl = view.findViewById(R.id.bookmarkUrl);
+                        editUrl.setText(mWebView.getUrl());
                         return true;
 
                     case R.id.download:
@@ -922,13 +922,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        sharedPreferences = getSharedPreferences("url", Context.MODE_PRIVATE);
-        if(sharedPreferences!=null){
-            String url = sharedPreferences.getString("url", null);
-            if(url != null){
-                mWebView.loadUrl(url);
-            }
-        }
+
 
         decorator = new Decorator();
         tabSwitcher = findViewById(R.id.tab_switcher);
@@ -1114,4 +1108,5 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             Toast.makeText(this, "Error adding Downloads", Toast.LENGTH_SHORT).show();
         }
     }
+
 }
