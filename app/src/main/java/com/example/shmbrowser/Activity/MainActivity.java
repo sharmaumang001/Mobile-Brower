@@ -326,7 +326,6 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
 
                                 mWebView.setVisibility(View.VISIBLE);
                                 mRecyclerView.setVisibility(View.GONE);
-                                Toast.makeText(MainActivity.this, url, Toast.LENGTH_SHORT).show();
 
                                 if (url.contains(".")) {
 
