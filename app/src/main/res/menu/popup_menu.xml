@@ -58,9 +58,9 @@
         android:title="AdBlock"
         android:checkable="true"
         android:checked="true"/>
-    <item
+    <!--<item
         android:id="@+id/audioQueue"
-        android:title="Audio Queue"/>
+        android:title="Audio Queue"/>-->
     <item
         android:id="@+id/downloadVids"
         android:title="Download videos on this page"/>

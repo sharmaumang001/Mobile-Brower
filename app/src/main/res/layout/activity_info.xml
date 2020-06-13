@@ -7,12 +7,24 @@
     android:orientation="vertical"
     android:layout_height="match_parent"
     tools:context=".Activity.Info">
-    <ImageButton
-        android:id="@+id/backToMain"
-        android:layout_width="wrap_content"
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:src="@drawable/ic_arrowback"/>
+        android:padding="5dp">
+        <ImageButton
+            android:id="@+id/backToMain"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:src="@drawable/ic_arrowback"/>
+        <TextView
+            android:id="@+id/infoName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="About App"
+            android:textSize="20sp"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/coordinatorLayout"

@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:background="#F4F0F1"
                 android:layout_height="match_parent"
-                android:contentDescription="lot of things"
+                android:contentDescriptigon="lot of things"
                 android:padding="5dp"
                 app:srcCompat="@android:drawable/btn_dropdown" />
 

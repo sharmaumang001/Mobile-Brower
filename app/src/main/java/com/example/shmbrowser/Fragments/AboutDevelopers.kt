@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import com.example.shmbrowser.R
 
 class AboutDevelopers : Fragment() {
@@ -12,7 +13,7 @@ class AboutDevelopers : Fragment() {
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        val view = inflater.inflate(R.layout.fragment_about_developers, container, false)
-        return view
+
+        return inflater.inflate(R.layout.fragment_about_developers, container, false)
     }
 }

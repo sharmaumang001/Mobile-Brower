@@ -572,11 +572,11 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         }
                         return true;
 
-                    case R.id.audioQueue:
+                    /*case R.id.audioQueue:
                         intent = new Intent(MainActivity.this, MyAudioQueueActivity.class);
                         startActivity(intent);
                         finish();
-                        return true;
+                        return true;*/
 
                     case R.id.downloadVids:
                         // needs web scrapping
@@ -633,7 +633,6 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         return false;
                 }
             }
-
         };
     }
 

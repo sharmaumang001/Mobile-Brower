@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.example.shmbrowser.Fragments.AboutDevelopers
@@ -22,6 +23,7 @@ class Info : AppCompatActivity() {
     lateinit var aboutDevelopers: Button
     lateinit var backToMain: ImageButton
     lateinit var cardView: CardView
+    lateinit var infoName: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,6 +34,7 @@ class Info : AppCompatActivity() {
         aboutDevelopers = findViewById(R.id.aboutDevelopers)
         aboutSRP = findViewById(R.id.aboutSRP)
         cardView = findViewById(R.id.cardView)
+        infoName = findViewById(R.id.infoName)
 
         cardView.visibility = View.VISIBLE
 
@@ -44,6 +47,7 @@ class Info : AppCompatActivity() {
 
         aboutSRP.setOnClickListener {
             cardView.visibility = View.GONE
+            infoName.text = "About SRP"
             supportFragmentManager.beginTransaction()
                     .replace(
                             R.id.frame,
@@ -54,6 +58,7 @@ class Info : AppCompatActivity() {
 
         aboutDevelopers.setOnClickListener {
             cardView.visibility = View.GONE
+            infoName.text = "About Developers"
             supportFragmentManager.beginTransaction()
                     .replace(
                             R.id.frame,
@@ -67,6 +72,7 @@ class Info : AppCompatActivity() {
             when (frag) {
                 !is InfoFragment -> {
                     cardView.visibility = View.VISIBLE
+                    infoName.text = "About App"
                     supportFragmentManager.beginTransaction()
                             .replace(
                                     R.id.frame,
@@ -87,6 +93,7 @@ class Info : AppCompatActivity() {
         when (frag) {
             !is InfoFragment -> {
                 cardView.visibility = View.VISIBLE
+                infoName.text = "About App"
                 supportFragmentManager.beginTransaction()
                         .replace(
                                 R.id.frame,
