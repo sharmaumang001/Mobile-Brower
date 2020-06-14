@@ -52,7 +52,9 @@ class BookmarkRecyclerAdapter(val context: Context, val bookmarkList: List<Bookm
                 val check = Functions.DBAsyncTask(context, bookmarkList[position], 2).execute().get()
                 if(check){
                     Toast.makeText(context, "Bookmark Deleted", Toast.LENGTH_SHORT).show()
-                    notifyItemRemoved(position)
+                    holder.itemView.visibility= View.GONE
+                    notifyDataSetChanged()
+
                 }
                 else{
                     Toast.makeText(context, "Some error occurred", Toast.LENGTH_SHORT).show()
