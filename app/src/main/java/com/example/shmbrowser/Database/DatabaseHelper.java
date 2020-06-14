@@ -63,4 +63,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return downlist;
     }
+
+    public void deleteData(){
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.rawQuery("DROP TABLE "+Table_Download, null);
+    }
 }

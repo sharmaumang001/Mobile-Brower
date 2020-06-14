@@ -19,6 +19,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.RectF;
@@ -114,6 +115,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     ImageView  image;
     String mImageDownloadurl;
     DatabaseHelper mydb;
+    Bundle bundle;
 
 
 
@@ -631,6 +633,11 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         return true;
 
                     case R.id.info:
+                        builder = new AlertDialog.Builder(MainActivity.this);
+                        builder.setTitle("Website Info")
+                                .setMessage(mWebView.getUrl())
+                                .create()
+                                .show();
                         return true;
 
                     case R.id.refresh:
@@ -672,13 +679,16 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         return true;*/
 
                     case R.id.downloadVids:
-                        // needs web scrapping
+                        //
                         return true;
+
                     case R.id.clearData:
                         new Functions.delete(MainActivity.this).execute();
                         return true;
 
                     case R.id.erase:
+                        mydb = new DatabaseHelper(MainActivity.this);
+                        mydb.deleteData();
                         new Functions.delete(MainActivity.this).execute();
                         if (tabSwitcher.isSwitcherShown()) {
                             createRevealAnimation();
@@ -922,8 +932,6 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
         decorator = new Decorator();
         tabSwitcher = findViewById(R.id.tab_switcher);
         tabSwitcher.clearSavedStatesWhenRemovingTabs(false);
@@ -1108,5 +1116,4 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             Toast.makeText(this, "Error adding Downloads", Toast.LENGTH_SHORT).show();
         }
     }
-
 }

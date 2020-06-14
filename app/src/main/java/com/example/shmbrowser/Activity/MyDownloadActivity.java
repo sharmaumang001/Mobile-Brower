@@ -82,4 +82,10 @@ public class MyDownloadActivity extends AppCompatActivity {
                         R.id.customtimedownload});
         lview.setAdapter(lviewAdapter);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(MyDownloadActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
 }

@@ -13,8 +13,7 @@
         android:background="?attr/colorPrimaryDark"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_scrollFlags="scroll|enterAlways|snap"
-        app:title="Downloads"
-        >
+        app:title="Download History">
     </androidx.appcompat.widget.Toolbar>
     <ListView
         android:layout_height="wrap_content"

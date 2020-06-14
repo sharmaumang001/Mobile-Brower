@@ -3,6 +3,7 @@ package com.example.shmbrowser.Adapter
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -41,7 +42,6 @@ class BookmarkRecyclerAdapter(val context: Context, val bookmarkList: List<Bookm
         holder.url.text = list.siteUrl
         holder.recyclerItem.setOnClickListener {
             val intent = Intent(context , MainActivity::class.java)
-            intent.putExtra("url", list.siteUrl)
             context.startActivity(intent)
         }
         holder.delete.setOnClickListener {
