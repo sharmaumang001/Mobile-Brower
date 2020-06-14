@@ -29,18 +29,17 @@
             app:srcCompat="@drawable/ic_arrowback"
             android:layout_gravity="center"
             tools:ignore="MissingConstraints"
-            android:layout_weight="1"/>
+            android:layout_weight="0.5"/>
 
         <EditText
             android:id="@+id/search_bar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Mobile Bookmarks"
-            android:maxLength="20"
+            android:hint="Search Bookmarks"
             android:maxLines="1"
             app:layout_constraintEnd_toStartOf="@+id/search_button"
             tools:ignore="MissingConstraints"
-            android:layout_weight="7"/>
+            android:layout_weight="8.5"/>
 
 
         <ImageButton
@@ -49,14 +48,14 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_search"
             app:layout_constraintEnd_toStartOf="@+id/cancelButton_ID"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             />
 
         <ImageButton
             android:id="@+id/cancelButton_ID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
+            android:layout_weight="0.5"
             android:layout_gravity="center"
             app:srcCompat="@drawable/ic_cancel"
             tools:ignore="MissingConstraints" />
