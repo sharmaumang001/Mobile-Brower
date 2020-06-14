@@ -68,11 +68,11 @@
 
     <ImageView
         android:id="@+id/img"
-        android:layout_width="wrap_content"
-        android:layout_height="250dp"
         android:layout_marginTop="150dp"
-        android:src="@drawable/srp7"
-        android:visibility="visible" />
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
+        android:visibility="visible"
+        android:src="@drawable/srp7"/>
 
     <WebView
         android:id="@+id/webView_ID"

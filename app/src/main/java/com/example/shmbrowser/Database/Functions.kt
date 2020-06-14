@@ -19,11 +19,6 @@ interface Functions {
                     return true
                 }
 
-                3 -> {
-                    db.BookmarkDao().getByName(bookmark.siteUrl)
-                    return true
-                }
-
             }
             return false
         }

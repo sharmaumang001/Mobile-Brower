@@ -2,7 +2,6 @@ package com.example.shmbrowser.Activity
 
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.AsyncTask
 import android.os.Bundle
 import android.view.View
@@ -26,7 +25,6 @@ class MyBookmarks: AppCompatActivity() {
     lateinit var recyclerBookmarks: RecyclerView
     lateinit var layoutManager: RecyclerView.LayoutManager
     lateinit var recyclerAdapter: BookmarkRecyclerAdapter
-    lateinit var sharedPreferences: SharedPreferences
     val searchList = arrayListOf<BookmarkEntity>()
     val bookmarkList = arrayListOf<BookmarkEntity>()
 
@@ -69,22 +67,24 @@ class MyBookmarks: AppCompatActivity() {
             searchList.clear()
             cancel.visibility = View.VISIBLE
             val name = search_bar.text.toString()
-            if(name!=null) {
-                val bookmark = GetBookmarkByName(this@MyBookmarks, name).execute().get()
-                searchList.add(bookmark)
-                if (searchList.isEmpty()) {
-                    noBookMark.visibility = View.VISIBLE
-                    star.visibility = View.VISIBLE
-                    recyclerBookmarks.visibility = View.GONE
-                } else {
-                    recyclerAdapter = BookmarkRecyclerAdapter(this@MyBookmarks, searchList)
-                    recyclerBookmarks.adapter = recyclerAdapter
-                    recyclerBookmarks.layoutManager = layoutManager
-                    recyclerAdapter.notifyDataSetChanged()
-                    recyclerBookmarks.visibility = View.VISIBLE
-                    noBookMark.visibility = View.GONE
-                    star.visibility = View.GONE
+            val bookmark = GetAllBookmarks(this@MyBookmarks).execute().get()
+            for(i in bookmark.indices) {
+                if(bookmark[i].bookmarkName.contains(name, ignoreCase = true)||bookmark[i].siteUrl.contains(name, ignoreCase = true)){
+                    searchList.add(bookmark[i])
                 }
+            }
+            if (searchList.isEmpty()) {
+                noBookMark.visibility = View.VISIBLE
+                star.visibility = View.VISIBLE
+                recyclerBookmarks.visibility = View.GONE
+            } else {
+                recyclerAdapter = BookmarkRecyclerAdapter(this@MyBookmarks, searchList)
+                recyclerBookmarks.adapter = recyclerAdapter
+                recyclerBookmarks.layoutManager = layoutManager
+                recyclerAdapter.notifyDataSetChanged()
+                recyclerBookmarks.visibility = View.VISIBLE
+                noBookMark.visibility = View.GONE
+                star.visibility = View.GONE
             }
         }
 
@@ -101,6 +101,8 @@ class MyBookmarks: AppCompatActivity() {
                 recyclerBookmarks.visibility = View.GONE
             }
             else {
+                bookmarkList.clear()
+                bookmarkList.addAll(list)
                 recyclerAdapter = BookmarkRecyclerAdapter(this@MyBookmarks, bookmarkList)
                 recyclerBookmarks.adapter = recyclerAdapter
                 recyclerBookmarks.layoutManager = layoutManager
@@ -112,12 +114,6 @@ class MyBookmarks: AppCompatActivity() {
         }
     }
 
-    class GetBookmarkByName(val context: Context, val name:String): AsyncTask<Void, Void, BookmarkEntity>(){
-        private val db = Room.databaseBuilder(context, BookmarkDatabase::class.java, "bookmark-db").build()
-        override fun doInBackground(vararg params: Void?): BookmarkEntity {
-            return db.BookmarkDao().getByName(name)
-        }
-    }
 
     class GetAllBookmarks(val context: Context): AsyncTask<Void, Void, List<BookmarkEntity>>(){
         private val db = Room.databaseBuilder(context, BookmarkDatabase::class.java, "bookmark-db").build()
