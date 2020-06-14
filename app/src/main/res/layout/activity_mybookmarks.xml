@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="#ffffff"
     android:hapticFeedbackEnabled="true"
     android:orientation="vertical"
     tools:context=".Activity.MyBookmarks">
@@ -19,24 +19,27 @@
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="4dp"
-        tools:ignore="MissingConstraints">
+        tools:ignore="MissingConstraints"
+        android:weightSum="10">
 
         <ImageButton
             android:id="@+id/backButton_ID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:srcCompat="@drawable/ic_arrowback"
-            tools:ignore="MissingConstraints" />
+            tools:ignore="MissingConstraints"
+            android:layout_weight="1"/>
 
         <EditText
             android:id="@+id/search_bar"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:hint="Mobile bookmarks..."
+            android:hint="Mobile bookmarks"
             android:maxLength="20"
             android:maxLines="1"
             app:layout_constraintEnd_toStartOf="@+id/search_button"
-            tools:ignore="MissingConstraints"/>
+            tools:ignore="MissingConstraints"
+            android:layout_weight="7"/>
 
 
         <ImageButton
@@ -45,16 +48,16 @@
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_search"
             app:layout_constraintEnd_toStartOf="@+id/cancelButton_ID"
+            android:layout_weight="1"
             />
 
         <ImageButton
             android:id="@+id/cancelButton_ID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:layout_weight="1"
             app:srcCompat="@drawable/ic_cancel"
-            tools:ignore="MissingConstraints"
-            android:layout_marginLeft="25dp"/>
+            tools:ignore="MissingConstraints" />
     </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
@@ -73,9 +76,9 @@
         android:id="@+id/star_imageview"
         android:layout_width="match_parent"
         android:layout_height="133dp"
-        android:src="@android:drawable/btn_star"
-        tools:ignore="MissingConstraints"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="250dp"
+        android:src="@android:drawable/btn_star" />
 
     <TextView
         android:id="@+id/nobookmark_textview"
@@ -84,5 +87,8 @@
         android:text="No bookmarks here"
         tools:ignore="MissingConstraints"
         app:layout_constraintTop_toBottomOf="@+id/star_imageview"
-        android:layout_gravity="center_horizontal"/>
+        android:layout_gravity="center_horizontal"
+        />
+
+
 </LinearLayout>

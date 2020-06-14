@@ -3,7 +3,7 @@
 
 <resources>
 
-    <string name="app_name">SHM Browser</string>
+    <string name="app_name">SRP Browser</string>
     <string name="toggle_tab_switcher_menu_item">Toggle switcher</string>
     <string name="remove_tab_menu_item">Remove tab</string>
     <string name="add_tab_menu_item">New tab</string>

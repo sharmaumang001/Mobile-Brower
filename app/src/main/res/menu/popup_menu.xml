@@ -56,9 +56,9 @@
     <!--<item
         android:id="@+id/audioQueue"
         android:title="Audio Queue"/>-->
-    <item
-        android:id="@+id/downloadVids"
-        android:title="Download videos on this page"/>
+<!--    <item-->
+<!--        android:id="@+id/downloadVids"-->
+<!--        android:title="Download videos on this page"/>-->
     <item
         android:id="@+id/clearData"
         android:title="Clear Data"/>
@@ -72,9 +72,11 @@
         android:checkable="true"
         android:id="@+id/desktopSite"
         android:title="Desktop Site"/>
-    <item
-        android:id="@+id/settings_menu_item"
-        android:title="Settings"/>
+
+<!--    <item-->
+<!--        android:id="@+id/settings_menu_item"-->
+<!--        android:title="Settings"/>-->
+
     <item
         android:id="@+id/appInfo"
         android:title="About App"/>

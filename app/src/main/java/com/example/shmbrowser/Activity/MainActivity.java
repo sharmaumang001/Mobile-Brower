@@ -115,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     ImageView  image;
     String mImageDownloadurl;
     DatabaseHelper mydb;
-    Bundle bundle;
 
 
 
@@ -678,9 +677,9 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         finish();
                         return true;*/
 
-                    case R.id.downloadVids:
-                        //
-                        return true;
+//                    case R.id.downloadVids:
+//                        //
+//                        return true;
 
                     case R.id.clearData:
                         new Functions.delete(MainActivity.this).execute();
@@ -715,9 +714,9 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         }
                         return true;
 
-                    case R.id.settings_menu_item:
-                        //add settings page
-                        return true;
+//                    case R.id.settings_menu_item:
+//                        //add settings page
+//                        return true;
 
                     case R.id.appInfo:
                         intent = new Intent(MainActivity.this, Info.class);
@@ -949,7 +948,9 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         tabSwitcher.setToolbarNavigationIcon(R.drawable.ic_plus_24dp, createAddTabListener());
         TabSwitcher.setupWithMenu(tabSwitcher, createTabSwitcherButtonListener());
         inflateMenu();
+
         //Runtime External storage permission for saving download files
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
             if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_DENIED) {
