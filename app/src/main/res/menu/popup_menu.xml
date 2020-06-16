@@ -11,6 +11,7 @@
     <item
         android:id="@+id/horizontalMenu"
         android:title=""
+        app:actionLayout="@layout/popup_horizontal"
         android:orderInCategory="0">
         <menu>
             <item
@@ -45,6 +46,11 @@
         android:title="@string/add_tab_menu_item"
         app:showAsAction="never"/>
     <item
+        android:id="@+id/incognito"
+        android:title="Incognito Mode"
+        android:checkable="true"
+        android:checked="false"/>
+    <item
         android:id="@+id/bookmark"
         android:title="Bookmarks" />
 
@@ -53,6 +59,10 @@
         android:title="AdBlock"
         android:checkable="true"
         android:checked="true"/>
+    <item
+        android:id="@+id/history"
+        android:title="History"/>
+
     <!--<item
         android:id="@+id/audioQueue"
         android:title="Audio Queue"/>-->

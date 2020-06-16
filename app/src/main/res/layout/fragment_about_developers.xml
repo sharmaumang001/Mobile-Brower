@@ -98,7 +98,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Siddhartha"
+                android:text="Siddharth Maurya"
                 android:textSize="20sp"
                 android:textStyle="bold"/>
             <TextView
@@ -108,7 +108,7 @@
                 android:layout_height="wrap_content"
                 android:autoLink="all"
                 android:linksClickable="true"
-                android:text=""
+                android:text="www.linkedin.com/in/siddharth-maurya-2792401aa"
                 android:textColorLink="#0645AD"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>

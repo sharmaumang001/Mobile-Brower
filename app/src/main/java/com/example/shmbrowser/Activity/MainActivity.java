@@ -19,7 +19,6 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.RectF;
@@ -57,7 +56,9 @@ import com.example.shmbrowser.Adapter.RecyclerViewClicklistner;
 import com.example.shmbrowser.Adapter.SitesAdapter;
 import com.example.shmbrowser.Database.BookmarkEntity;
 import com.example.shmbrowser.Database.DatabaseHelper;
-import com.example.shmbrowser.Database.Functions;
+import com.example.shmbrowser.Database.FunctionsBookmark;
+import com.example.shmbrowser.Database.FunctionsHistory;
+import com.example.shmbrowser.Database.HistoryEntity;
 import com.example.shmbrowser.Model.Sites;
 import com.example.shmbrowser.utility.MyNetworkState;
 import com.example.shmbrowser.utility.MyWebViewClient;
@@ -65,7 +66,6 @@ import com.example.shmbrowser.R;
 import com.google.android.material.snackbar.BaseTransientBottomBar;
 import com.google.android.material.snackbar.Snackbar;
 
-import org.adblockplus.libadblockplus.android.webview.AdblockWebView;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
@@ -110,11 +110,12 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     List<Sites> mSitesList;
     SitesAdapter mAdapter;
     String Url;
-    AdblockWebView adblockWebView;
     BookmarkEntity bookmarkEntity;
+    HistoryEntity historyEntity;
     ImageView  image;
     String mImageDownloadurl;
     DatabaseHelper mydb;
+    Boolean check = true;
 
 
 
@@ -137,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         public boolean onLoadData(
                 @NonNull final AbstractDataBinder<ArrayAdapter<String>, Tab, ListView, Void> dataBinder,
                 @NonNull final Tab key, @NonNull final Void... params) {
+            history(check);
             return true;
         }
 
@@ -244,9 +246,6 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             mRecyclerView = findViewById(R.id.shortcutlinks_recycler);
             image = findViewById(R.id.img);
 
-            // adBlock
-            adblockWebView = findViewById(R.id.adBlock);
-            adblockWebView.setAdblockEnabled(true);
 
             //proxy
             /*System.setProperty("http.proxyHost", "127.0.0.1");    change proxy ip and port
@@ -287,6 +286,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     mWebView.getSettings().setJavaScriptEnabled(true);
                     mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
                     mWebView.loadUrl(Url);
+                    history(check);
                     image.setVisibility(View.GONE);
                 }
             };
@@ -346,7 +346,11 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                 }
             });
 
-            mWebView.setWebViewClient(new MyWebViewClient());
+            mWebView.setWebViewClient(new MyWebViewClient(){
+                public void onPageFinished(WebView view, String url) {
+                history(check);
+                }
+            });
 
 
             mUrlText.setOnKeyListener(new View.OnKeyListener() {
@@ -371,12 +375,14 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                                     inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
 
                                     mWebView.loadUrl("https://" + url);
+                                    history(check);
                                     image.setVisibility(View.GONE);
-                                    mUrlText.setText("");
+                                    mUrlText.setText(mWebView.getUrl());
                                 } else {
                                     InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                                     inputMethodManager.hideSoftInputFromWindow(mUrlText.getWindowToken(), 0);
                                     mWebView.loadUrl("https://www.google.com/search?q=" + url);
+                                    history(check);
                                     image.setVisibility(View.GONE);
                                     mUrlText.setText("");
                                 }
@@ -413,7 +419,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                             }
                         }else{
                             mWebView.loadUrl("about:blank");
-
+                            history(check);
                             mRecyclerView.setVisibility(View.VISIBLE);
                             image.setVisibility(View.VISIBLE);
                             mWebView.setVisibility(View.GONE);
@@ -458,7 +464,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     mRecyclerView.setAdapter(mAdapter);
 
                     mWebView.loadUrl("about:blank");
-
+                    history(check);
 
                     mRecyclerView.setVisibility(View.VISIBLE);
                     image.setVisibility(View.VISIBLE);
@@ -562,7 +568,6 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
 
             @Override
             public boolean onMenuItemClick(final MenuItem item) {
-
                 switch (item.getItemId()) {
                     case R.id.setbookmark:
                         AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
@@ -581,7 +586,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                                         if(url!=null){
                                             bookmarkEntity = new BookmarkEntity(url, name);
                                             try {
-                                                Boolean check = new Functions.DBAsyncTask(MainActivity.this, bookmarkEntity, 1).execute().get();
+                                                Boolean check = new FunctionsBookmark.DBAsyncTask(MainActivity.this, bookmarkEntity, 1).execute().get();
                                                 if(check){
                                                     Toast.makeText(
                                                             MainActivity.this,
@@ -654,6 +659,19 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         }
                         return true;
 
+                    case R.id.incognito:
+                        if(item.isChecked()){
+                            item.setChecked(false);
+                            check = true;
+                        }
+                        else{
+                            item.setChecked(true);
+                            check = false;
+                            Toast.makeText(MainActivity.this, "Incognito Mode", Toast.LENGTH_LONG).show();
+                        }
+                        return true;
+
+
                     case R.id.bookmark:
                         intent = new Intent(MainActivity.this, MyBookmarks.class);
                         startActivity(intent);
@@ -661,14 +679,17 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         return true;
 
                     case R.id.btnAdBlock:
-                        if(adblockWebView.isAdblockEnabled()){
-                            adblockWebView.setAdblockEnabled(false);
+                        if(item.isChecked()){
                             item.setChecked(false);
                         }
                         else{
-                            adblockWebView.setAdblockEnabled(true);
                             item.setChecked(true);
                         }
+                        return true;
+
+                    case R.id.history:
+                        startActivity(new Intent(MainActivity.this, BrowserHistoryActivity.class));
+                        finish();
                         return true;
 
                     /*case R.id.audioQueue:
@@ -682,13 +703,17 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
 //                        return true;
 
                     case R.id.clearData:
-                        new Functions.delete(MainActivity.this).execute();
+                        new FunctionsHistory.ClearData(MainActivity.this).execute();
+                        new FunctionsBookmark.delete(MainActivity.this).execute();
+                        mydb = new DatabaseHelper(MainActivity.this);
+                        mydb.deleteData();
                         return true;
 
                     case R.id.erase:
+                        new FunctionsHistory.ClearData(MainActivity.this).execute();
                         mydb = new DatabaseHelper(MainActivity.this);
                         mydb.deleteData();
-                        new Functions.delete(MainActivity.this).execute();
+                        new FunctionsBookmark.delete(MainActivity.this).execute();
                         if (tabSwitcher.isSwitcherShown()) {
                             createRevealAnimation();
                         }
@@ -995,7 +1020,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                 }
             }else{
                 mWebView.loadUrl("about:blank");
-
+                history(check);
                 mRecyclerView.setVisibility(View.VISIBLE);
                 image.setVisibility(View.VISIBLE);
                 mWebView.setVisibility(View.GONE);
@@ -1101,20 +1126,33 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         return true;
     }
 
-    public void addDownload(String Title,String Time,String Path)
-    {
+    public void addDownload(String Title,String Time,String Path) {
 
         String title = Title;
         String time = Time;
         String path = Path;
-        boolean isInserted = mydb.insertDataDownload(title,time,path);
-        if(isInserted)
-        {
+        boolean isInserted = mydb.insertDataDownload(title, time, path);
+        if (isInserted) {
             Toast.makeText(this, "Download Added", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        } else {
             Toast.makeText(this, "Error adding Downloads", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+
+    public void history(Boolean check){
+        if(!mWebView.getUrl().equals("about:blank")){
+            try {
+                Integer id = new FunctionsHistory.Count(MainActivity.this).execute().get();
+                if (check) {
+                    id = id+1;
+                    historyEntity = new HistoryEntity(id, mWebView.getUrl());
+                    new FunctionsHistory.DBAsyncTask(MainActivity.this, historyEntity, 1).execute().get();
+                }
+            } catch (ExecutionException | InterruptedException e) {
+                e.printStackTrace();
+                Toast.makeText(MainActivity.this, "Count Error", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

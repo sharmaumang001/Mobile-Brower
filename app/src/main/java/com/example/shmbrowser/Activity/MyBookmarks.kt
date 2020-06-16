@@ -94,7 +94,7 @@ class MyBookmarks: AppCompatActivity() {
         }
 
         cancel.setOnClickListener {
-
+            val list = GetAllBookmarks(this@MyBookmarks).execute().get()
             if(list.isEmpty()){
                 noBookMark.visibility = View.VISIBLE
                 star.visibility = View.VISIBLE

@@ -3,7 +3,6 @@ package com.example.shmbrowser.Adapter
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.shmbrowser.Activity.MainActivity
 import com.example.shmbrowser.Database.BookmarkEntity
-import com.example.shmbrowser.Database.Functions
+import com.example.shmbrowser.Database.FunctionsBookmark
 import com.example.shmbrowser.R
 
 class BookmarkRecyclerAdapter(val context: Context, val bookmarkList: List<BookmarkEntity>): RecyclerView.Adapter<BookmarkRecyclerAdapter.BookmarkViewHolder>(){
@@ -49,7 +48,7 @@ class BookmarkRecyclerAdapter(val context: Context, val bookmarkList: List<Bookm
             builder.setTitle("Delete")
             builder.setMessage("Sure you want to delete bookmark?")
             builder.setPositiveButton("Delete"){text, listner ->
-                val check = Functions.DBAsyncTask(context, bookmarkList[position], 2).execute().get()
+                val check = FunctionsBookmark.DBAsyncTask(context, bookmarkList[position], 2).execute().get()
                 if(check){
                     Toast.makeText(context, "Bookmark Deleted", Toast.LENGTH_SHORT).show()
                     notifyItemRemoved(position)

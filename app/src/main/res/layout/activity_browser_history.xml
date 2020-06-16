@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activity.BrowserHistoryActivity"
+    android:padding="5dp">
+    
+    <ImageButton
+        android:id="@+id/back"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:src="@drawable/ic_arrowback"
+        android:background="@android:color/white"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Browser History"
+        android:textColor="@android:color/black"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:paddingStart="10dp"
+        android:layout_toEndOf="@+id/back"/>
+    <Button
+        android:id="@+id/clearData"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Clear History"
+        android:background="@drawable/clearhistorybg"
+        android:padding="10dp"
+        android:layout_below="@+id/back"
+        android:layout_centerHorizontal="true"/>
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/clearData">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerHistory"
+            android:layout_width="match_parent"
+            android:padding="5dp"
+            android:layout_height="wrap_content"/>
+    </ScrollView>
+    <TextView
+        android:id="@+id/texthistory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No History"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        android:layout_centerInParent="true"/>
+
+</RelativeLayout>

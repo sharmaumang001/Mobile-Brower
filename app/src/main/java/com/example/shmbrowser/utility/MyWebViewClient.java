@@ -3,6 +3,9 @@ package com.example.shmbrowser.utility;
 import android.webkit.CookieManager;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
+
+import com.example.shmbrowser.Activity.MainActivity;
 
 public class MyWebViewClient extends WebViewClient {
 
