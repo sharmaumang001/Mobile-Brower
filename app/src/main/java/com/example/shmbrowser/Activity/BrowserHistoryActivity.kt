@@ -48,10 +48,12 @@ class BrowserHistoryActivity : AppCompatActivity() {
         }
 
         clearData.setOnClickListener {
-            FunctionsHistory.ClearData(this@BrowserHistoryActivity).execute()
-            recyclerAdapter.notifyDataSetChanged()
-            texthistory.visibility = View.VISIBLE
-            scrollView.visibility = View.GONE
+            if(list.isNotEmpty()) {
+                FunctionsHistory.ClearData(this@BrowserHistoryActivity).execute()
+                recyclerAdapter.notifyDataSetChanged()
+                texthistory.visibility = View.VISIBLE
+                scrollView.visibility = View.GONE
+            }
         }
 
         back.setOnClickListener {

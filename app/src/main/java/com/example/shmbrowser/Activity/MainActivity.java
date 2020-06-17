@@ -12,8 +12,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.Manifest;
 import android.app.DownloadManager;
 import android.content.Context;
@@ -24,8 +24,9 @@ import android.graphics.Color;
 import android.graphics.RectF;
 import android.net.Uri;
 import android.os.Build;
+import com.example.shmbrowser.Database.Functions;
 import android.os.Bundle;
-
+import android.content.SharedPreferences;
 import android.os.Environment;
 import android.util.Log;
 import android.view.ContextMenu;
@@ -41,12 +42,17 @@ import android.webkit.DownloadListener;
 import android.webkit.MimeTypeMap;
 import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
+
+import org.adblockplus.libadblockplus.android.webview.AdblockWebView;
 
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -107,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     ProgressBar mProgressBar;
     ImageButton mBackButton, mForwardButton, mStopButton, mRefreshButton, mHomeButton;
     RecyclerView mRecyclerView;
+    AdblockWebView adblockWebView;
     List<Sites> mSitesList;
     SitesAdapter mAdapter;
     String Url;
@@ -246,11 +253,13 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             mRecyclerView = findViewById(R.id.shortcutlinks_recycler);
             image = findViewById(R.id.img);
 
+             // adBlock
+//           adblockWebView = findViewById(R.id.adBlock);
+//             adblockWebView.setAdblockEnabled(true);
 
-            //proxy
-            /*System.setProperty("http.proxyHost", "127.0.0.1");    change proxy ip and port
+	            /*System.setProperty("http.proxyHost", "127.0.0.1");
+              change proxy ip and port
             System.setProperty("http.proxyPort", "8080");*/
-
 
             mSitesList = new ArrayList<>();
             Sites sites = new Sites("https://www.google.com/","Google",R.drawable.ic_google);
@@ -285,7 +294,12 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     mWebView.getSettings().setLoadsImagesAutomatically(true);
                     mWebView.getSettings().setJavaScriptEnabled(true);
                     mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+
+                    mWebView.setWebViewClient(new Browser_Home());
+                    mWebView.setWebChromeClient(new ChromeClient());
+                    WebSettings webSettings = mWebView.getSettings();
                     mWebView.loadUrl(Url);
+                    mUrlText.setText(mWebView.getUrl());
                     history(check);
                     image.setVisibility(View.GONE);
                 }
@@ -340,14 +354,12 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                                     File path = new File(Environment.getExternalStorageDirectory() + "/" + Environment.DIRECTORY_DOWNLOADS + "/" + filename);
                                     addDownload(filename,sdf.format(new Date()),String.valueOf(path));
 
-
-
-
                 }
             });
 
             mWebView.setWebViewClient(new MyWebViewClient(){
                 public void onPageFinished(WebView view, String url) {
+                    mUrlText.setText(view.getUrl());
                 history(check);
                 }
             });
@@ -368,6 +380,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
 
                                 mWebView.setVisibility(View.VISIBLE);
                                 mRecyclerView.setVisibility(View.GONE);
+                                mUrlText.setText(mWebView.getUrl());
 
                                 if (url.contains(".")) {
 
@@ -384,7 +397,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                                     mWebView.loadUrl("https://www.google.com/search?q=" + url);
                                     history(check);
                                     image.setVisibility(View.GONE);
-                                    mUrlText.setText("");
+                                    mUrlText.setText(mWebView.getUrl());
                                 }
                             }
 
@@ -414,6 +427,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                                 mRecyclerView.setVisibility(View.VISIBLE);
                                 image.setVisibility(View.VISIBLE);
                                 mWebView.setVisibility(View.GONE);
+                                mUrlText.setText("");
                             }else {
                                 mWebView.goBack();
                             }
@@ -425,6 +439,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                             mWebView.setVisibility(View.GONE);
                             mWebView.clearCache(true);
                             mWebView.clearHistory();
+                            mUrlText.setText("");
                         }
 
                     }
@@ -471,6 +486,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     mWebView.setVisibility(View.GONE);
                     mWebView.clearCache(true);
                     mWebView.clearHistory();
+                    mUrlText.setText("");
                     Toast.makeText(MainActivity.this, "HOME", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -478,8 +494,6 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
 
 
         }
-
-
 
 
         @Override
@@ -678,11 +692,13 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         finish();
                         return true;
 
-                    case R.id.btnAdBlock:
-                        if(item.isChecked()){
+                        case R.id.btnAdBlock:
+                        if(adblockWebView.isAdblockEnabled()){
+                            adblockWebView.setAdblockEnabled(false);
                             item.setChecked(false);
                         }
                         else{
+                            adblockWebView.setAdblockEnabled(true);
                             item.setChecked(true);
                         }
                         return true;
@@ -1126,16 +1142,72 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         return true;
     }
 
-    public void addDownload(String Title,String Time,String Path) {
+   public void addDownload(String Title,String Time,String Path)
+    {
 
         String title = Title;
         String time = Time;
         String path = Path;
-        boolean isInserted = mydb.insertDataDownload(title, time, path);
-        if (isInserted) {
+        boolean isInserted = mydb.insertDataDownload(title,time,path);
+        if(isInserted)
+        {
             Toast.makeText(this, "Download Added", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(this, "Error adding Downloads", Toast.LENGTH_SHORT).show();
+        }
+    }
+    class Browser_Home extends WebViewClient {
+        Browser_Home(){}
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+        }
+    }
+
+    class ChromeClient extends WebChromeClient {
+        private View mCustomView;
+        private WebChromeClient.CustomViewCallback mCustomViewCallback;
+        protected FrameLayout mFullscreenContainer;
+        private int mOriginalOrientation;
+        private int mOriginalSystemUiVisibility;
+
+        ChromeClient() {}
+
+        public Bitmap getDefaultVideoPoster()
+        {
+            if (mCustomView == null) {
+                return null;
+            }
+            return BitmapFactory.decodeResource(getApplicationContext().getResources(), 2130837573);
+        }
+
+        public void onHideCustomView()
+        {
+            ((FrameLayout)getWindow().getDecorView()).removeView(this.mCustomView);
+            this.mCustomView = null;
+            getWindow().getDecorView().setSystemUiVisibility(this.mOriginalSystemUiVisibility);
+            setRequestedOrientation(this.mOriginalOrientation);
+            this.mCustomViewCallback.onCustomViewHidden();
+            this.mCustomViewCallback = null;
+        }
+
+        public void onShowCustomView(View paramView, WebChromeClient.CustomViewCallback paramCustomViewCallback)
+        {
+            if (this.mCustomView != null)
+            {
+                onHideCustomView();
+                return;
+            }
+            this.mCustomView = paramView;
+            this.mOriginalSystemUiVisibility = getWindow().getDecorView().getSystemUiVisibility();
+            this.mOriginalOrientation = getRequestedOrientation();
+            this.mCustomViewCallback = paramCustomViewCallback;
+            ((FrameLayout)getWindow().getDecorView()).addView(this.mCustomView, new FrameLayout.LayoutParams(-1, -1));
+            getWindow().getDecorView().setSystemUiVisibility(3846 | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
         }
     }
 
