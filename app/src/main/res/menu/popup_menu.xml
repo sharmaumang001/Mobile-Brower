@@ -83,6 +83,10 @@
         android:id="@+id/desktopSite"
         android:title="Desktop Site"/>
 
+    <item
+        android:id="@+id/donate"
+        android:title="Donate"/>
+
 <!--    <item-->
 <!--        android:id="@+id/settings_menu_item"-->
 <!--        android:title="Settings"/>-->

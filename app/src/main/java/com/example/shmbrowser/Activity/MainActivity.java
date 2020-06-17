@@ -12,6 +12,8 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.Manifest;
@@ -294,7 +296,6 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                     mWebView.getSettings().setLoadsImagesAutomatically(true);
                     mWebView.getSettings().setJavaScriptEnabled(true);
                     mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
-
                     mWebView.setWebViewClient(new Browser_Home());
                     mWebView.setWebChromeClient(new ChromeClient());
                     WebSettings webSettings = mWebView.getSettings();
@@ -765,6 +766,21 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         finish();
                         return true;
 
+                    case R.id.donate:
+                        mWebView.loadUrl("https://milaap.org/fundraisers/support-pulkit-gupta");
+                        mRecyclerView.setVisibility(View.GONE);
+                        mWebView.setVisibility(View.VISIBLE);
+                        mWebView.getSettings().setLoadsImagesAutomatically(true);
+                        mWebView.getSettings().setJavaScriptEnabled(true);
+                        mWebView.setScrollBarStyle(View.SCROLLBARS_INSIDE_OVERLAY);
+
+                        mWebView.setWebViewClient(new Browser_Home());
+                        mWebView.setWebChromeClient(new ChromeClient());
+                        mUrlText.setText(mWebView.getUrl());
+                        history(check);
+                        image.setVisibility(View.GONE);
+                        return true;
+
                     case R.id.exit:
                         finishAffinity();
 
@@ -1120,10 +1136,10 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         });
             }
         }
-        else
-        {
-            Toast.makeText(this, "Error Downloading", Toast.LENGTH_SHORT).show();
-        }
+//        else
+//        {
+//            Toast.makeText(this, "Error Downloading", Toast.LENGTH_SHORT).show();
+//        }
     }
 
     public static boolean hasPermission(Context context, String... permissions)
@@ -1152,6 +1168,8 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
         if(isInserted)
         {
             Toast.makeText(this, "Download Added", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(this, "Error Downloading", Toast.LENGTH_SHORT).show();
         }
     }
     class Browser_Home extends WebViewClient {
@@ -1227,4 +1245,5 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             }
         }
     }
+
 }
