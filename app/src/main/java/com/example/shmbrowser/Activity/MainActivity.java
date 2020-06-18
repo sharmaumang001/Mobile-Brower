@@ -776,6 +776,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
 
                         mWebView.setWebViewClient(new Browser_Home());
                         mWebView.setWebChromeClient(new ChromeClient());
+                        WebSettings webSettings = mWebView.getSettings();
                         mUrlText.setText(mWebView.getUrl());
                         history(check);
                         image.setVisibility(View.GONE);
