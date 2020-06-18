@@ -80,7 +80,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight=".99"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="10dp">
+
+        <org.adblockplus.libadblockplus.android.webview.AdblockWebView
+            android:id="@+id/adBlock"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"
+            />
+
+
+    </WebView>
 
     <LinearLayout
 

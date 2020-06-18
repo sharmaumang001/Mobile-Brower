@@ -255,9 +255,9 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             mRecyclerView = findViewById(R.id.shortcutlinks_recycler);
             image = findViewById(R.id.img);
 
-             // adBlock
-//           adblockWebView = findViewById(R.id.adBlock);
-//             adblockWebView.setAdblockEnabled(true);
+              //adBlock
+           adblockWebView = findViewById(R.id.adBlock);
+             adblockWebView.setAdblockEnabled(true);
 
 	            /*System.setProperty("http.proxyHost", "127.0.0.1");
               change proxy ip and port
