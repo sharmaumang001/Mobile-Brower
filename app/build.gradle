@@ -5,12 +5,19 @@ apply plugin: 'kotlin-kapt'
 
 
 android {
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
 
     defaultConfig {
-        applicationId "com.example.shmbrowser"
+        applicationId "com.sharmaumang001.srpbrowser"
         minSdkVersion 22
         targetSdkVersion 29
         versionCode 1
