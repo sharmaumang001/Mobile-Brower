@@ -46,7 +46,7 @@ git https://github.com/sharmaumang001/Mobile-Brower
 2.  Follew the dialog wizard to choose the folder where you cloned the project and click on open.
 3.  Android Studio imports the projects and builds it for you
 
-## 🧐Code of Conduct
+## 🧐 Code of Conduct
 You can find our Code of Conduct [here](https://github.com/sharmaumang001/Mobile-Brower/blob/master/CODE_OF_CONDUCT.md).
 
 ## 💥 How to Contribute ?
