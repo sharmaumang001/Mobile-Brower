@@ -1,6 +1,6 @@
 <p align="center">
     <a>
-    <img src="app/src/main/ic_launcher-playstore.png" width="200" height="200"/>
+    <img src="ic_launcher-playstore-removebg-preview.png" width="200" height="200"/>
     </a>
     <h1 align="center">Mobile-Brower</h1>
 </p>
