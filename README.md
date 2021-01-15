@@ -9,9 +9,9 @@
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 [![API](https://img.shields.io/badge/API-21%2B-yellow?style=for-the-badge)](https://android-arsenal.com/api?level=21)
 [![WORKFLOWS](https://img.shields.io/badge/Android%20CI-passing-green?style=for-the-badge)](https://github.com/sharmaumang001/Mobile-Brower/actions)
-[![Stargazers](https://img.shields.io/github/stars/thinktocode/COVID-19-Tracker?style=for-the-badge)](https://github.com/sharmaumang001/Mobile-Brower/stargazers)
-[![Issues](https://img.shields.io/github/issues/thinktocode/COVID-19-Tracker?style=for-the-badge)](https://github.com/sharmaumang001/Mobile-Brower/issues)
-[![Contributors](https://img.shields.io/github/contributors/thinktocode/COVID-19-Tracker?style=for-the-badge)](https://img.shields.io/github/contributors/sharmaumang001/Mobile-Brower)
+[![Stargazers](https://img.shields.io/github/stars/sharmaumang001/Mobile-Brower?style=for-the-badge)](https://github.com/sharmaumang001/Mobile-Brower/stargazers)
+[![Issues](https://img.shields.io/github/issues/sharmaumang001/Mobile-Brower?style=for-the-badge)](https://github.com/sharmaumang001/Mobile-Brower/issues)
+[![Contributors](https://img.shields.io/github/contributors/sharmaumang001/Mobile-Brower?style=for-the-badge)](https://img.shields.io/github/contributors/sharmaumang001/Mobile-Brower)
 [![Forks](https://img.shields.io/github/forks/sharmaumang001/Mobile-Brower?style=for-the-badge)](https://github.com/sharmaumang001/Mobile-Brower/network/members)
 
 ## 🌟 About
