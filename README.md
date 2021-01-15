@@ -26,7 +26,13 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites
 *   Android Studio 3.2+
 *   Java JDK
+*   Kotlin
 
+### Live App 
+Test or Use the app by downloading it through Playstore
+```
+https://play.google.com/store/apps/details?id=com.sharmaumang001.srpbrowser&hl=en&gl=US
+```
 ### Installing
 Follow these steps if you want to get a local copy of the project on your machine.
 
