@@ -69,7 +69,7 @@ Checkout the contributing file [here](https://github.com/sharmaumang001/Mobile-B
 
 
 
-
+<!---
 ## 📃 Libraries used
 - [Kotlin](https://kotlinlang.org/) - First class and official programming language for Android development.
 - [Coroutines](https://kotlinlang.org/docs/reference/coroutines-overview.html) - For asynchronous and more..
@@ -85,78 +85,23 @@ Checkout the contributing file [here](https://github.com/sharmaumang001/Mobile-B
 - [Retrofit](https://square.github.io/retrofit/) - A type-safe HTTP client for Android and Java.
 - [Coil-kt](https://coil-kt.github.io/coil/) - An image loading library for Android backed by Kotlin Coroutines.
 - [Material Components for Android](https://github.com/material-components/material-components-android) - Modular and customizable Material Design UI components for Android
+--->
 
-## Contributors 🌟
 
-Thanks goes to these wonderful people ✨✨:
-<table>
-   <!--   ROW 1 -->
-   <tr>  
-    <td align="center">
-        <a href="https://github.com/sharmaumang001">
-          <img src="https://avatars0.githubusercontent.com/u/57462562?s=460&u=903cf0db37d202f929f53569e5df571e4fa69552&v=4" width="100px" alt=""/><br />
-          <sub><b>sharmaumang001</b></sub>
-        </a><br />
-        <a href="https://github.com/sharmaumang001/Mobile-Brower/commits?author=sharmaumang001">
-            👑 Author
-        </a>
-      </td>
-    <td align="center">
-        <a href="https://github.com/codewithbenny">
-          <img src="https://avatars1.githubusercontent.com/u/64968577?s=460&u=0b0908a6072af27a5e12b638ab61cda87ab0fb8a&v=4" width="100px" alt=""/><br />
-          <sub><b>codewithbenny</b></sub>
-        </a><br />
-        <a href="https://github.com/sharmaumang001/Mobile-Brower/commits?author=namanbirsingh">
-            💻
-        </a>
-      </td>
-    <td align="center">
-        <a href="https://github.com/yashas-hm">
-          <img src="https://avatars3.githubusercontent.com/u/64674824?s=460&u=db2aef01328413b1df469cfd3d2a01910d49a4d3&v=4" width="100px" alt=""/><br />
-          <sub><b>yashas-hm</b></sub>
-        </a><br />
-        <a href="https://github.com/sharmaumang001/Mobile-Brower/commits?author=tharunc">
-            💻
-        </a>
-      </td>
-    <td align="center">
-        <a href="https://github.com/Sloth-Panda">
-          <img src="https://avatars2.githubusercontent.com/u/70213384?v=4" width="100px" alt=""/><br />
-          <sub><b>Sloth-Panda</b></sub>
-        </a><br />
-        <a href="https://github.com/sharmaumang001/Mobile-Brower/commits?author=Sloth-Panda">
-            💻
-        </a>
-      </td>
-       <td align="center">
-        <a href="https://github.com/Zircoz">
-          <img src="https://avatars0.githubusercontent.com/u/17019944?s=460&v=4" width="100px" alt=""/><br />
-          <sub><b>Zircoz</b></sub>
-        </a><br />
-        <a href="https://github.com/sharmaumang001/Mobile-Brower/commits?author=Zircoz">
-            💻
-        </a>
-      </td>
-   <td align="center">
-        <a href="https://github.com/akrish4">
-          <img src="https://avatars1.githubusercontent.com/u/61831021?s=460&u=31f7ece09fb07c20b3b97673f448e762dc0946b0&v=4" width="100px" alt=""/><br />
-          <sub><b>akrish4</b></sub>
-        </a><br />
-        <a href="https://github.com/sharmaumang001/Mobile-Brower/commits?author=akrish4">
-            💻
-        </a>
-      </td>
-    </tr>
-    <tr>
-    <td align="center">
-        <a href="https://github.com/siddharth2509">
-          <img src="https://avatars0.githubusercontent.com/u/53047308?s=460&u=ca536e62e9461103090e42219fb4ba1e14170e03&v=4" width="100px" alt=""/><br />
-          <sub><b>siddharth2509</b></sub>
-        </a><br />
-        <a href="https://github.com/sharmaumang001/Mobile-Brower/commits?author=siddharth2509">
-            💻
-        </a>
-      </td>
-    </tr>
-</table>
+## Connect with me  
 
+<div align="center">
+<a href="https://github.com/sharmaumang001" target="_blank">
+<img src=https://img.shields.io/badge/github-%2324292e.svg?&style=for-the-badge&logo=github&logoColor=white alt=github style="margin-bottom: 5px;" />
+</a>
+<a href="https://twitter.com/WahiLadka" target="_blank">
+<img src=https://img.shields.io/badge/twitter-%2300acee.svg?&style=for-the-badge&logo=twitter&logoColor=white alt=twitter style="margin-bottom: 5px;" />
+</a>
+<a href="https://www.linkedin.com/in/0729" target="_blank">
+<img src=https://img.shields.io/badge/linkedin-%231E77B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white alt=linkedin style="margin-bottom: 5px;" />
+</a> 
+<a href="sharmaumang001.github.io" target="_blank">
+<img src=https://img.shields.io/badge/WEBSITE-PORTFOLIO-brightgreen?&style=for-the-badge alt=website style="margin-bottom: 5px;" />
+</a> 
+</div> 
+    
