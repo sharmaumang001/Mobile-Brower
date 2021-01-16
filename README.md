@@ -14,6 +14,16 @@
 [![Contributors](https://img.shields.io/github/contributors/sharmaumang001/Mobile-Brower?style=for-the-badge)](https://img.shields.io/github/contributors/sharmaumang001/Mobile-Brower)
 [![Forks](https://img.shields.io/github/forks/sharmaumang001/Mobile-Brower?style=for-the-badge)](https://github.com/sharmaumang001/Mobile-Brower/network/members)
 
+
+## ✨ Screenshots
+
+| Main Screen | News Search |  News |
+|:-:|:-:|:-:|
+| ![Fist](media/img3.png?raw=true) | ![3](media/img2.png?raw=true) | ![3](media/img1.png?raw=true) |
+| Options |  SRP |  Feed |
+| ![4](media/img4.png?raw=true) | ![5](media/img5.png?raw=true) | ![6](media/img2.png?raw=true) |
+
+
 ## 🌟 About
 A full-fledged Mobile Browser.
 - Multi tab , Incognito mode and all basic features of an normal mobile browser
@@ -60,13 +70,6 @@ Checkout the contributing file [here](https://github.com/sharmaumang001/Mobile-B
     <img src="https://devscript.tech/woc/img/WOC-logo.png" width="30%">
 
 
-## ✨ Screenshots
-
-| Main Screen | News Search |  News |
-|:-:|:-:|:-:|
-| ![Fist](media/img3.png?raw=true) | ![3](media/img2.png?raw=true) | ![3](media/img1.png?raw=true) |
-| Options |  SRP |  Feed |
-| ![4](media/img4.png?raw=true) | ![5](media/img5.png?raw=true) | ![6](media/img2.png?raw=true) |
 
 
 ## 📃 Libraries used
@@ -119,11 +122,11 @@ Thanks goes to these wonderful people ✨✨:
         </a>
       </td>
     <td align="center">
-        <a href="https://github.com/Sloth-Panda">
-          <img src="https://avatars2.githubusercontent.com/u/70213384?v=4" width="100px" alt=""/><br />
-          <sub><b>Sloth-Panda</b></sub>
+        <a href="https://github.com/Zircoz">
+          <img src="https://avatars0.githubusercontent.com/u/17019944?s=460&v=4" width="100px" alt=""/><br />
+          <sub><b>Zircoz</b></sub>
         </a><br />
-        <a href="https://github.com/sharmaumang001/Mobile-Brower/commits?author=Sloth-Panda">
+        <a href="https://github.com/sharmaumang001/Mobile-Brower/commits?author=Zircoz">
             💻
         </a>
       </td>
@@ -149,3 +152,4 @@ Thanks goes to these wonderful people ✨✨:
       </td>
     </tr>
 </table>
+
