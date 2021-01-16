@@ -100,8 +100,8 @@ Checkout the contributing file [here](https://github.com/sharmaumang001/Mobile-B
 <a href="https://www.linkedin.com/in/0729" target="_blank">
 <img src=https://img.shields.io/badge/linkedin-%231E77B5.svg?&style=for-the-badge&logo=linkedin&logoColor=white alt=linkedin style="margin-bottom: 5px;" />
 </a> 
-<a href="sharmaumang001.github.io" target="_blank">
-<img src=https://img.shields.io/badge/-PORTFOLIO-brightgreen?&style=for-the-badge alt=website style="margin-bottom: 5px;" />
+<a href="https://sharmaumang001.github.io/" target="_blank">
+<img src=https://img.shields.io/badge/-WEBSITE-brightgreen?&style=for-the-badge alt=website style="margin-bottom: 5px;" />
 </a> 
 </div> 
     
