@@ -1,6 +1,6 @@
 <p align="center">
     <a>
-    <img src="app/src/main/ic_launcher-playstore.png" width="200" height="200"/>
+    <img src="ic_launcher-playstore-removebg-preview.png" width="200" height="200"/>
     </a>
     <h1 align="center">Mobile-Brower</h1>
 </p>
@@ -28,12 +28,12 @@ These instructions will get you a copy of the project up and running on your loc
 *   Java JDK
 *   Kotlin
 
-### Live App 
+### 📱 Live App 
 Test or Use the app by downloading it through Playstore
 ```
 https://play.google.com/store/apps/details?id=com.sharmaumang001.srpbrowser&hl=en&gl=US
 ```
-### Installing
+### ✅ Installing
 Follow these steps if you want to get a local copy of the project on your machine.
 
 #### 1. Clone or fork the repository by running the command below	
@@ -46,7 +46,15 @@ git https://github.com/sharmaumang001/Mobile-Brower
 2.  Follew the dialog wizard to choose the folder where you cloned the project and click on open.
 3.  Android Studio imports the projects and builds it for you
 
-## 🧐Code of Conduct
+## 🧐 Code of Conduct
 You can find our Code of Conduct [here](https://github.com/sharmaumang001/Mobile-Brower/blob/master/CODE_OF_CONDUCT.md).
 
 ## 💥 How to Contribute ?
+Checkout the contributing file [here](https://github.com/sharmaumang001/Mobile-Brower/blob/master/CODE_OF_CONDUCT.md).
+
+## 👨‍💻 Open-source Programs
+
+- <strong>DWoC(Devscript Winter of Code)</strong>
+
+    Winter of Code is an open-source program envisioned by DevScript that helps understand the paradigm of Open Source contribution. It aims to bring students into the world of open source development and see the power of unified problem solving in real time.
+    <img src="https://devscript.tech/woc/img/WOC-logo.png" width="30%">
