@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.michael-rapp:java-util:2.5.0">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.michael-rapp/java-util/2.5.0/d312fe05106ef0124cd6d27bbc16a614c4b4011d/java-util-2.5.0.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.michael-rapp/java-util/2.5.0/fe0964bb9eae29163aaecd1d3d5d46467ce13bd7/java-util-2.5.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.michael-rapp/java-util/2.5.0/d543653681d25be5a3e7631b307a57794eb70046/java-util-2.5.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
