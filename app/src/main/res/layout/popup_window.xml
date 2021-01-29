@@ -9,10 +9,11 @@
         android:id="@+id/bookmarkName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="#ffffff"
         android:hint="Enter Bookmark Name"
         android:inputType="text"
         android:maxLength="30"
-        android:maxLines="1"/>
+        android:maxLines="1" />
     <EditText
         android:id="@+id/bookmarkUrl"
         android:layout_below="@+id/bookmarkName"
