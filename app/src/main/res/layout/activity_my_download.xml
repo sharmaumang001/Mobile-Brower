@@ -6,15 +6,16 @@
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Activity.MyDownloadActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="?attr/colorPrimaryDark"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        android:background="#ffffff"
+        android:elevation="5sp"
         app:layout_scrollFlags="scroll|enterAlways|snap"
-        app:title="Download History">
-    </androidx.appcompat.widget.Toolbar>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Download History"></androidx.appcompat.widget.Toolbar>
     <ListView
         android:layout_height="wrap_content"
         android:id="@+id/downloadlistview"
