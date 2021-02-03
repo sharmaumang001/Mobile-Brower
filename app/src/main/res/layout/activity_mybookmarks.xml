@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,7 +7,8 @@
     android:background="#ffffff"
     android:hapticFeedbackEnabled="true"
     android:orientation="vertical"
-    tools:context=".Activity.MyBookmarks">
+    tools:context=".activity.MyBookmarks"
+    tools:ignore="Overdraw">
 
 
     <LinearLayout
@@ -17,64 +17,64 @@
         android:layout_height="wrap_content"
         android:background="#d6d6d6"
         android:orientation="horizontal"
+        android:weightSum="10"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="4dp"
         tools:ignore="MissingConstraints"
-        android:weightSum="10">
+        tools:layout_editor_absoluteY="4dp">
 
         <ImageButton
             android:id="@+id/backButton_ID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_arrowback"
             android:layout_gravity="center"
-            tools:ignore="MissingConstraints"
-            android:layout_weight="0.5"/>
+            android:layout_weight="0.5"
+            app:srcCompat="@drawable/ic_arrow_back"
+            tools:ignore="MissingConstraints" />
 
         <EditText
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Search Bookmarks"
+            android:layout_weight="8.5"
+            android:hint="@string/search_bookmarks"
             android:maxLines="1"
             app:layout_constraintEnd_toStartOf="@+id/search_button"
-            tools:ignore="MissingConstraints"
-            android:layout_weight="8.5"/>
+            tools:ignore="Autofill,MissingConstraints,TextFields" />
 
 
         <ImageButton
             android:id="@+id/search_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_search"
-            app:layout_constraintEnd_toStartOf="@+id/cancelButton_ID"
             android:layout_weight="0.5"
-            />
+            android:src="@android:drawable/ic_menu_search"
+            app:layout_constraintEnd_toStartOf="@+id/cancelButton_ID" />
 
         <ImageButton
             android:id="@+id/cancelButton_ID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="0.5"
             android:layout_gravity="center"
+            android:layout_weight="0.5"
             app:srcCompat="@drawable/ic_cancel"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintTop_toBottomOf="@+id/llContent">
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerBookmarks"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:scrollbars="vertical"
-            />
+            android:scrollbars="vertical" />
     </ScrollView>
 
     <ImageView
-        android:id="@+id/star_imageview"
+        android:id="@+id/star_image_view"
         android:layout_width="match_parent"
         android:layout_height="133dp"
         android:layout_gravity="center"
@@ -82,14 +82,12 @@
         android:src="@android:drawable/btn_star" />
 
     <TextView
-        android:id="@+id/nobookmark_textview"
+        android:id="@+id/no_bookmark_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No bookmarks here"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintTop_toBottomOf="@+id/star_imageview"
         android:layout_gravity="center_horizontal"
-        />
-
+        android:text="@string/no_bookmarks_here"
+        app:layout_constraintTop_toBottomOf="@+id/star_image_view"
+        tools:ignore="MissingConstraints" />
 
 </LinearLayout>

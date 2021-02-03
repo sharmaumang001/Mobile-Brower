@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:padding="5dp">
@@ -9,18 +9,21 @@
         android:id="@+id/bookmarkName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Bookmark Name"
+        android:hint="@string/enter_bookmark_name"
         android:inputType="text"
         android:maxLength="30"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        tools:ignore="Autofill" />
+
     <EditText
         android:id="@+id/bookmarkUrl"
-        android:layout_below="@+id/bookmarkName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Enter Url"
+        android:layout_below="@+id/bookmarkName"
+        android:hint="@string/enter_url"
         android:inputType="textUri"
         android:maxLength="60"
-        android:maxLines="1"/>
+        android:maxLines="1"
+        tools:ignore="Autofill" />
 
 </RelativeLayout>

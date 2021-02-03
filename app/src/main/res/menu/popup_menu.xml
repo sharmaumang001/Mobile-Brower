@@ -1,100 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/toggle_tab_switcher_menu_item"
         android:title="@string/toggle_tab_switcher_menu_item"
         app:actionLayout="@layout/tab_switcher_menu_item"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
     <item
-        android:id="@+id/horizontalMenu"
+        android:orderInCategory="0"
         android:title=""
-        app:actionLayout="@layout/popup_horizontal"
-        android:orderInCategory="0">
+        app:actionLayout="@layout/popup_horizontal">
         <menu>
             <item
                 android:id="@+id/back"
-                android:icon="@drawable/ic_arrowback"
-                app:showAsAction="ifRoom"
-                android:title="back"/>
+                android:icon="@drawable/ic_arrow_back"
+                android:title="@string/back"
+                app:showAsAction="ifRoom" />
             <item
-                android:id="@+id/setbookmark"
+                android:id="@+id/set_bookmark"
                 android:icon="@drawable/ic_bookmark_hollow"
-                app:showAsAction="ifRoom"
-                android:title="bookmark"/>
+                android:title="@string/bookmark"
+                app:showAsAction="ifRoom" />
             <item
                 android:id="@+id/download"
                 android:icon="@drawable/ic_download"
-                app:showAsAction="ifRoom"
-                android:title="download"/>
+                android:title="@string/download"
+                app:showAsAction="ifRoom" />
             <item
                 android:id="@+id/info"
                 android:icon="@drawable/ic_info"
-                app:showAsAction="ifRoom"
-                android:title="info"/>
+                android:title="@string/info"
+                app:showAsAction="ifRoom" />
             <item
                 android:id="@+id/refresh"
                 android:icon="@drawable/ic_refresh_24"
-                app:showAsAction="ifRoom"
-                android:title="refresh"/>
+                android:title="@string/refresh"
+                app:showAsAction="ifRoom" />
         </menu>
     </item>
     <item
         android:id="@+id/add_tab_menu_item"
         android:title="@string/add_tab_menu_item"
-        app:showAsAction="never"/>
+        app:showAsAction="never" />
     <item
         android:id="@+id/incognito"
-        android:title="Incognito Mode"
         android:checkable="true"
-        android:checked="false"/>
+        android:checked="false"
+        android:title="@string/incognito_mode" />
     <item
         android:id="@+id/bookmark"
-        android:title="Bookmarks" />
+        android:title="@string/bookmarks" />
 
     <item
         android:id="@+id/btnAdBlock"
-        android:title="AdBlock"
         android:checkable="true"
-        android:checked="true"/>
+        android:checked="true"
+        android:title="@string/adblock" />
     <item
         android:id="@+id/history"
-        android:title="History"/>
+        android:title="@string/history" />
 
     <!--<item
         android:id="@+id/audioQueue"
         android:title="Audio Queue"/>-->
-<!--    <item-->
-<!--        android:id="@+id/downloadVids"-->
-<!--        android:title="Download videos on this page"/>-->
+    <!--    <item-->
+    <!--        android:id="@+id/downloadVids"-->
+    <!--        android:title="Download videos on this page"/>-->
     <item
         android:id="@+id/clearData"
-        android:title="Clear Data"/>
+        android:title="@string/clear_data" />
     <item
         android:id="@+id/erase"
-        android:title="Clear Data and Close all tabs"/>
+        android:title="@string/clear_data_and_close_all_tabs" />
     <item
         android:id="@+id/downloads"
-        android:title="Downloads"/>
+        android:title="@string/downloads" />
     <item
-        android:checkable="true"
         android:id="@+id/desktopSite"
-        android:title="Desktop Site"/>
+        android:checkable="true"
+        android:title="@string/desktop_site" />
 
     <item
         android:id="@+id/donate"
-        android:title="Donate"/>
+        android:title="@string/donate" />
 
-<!--    <item-->
-<!--        android:id="@+id/settings_menu_item"-->
-<!--        android:title="Settings"/>-->
+    <!--    <item-->
+    <!--        android:id="@+id/settings_menu_item"-->
+    <!--        android:title="Settings"/>-->
 
     <item
         android:id="@+id/appInfo"
-        android:title="About App"/>
+        android:title="@string/about_app" />
     <item
         android:id="@+id/exit"
-        android:title="Exit"/>
+        android:title="@string/exit" />
 </menu>

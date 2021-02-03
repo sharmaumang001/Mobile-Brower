@@ -1,6 +1,6 @@
 <p align="center">
     <a>
-    <img src="ic_launcher-playstore-removebg-preview.png" width="200" height="200"/>
+    <img src="ic_launcher-playstore-removebg-preview.webp" width="200" height="200"/>
     </a>
     <h1 align="center">Mobile-Brower</h1>
 </p>
@@ -51,7 +51,7 @@ git https://github.com/sharmaumang001/Mobile-Brower
 
 #### 2. Import the project in AndroidStudio, and add API Key
 1.  In Android Studio, go to File -> New -> Import project
-2.  Follew the dialog wizard to choose the folder where you cloned the project and click on open.
+2.  Follow the dialog wizard to choose the folder where you cloned the project and click on open.
 3.  Android Studio imports the projects and builds it for you
 
 ## 🧐 Code of Conduct

@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-             >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize">
-
 
         <de.mrapp.android.util.view.UnfocusableToolbar
             android:id="@+id/toolbar"
@@ -27,12 +25,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@drawable/searchtextview"
+                android:background="@drawable/search_text_view"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
-                android:hint="Search here"
+                android:hint="@string/search_here"
                 android:inputType="textWebEditText"
-                android:theme="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
                 android:maxLines="1"
                 android:padding="@dimen/tab_padding"
                 android:textColor="#000000"
@@ -41,64 +38,60 @@
                 android:textColorLink="#000000"
                 android:textCursorDrawable="@null"
                 android:textIsSelectable="true"
-                android:textSize="20sp" />
-
+                android:textSize="20sp"
+                android:theme="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
+                tools:ignore="Autofill,TextFields" />
 
         </de.mrapp.android.util.view.UnfocusableToolbar>
-
     </FrameLayout>
-    <ProgressBar
 
+    <ProgressBar
         android:id="@+id/progressBar_ID"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-      />
-<!--    <ImageView-->
-<!--        android:id="@+id/add_shortcut"-->
-<!--        android:layout_width="50dp"-->
-<!--        android:layout_height="50dp"-->
-<!--        android:src="@drawable/ic_baseline_add_24"/>-->
+        android:layout_height="wrap_content" />
+    <!--    <ImageView-->
+    <!--        android:id="@+id/add_shortcut"-->
+    <!--        android:layout_width="50dp"-->
+    <!--        android:layout_height="50dp"-->
+    <!--        android:src="@drawable/ic_baseline_add_24"/>-->
 
 
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/shortcutlinks_recycler"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content" />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/shortcut_links_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
     <ImageView
         android:id="@+id/img"
-        android:layout_marginTop="150dp"
         android:layout_width="wrap_content"
         android:layout_height="250dp"
-        android:visibility="visible"
-        android:src="@drawable/srp7"/>
+        android:layout_marginTop="150dp"
+        android:src="@drawable/srp7"
+        android:visibility="visible" />
 
     <WebView
         android:id="@+id/webView_ID"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_weight=".99"
-        android:layout_marginTop="10dp">
+        android:visibility="gone">
 
         <org.adblockplus.libadblockplus.android.webview.AdblockWebView
             android:id="@+id/adBlock"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="invisible"
-            />
-
+            android:visibility="invisible" />
 
     </WebView>
 
     <LinearLayout
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight=".005"
-        android:gravity="bottom"
         android:background="@android:color/transparent"
+        android:gravity="bottom"
         android:orientation="horizontal"
         android:weightSum="5">
 
@@ -108,7 +101,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_arrowback"/>
+            android:src="@drawable/ic_arrow_back"
+            tools:ignore="NestedWeights" />
 
         <ImageButton
             android:id="@+id/forwardButton_ID"
@@ -116,7 +110,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_forward"/>
+            android:src="@drawable/ic_forward" />
 
         <ImageButton
             android:id="@+id/stopButton_ID"
@@ -124,24 +118,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_cancel"/>
+            android:src="@drawable/ic_cancel" />
 
         <ImageButton
-            android:id="@+id/refreshButon_ID"
+            android:id="@+id/refresh_Button_ID"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_refresh_24"/>
+            android:src="@drawable/ic_refresh_24" />
+
         <ImageButton
             android:id="@+id/homeButton_ID"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_home"/>
+            android:src="@drawable/ic_home" />
 
     </LinearLayout>
-
-
 </LinearLayout>
