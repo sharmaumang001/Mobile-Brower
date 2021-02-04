@@ -15,49 +15,58 @@
         android:id="@+id/llContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#d6d6d6"
+        android:layout_gravity="clip_vertical|center_horizontal"
+        android:background="#FFFFFF"
+        android:gravity="clip_vertical|center_horizontal"
         android:orientation="horizontal"
+        android:weightSum="10"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="4dp"
         tools:ignore="MissingConstraints"
-        android:weightSum="10">
+        tools:layout_editor_absoluteY="4dp">
 
         <ImageButton
             android:id="@+id/backButton_ID"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:srcCompat="@drawable/ic_arrowback"
             android:layout_gravity="center"
-            tools:ignore="MissingConstraints"
-            android:layout_weight="0.5"/>
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="2dp"
+            android:layout_weight="0.5"
+            android:background="@drawable/ic_arrowback"
+            tools:ignore="MissingConstraints" />
 
         <EditText
             android:id="@+id/search_bar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:layout_weight="8.5"
+            android:fontFamily="@font/poppins_light"
             android:hint="Search Bookmarks"
             android:maxLines="1"
             app:layout_constraintEnd_toStartOf="@+id/search_button"
-            tools:ignore="MissingConstraints"
-            android:layout_weight="8.5"/>
+            tools:ignore="MissingConstraints" />
 
 
         <ImageButton
             android:id="@+id/search_button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_search"
-            app:layout_constraintEnd_toStartOf="@+id/cancelButton_ID"
+            android:layout_height="match_parent"
             android:layout_weight="0.5"
-            />
+            android:background="@drawable/clearhistorybg"
+            android:src="?android:attr/actionModeWebSearchDrawable"
+            app:layout_constraintEnd_toStartOf="@+id/cancelButton_ID" />
 
         <ImageButton
             android:id="@+id/cancelButton_ID"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="0.5"
+            android:layout_height="match_parent"
             android:layout_gravity="center"
-            app:srcCompat="@drawable/ic_cancel"
+            android:layout_marginLeft="6dp"
+            android:layout_marginRight="12dp"
+            android:layout_weight="0.11"
+            android:background="@drawable/clearhistorybg"
+            app:srcCompat="@drawable/phone_tab_close_button_icon_light"
             tools:ignore="MissingConstraints" />
     </LinearLayout>
     <ScrollView
@@ -79,17 +88,18 @@
         android:layout_height="133dp"
         android:layout_gravity="center"
         android:layout_marginTop="250dp"
-        android:src="@android:drawable/btn_star" />
+        android:src="@android:drawable/btn_star"
+        app:srcCompat="@drawable/ic_bookmark_hollow" />
 
     <TextView
         android:id="@+id/nobookmark_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="No bookmarks here"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintTop_toBottomOf="@+id/star_imageview"
         android:layout_gravity="center_horizontal"
-        />
+        android:fontFamily="@font/poppins_light"
+        android:text="No bookmarks here"
+        app:layout_constraintTop_toBottomOf="@+id/star_imageview"
+        tools:ignore="MissingConstraints" />
 
 
 </LinearLayout>

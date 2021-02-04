@@ -17,13 +17,16 @@
             android:layout_height="wrap_content"
             android:background="@android:color/white"
             android:src="@drawable/ic_arrowback"/>
+
         <TextView
             android:id="@+id/infoName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/poppins_bold"
             android:text="About App"
-            android:textSize="20sp"
-            android:layout_centerHorizontal="true"/>
+            android:textColor="#000000"
+            android:textSize="20sp" />
     </RelativeLayout>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -47,16 +50,22 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <Button
                 android:id="@+id/aboutSRP"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="About SRP"/>
+                android:background="@drawable/clearhistorybg"
+                android:fontFamily="@font/poppins_light"
+                android:text="About SRP" />
+
             <Button
                 android:id="@+id/aboutDevelopers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="About Developers"/>
+                android:background="@drawable/clearhistorybg"
+                android:fontFamily="@font/poppins_light"
+                android:text="About Developers" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

@@ -8,30 +8,47 @@
     android:padding="10dp"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/poppins_bold"
+        android:text="About Developers"
+        android:textColor="#000000"
+        android:textSize="24sp" />
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:elevation="10dp"
-        android:layout_marginBottom="10dp">
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:elevation="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Umang Sharma"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/linku"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:autoLink="all"
+                android:fontFamily="@font/poppins_light"
                 android:linksClickable="true"
                 android:text="www.linkedin.com/in/0729/"
-                android:textColorLink="#0645AD"/>
+                android:textColorLink="#0645AD" />
+
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
@@ -43,21 +60,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Ravi Beniwal"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/linkr"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:autoLink="all"
+                android:fontFamily="@font/poppins_light"
                 android:linksClickable="true"
                 android:text="www.linkedin.com/in/ravi-beniwal-a7bb55198/"
-                android:textColorLink="#0645AD"/>
+                android:textColorLink="#0645AD" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
@@ -65,25 +86,30 @@
         android:layout_height="wrap_content"
         android:elevation="10dp"
         android:layout_marginBottom="10dp">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Yashas H Majmudar"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/linky"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:autoLink="all"
+                android:fontFamily="@font/poppins_light"
                 android:linksClickable="true"
                 android:text="www.linkedin.com/in/yashashm08052001/"
-                android:textColorLink="#0645AD"/>
+                android:textColorLink="#0645AD" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
     <androidx.cardview.widget.CardView
@@ -95,21 +121,25 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_bold"
                 android:text="Siddharth Maurya"
                 android:textSize="20sp"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/links"
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:autoLink="all"
+                android:fontFamily="@font/poppins_light"
                 android:linksClickable="true"
                 android:text="www.linkedin.com/in/siddharth-maurya-2792401aa"
-                android:textColorLink="#0645AD"/>
+                android:textColorLink="#0645AD" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 </LinearLayout>

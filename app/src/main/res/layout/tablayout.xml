@@ -17,31 +17,37 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@android:color/transparent"
+            android:background="@color/ic_launcher_background"
+            android:elevation="2sp"
             android:focusable="false"
+            android:paddingLeft="2dp"
+            android:paddingRight="2dp"
             android:theme="?attr/toolbarTheme"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+            app:titleMarginTop="5dp">
 
             <EditText
                 android:id="@+id/url_EditText_ID"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/searchtextview"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20sp"
+                android:background="@drawable/search_bar"
+                android:elevation="4sp"
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:hint="Search here"
                 android:inputType="textWebEditText"
-                android:theme="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored"
                 android:maxLines="1"
                 android:padding="@dimen/tab_padding"
-                android:textColor="#000000"
+                android:textColor="#121212"
                 android:textColorHighlight="#c1c1c1"
-                android:textColorHint="#000000"
+                android:textColorHint="#B5444444"
                 android:textColorLink="#000000"
                 android:textCursorDrawable="@null"
                 android:textIsSelectable="true"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:theme="@style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored" />
 
 
         </de.mrapp.android.util.view.UnfocusableToolbar>
@@ -97,8 +103,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight=".005"
-        android:gravity="bottom"
         android:background="@android:color/transparent"
+        android:elevation="5dp"
+        android:gravity="bottom"
         android:orientation="horizontal"
         android:weightSum="5">
 
@@ -108,7 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_arrowback"/>
+            android:src="@drawable/ic_arrowback" />
 
         <ImageButton
             android:id="@+id/forwardButton_ID"
@@ -116,7 +123,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_forward"/>
+            android:src="@drawable/ic_forward" />
 
         <ImageButton
             android:id="@+id/stopButton_ID"
@@ -124,7 +131,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_cancel"/>
+            android:src="@drawable/ic_cancel" />
 
         <ImageButton
             android:id="@+id/refreshButon_ID"
@@ -132,14 +139,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_refresh_24"/>
+            android:src="@drawable/ic_refresh_24" />
+
         <ImageButton
             android:id="@+id/homeButton_ID"
             style="@style/Base.Widget.AppCompat.Button.Borderless"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:src="@drawable/ic_home"/>
+            android:src="@drawable/ic_home" />
 
     </LinearLayout>
 
