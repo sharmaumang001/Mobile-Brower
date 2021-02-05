@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:layout_width="wrap_content"
-          android:id="@+id/textviewnewtab"
-          android:layout_height="wrap_content"
-          android:drawableTop="@drawable/ic_plus_24dp"
-          android:text="No tabs Available"
-          android:textAppearance="?android:textAppearanceMedium"
-          android:textColor="@android:color/white"/>
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/no_tabs_available"
+    android:textAppearance="?android:textAppearanceMedium"
+    android:textColor="@android:color/white"
+    app:drawableTopCompat="@drawable/ic_plus_24dp" />

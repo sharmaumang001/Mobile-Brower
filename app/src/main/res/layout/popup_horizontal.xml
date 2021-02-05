@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/popip"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
 
@@ -9,28 +7,29 @@
         android:id="@+id/back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_arrowback"
-        android:background="#ffffff"/>
+        android:background="#ffffff"
+        android:src="@drawable/ic_arrow_back" />
 
     <ImageButton
-        android:id="@+id/bookmark"
+        android:id="@+id/set_bookmark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_bookmark_hollow"
-        android:background="#ffffff"/>
-    
+        android:background="#ffffff"
+        android:src="@drawable/ic_bookmark_hollow" />
+
     <ImageButton
         android:id="@+id/download"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_download"
-        android:background="#ffffff"/>
+        android:background="#ffffff"
+        android:src="@drawable/ic_download" />
+
     <ImageButton
         android:id="@+id/info"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_info"
-        android:background="#ffffff"/>
+        android:background="#ffffff"
+        android:src="@drawable/ic_info" />
 
     <ImageButton
         android:id="@+id/refresh"

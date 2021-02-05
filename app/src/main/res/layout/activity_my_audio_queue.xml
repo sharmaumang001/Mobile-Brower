@@ -1,84 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activity.MyAudioQueueActivity"
-    android:orientation="vertical">
-
+    android:orientation="vertical"
+    tools:context=".activity.MyAudioQueueActivity">
 
     <LinearLayout
         android:id="@+id/text"
-        android:layout_alignParentTop="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
         android:background="@color/colorAccent"
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
         <LinearLayout
-                android:layout_width="match_parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
+
+            <ImageButton
+                android:id="@+id/imageButton2"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                app:srcCompat="@drawable/ic_arrow_back" />
 
-                <ImageButton
-                    android:id="@+id/imageButton2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    app:srcCompat="@drawable/ic_arrowback"/>
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="318dp"
-                    android:layout_height="44dp"
-                    android:text="  Audio Queue "
-                    android:textSize="37dp"
-                    android:textStyle="bold"
-                    android:textColor="#151515"/>
-            </LinearLayout>
+            <TextView
+                android:layout_width="318dp"
+                android:layout_height="44dp"
+                android:text="  Audio Queue "
+                android:textColor="#151515"
+                android:textSize="37sp"
+                android:textStyle="bold"
+                tools:ignore="HardcodedText" />
+        </LinearLayout>
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerQueue"
-        android:layout_below="@+id/text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/text"/>
+        android:layout_below="@+id/text"
+        app:layout_constraintTop_toBottomOf="@+id/text" />
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
         android:layout_height="87dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginEnd="16dp"
         android:orientation="horizontal"
-        tools:ignore="MissingConstraints"
-        android:padding="10dp">
+        android:padding="10dp"
+        tools:ignore="MissingConstraints">
 
         <ImageButton
-            android:id="@+id/imageButton"
             android:layout_width="98dp"
             android:layout_height="match_parent"
             android:background="#7E7C7C"
-            app:srcCompat="@android:drawable/ic_media_previous"
-            />
+            app:srcCompat="@android:drawable/ic_media_previous" />
 
         <ImageButton
-            android:id="@+id/imageButton3"
             android:layout_width="93dp"
             android:layout_height="match_parent"
             android:background="#7E7C7C"
             app:srcCompat="@android:drawable/ic_media_play" />
 
         <ImageButton
-            android:id="@+id/imageButton4"
             android:layout_width="98dp"
             android:layout_height="match_parent"
             android:background="#7E7C7C"
             app:srcCompat="@android:drawable/ic_media_next" />
     </LinearLayout>
-
-
 </RelativeLayout>

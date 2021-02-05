@@ -1,25 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".Activity.MyDownloadActivity">
+    tools:context=".activity.MyDownloadActivity">
+
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimaryDark"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:layout_scrollFlags="scroll|enterAlways|snap"
-        app:title="Download History">
-    </androidx.appcompat.widget.Toolbar>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:title="Download History"/>
+
     <ListView
-        android:layout_height="wrap_content"
-        android:id="@+id/downloadlistview"
-        android:layout_width="match_parent">
-    </ListView>
+        android:id="@+id/download_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
     <LinearLayout
         android:id="@+id/emptyList"
         android:layout_width="match_parent"
@@ -27,23 +28,26 @@
         android:layout_centerInParent="true"
         android:gravity="center"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="gone"
+        tools:ignore="ObsoleteLayoutParam">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center_vertical"
-            android:text="WHOOPS"
+            android:text="@string/whoops"
             android:textColor="#212121"
             android:textSize="26sp"
             android:textStyle="bold" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:gravity="center"
-            android:textSize="20sp"
-            android:text="There are no Downloads at the moment"
-            android:textColor="#212121" />
+            android:text="@string/there_are_no_downloads_at_the_moment"
+            android:textColor="#212121"
+            android:textSize="20sp" />
     </LinearLayout>
 </LinearLayout>

@@ -1,44 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.sharmaumang001.srpbrowser">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
     <uses-permission android:name="android.permission.Read_EXTERNAL_STORAGE" />
 
-
     <application
-        android:allowBackup="true"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:hardwareAccelerated="false"
         android:largeHeap="true"
-        android:supportsRtl="true"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/AppTheme">
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme"
+        tools:ignore="AllowBackup">
 
-        <activity android:name="com.sharmaumang001.srpbrowser.Activity.BrowserHistoryActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name="com.sharmaumang001.srpbrowser.activity.BrowserHistoryActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustResize"
-            ></activity>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name="com.sharmaumang001.srpbrowser.Activity.MyDownloadActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name="com.sharmaumang001.srpbrowser.activity.MyDownloadActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustResize"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name="com.sharmaumang001.srpbrowser.Activity.Info"
-            android:screenOrientation="portrait"
+        <activity
+            android:name="com.sharmaumang001.srpbrowser.activity.Info"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustResize"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name="com.sharmaumang001.srpbrowser.Activity.SplashScreen"
-            android:screenOrientation="portrait"
+        <activity
+            android:name="com.sharmaumang001.srpbrowser.activity.SplashScreen"
             android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -46,21 +51,23 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.sharmaumang001.srpbrowser.Activity.MainActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name="com.sharmaumang001.srpbrowser.activity.MainActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustResize"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name="com.sharmaumang001.srpbrowser.Activity.MyAudioQueueActivity"
-            android:screenOrientation="portrait"
+        <activity
+            android:name="com.sharmaumang001.srpbrowser.activity.MyAudioQueueActivity"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustResize"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
-        <activity android:name="com.sharmaumang001.srpbrowser.Activity.MyBookmarks"
-            android:screenOrientation="portrait"
+        <activity
+            android:name="com.sharmaumang001.srpbrowser.activity.MyBookmarks"
             android:configChanges="orientation|keyboardHidden"
-            android:windowSoftInputMode="adjustResize"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
 
     </application>
-
 </manifest>
