@@ -68,7 +68,6 @@ import com.sharmaumang001.srpbrowser.utility.MyNetworkState;
 import com.sharmaumang001.srpbrowser.utility.MyWebViewClient;
 
 import org.adblockplus.libadblockplus.android.webview.AdblockWebView;
-
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
