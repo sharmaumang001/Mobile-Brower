@@ -80,4 +80,7 @@ dependencies {
 
 // Picasso
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    implementation 'com.ismaeldivita.chipnavigation:chip-navigation-bar:1.1.1'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cnb_unselectedColor="#666666">
+
+    <item
+        android:id="@+id/backButton_ID"
+        android:icon="@drawable/ic_arrowback"
+        android:title=""
+        app:cnb_iconColor="#5B37B7"
+        />
+    <item
+        android:id="@+id/forwardButton_ID"
+        android:icon="@drawable/ic_forward"
+        android:title=""
+        app:cnb_iconColor="#5B37B7"
+        />
+    <item
+        android:id="@+id/stopButton_ID"
+        android:icon="@drawable/ic_cancel"
+        android:title="Stop"
+        app:cnb_iconColor="#C9379D"
+        />
+    <item
+        android:id="@+id/refreshButon_ID"
+        android:icon="@drawable/ic_refresh_24"
+        android:title="Refresh"
+        app:cnb_iconColor="#E6A919"
+        />
+    <item
+        android:id="@+id/homeButton_ID"
+        android:icon="@drawable/ic_home"
+        android:title="Home"
+        app:cnb_iconColor="#1194AA"
+        />
+</menu>
