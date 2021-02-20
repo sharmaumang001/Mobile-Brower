@@ -1,0 +1,27 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="General"
+        app:iconSpaceReserved="false">
+
+        <SwitchPreferenceCompat
+            app:iconSpaceReserved="false"
+            app:key="adBlock_toggle"
+            app:summaryOn="On"
+            app:summaryOff="Off"
+            app:title="@string/adblock" />
+
+        <Preference app:title="@string/clear_data"
+            app:key="clear_data"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="Other"
+        app:iconSpaceReserved="false">
+
+        <Preference app:title="@string/about_app"
+            app:key="about_app"
+            app:iconSpaceReserved="false" />
+
+    </PreferenceCategory>
+</PreferenceScreen>

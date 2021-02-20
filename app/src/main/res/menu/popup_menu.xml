@@ -51,11 +51,11 @@
         android:id="@+id/bookmark"
         android:title="@string/bookmarks" />
 
-    <item
+   <!-- <item
         android:id="@+id/btnAdBlock"
         android:checkable="true"
         android:checked="true"
-        android:title="@string/adblock" />
+        android:title="@string/adblock" />-->
     <item
         android:id="@+id/history"
         android:title="@string/history" />
@@ -84,13 +84,13 @@
         android:id="@+id/donate"
         android:title="@string/donate" />
 
-    <!--    <item-->
-    <!--        android:id="@+id/settings_menu_item"-->
-    <!--        android:title="Settings"/>-->
+        <item
+            android:id="@+id/settings_menu_item"
+            android:title="@string/settings"/>
 
-    <item
+    <!--<item
         android:id="@+id/appInfo"
-        android:title="@string/about_app" />
+        android:title="@string/about_app" />-->
     <item
         android:id="@+id/exit"
         android:title="@string/exit" />
