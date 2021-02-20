@@ -6,6 +6,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -118,6 +119,8 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     private TabSwitcher tabSwitcher;
     private Decorator decorator;
     private Snackbar snackbar;
+    SharedPreferences sharedPreferences;
+    String SHARED_PREF = "APP_SHARED_PREF";
 
     public static boolean hasPermission(Context context, String... permissions) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
@@ -289,7 +292,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         finish();
                         return true;
 
-                    case R.id.btnAdBlock:
+                    /*case R.id.btnAdBlock:
                         if (adblockWebView.isAdblockEnabled()) {
                             adblockWebView.setAdblockEnabled(false);
                             item.setChecked(false);
@@ -297,7 +300,7 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                             adblockWebView.setAdblockEnabled(true);
                             item.setChecked(true);
                         }
-                        return true;
+                        return true;*/
 
                     case R.id.history:
                         startActivity(new Intent(MainActivity.this, BrowserHistoryActivity.class));
@@ -350,15 +353,16 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
                         }
                         return true;
 
-//                    case R.id.settings_menu_item:
-//                        //add settings page
-//                        return true;
+                    case R.id.settings_menu_item:
+                        intent = new Intent(MainActivity.this,SettingsActivity.class);
+                        startActivity(intent);
+                        return true;
 
-                    case R.id.appInfo:
+                    /*case R.id.appInfo:
                         intent = new Intent(MainActivity.this, Info.class);
                         startActivity(intent);
                         finish();
-                        return true;
+                        return true;*/
 
                     case R.id.donate:
                         mWebView.loadUrl("https://milaap.org/fundraisers/support-pulkit-gupta");
@@ -572,6 +576,8 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
     protected final void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharedPreferences = getSharedPreferences(SHARED_PREF,Context.MODE_PRIVATE);
 
         decorator = new Decorator();
         tabSwitcher = findViewById(R.id.tab_switcher);
@@ -896,7 +902,16 @@ public class MainActivity extends AppCompatActivity implements TabSwitcherListen
             //adBlock
 
             adblockWebView = findViewById(R.id.adBlock);
-            adblockWebView.setAdblockEnabled(true);
+
+            Boolean isAdBlockEnabled = false;
+            if(sharedPreferences != null){
+                isAdBlockEnabled = sharedPreferences.getBoolean("isAdBlockEnabled",false);
+            }
+            if(isAdBlockEnabled){
+                adblockWebView.setAdblockEnabled(true);
+            }else{
+                adblockWebView.setAdblockEnabled(false);
+            }
 
 	            /*System.setProperty("http.proxyHost", "127.0.0.1");
               change proxy ip and port

@@ -56,6 +56,8 @@
     <string name="desktop_site">Desktop Site</string>
     <string name="donate">Donate</string>
     <string name="exit">Exit</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="settings">Settings</string>
 
 
 </resources>

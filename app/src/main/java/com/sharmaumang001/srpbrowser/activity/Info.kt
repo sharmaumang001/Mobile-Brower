@@ -82,7 +82,6 @@ class Info : AppCompatActivity() {
                         .commit()
                 }
                 else -> {
-                    startActivity(Intent(this@Info, MainActivity::class.java))
                     finish()
                 }
             }
@@ -102,9 +101,9 @@ class Info : AppCompatActivity() {
                     .commit()
             }
             else -> {
-                startActivity(Intent(this@Info, MainActivity::class.java))
-                finish()
+                super.onBackPressed()
             }
         }
     }
+
 }
